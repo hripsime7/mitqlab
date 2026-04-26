@@ -2,6 +2,14 @@
 <html lang="hy">
 <head>
 <meta charset="UTF-8">
+<meta charset="UTF-8">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MY6JNL53ZS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MY6JNL53ZS');
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MitqLab — Տվյալագիտություն</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1527,11 +1535,11 @@ score = [<span class="num">50</span>, <span class="num">60</span>, <span class="
       </div>
       <div class="summary-card">
         <h4>Pandas</h4>
-        DataFrame, dropna, describe — տվյալ հավաքել, մաքրել, վերլ.
+        DataFrame, dropna, describe — տվյալ հավաքել, մաքրել, վերլուծել
       </div>
       <div class="summary-card">
         <h4>ML</h4>
-        Linear Regression, Decision Tree, KNN — ուսուցման 3 ռազ.
+        Linear Regression, Decision Tree, KNN — ուսուցման 3 ռազմավարություն
       </div>
       <div class="summary-card">
         <h4>Վիզուալիզացիա</h4>
@@ -1987,8 +1995,7 @@ _stdout_buf.getvalue()
         }
       } else {
         card.classList.add('wrong');
-        fb.textContent = '✗ Պ. ա. ն. (not answered) — ' + explanations[qid];
-        fb.className = 'quiz-feedback show bad';
+        fb.className = 'quiz-feedback';
       }
     }
 
