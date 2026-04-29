@@ -11,10 +11,10 @@
   gtag('config', 'G-MY6JNL53ZS');
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MitqLab — Տվյալագիտություն</title>
+<title>MitqLab Տվյալագիտություն</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Code+Pro:wght@400;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.js"></script>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
 <style>
   :root {
     --midnight: #1B263B;
@@ -978,7 +978,7 @@
 </style>
 </head>
 <body>
-<div class="pyodide-status" id="pyStatus">⏳ Python բեռնվում է…</div>
+<div class="pyodide-status" id="pyStatus">⏳ Python-ը բեռնվում է…</div>
 
 <!-- HEADER -->
 <header>
@@ -1020,12 +1020,12 @@
 
   <!-- NAV -->
   <nav class="module-nav">
-    <button class="nav-btn active" onclick="showModule(0)">Մ1 · Մաթ. &amp; Վիճ.</button>
+    <button class="nav-btn active" onclick="showModule(0)">Մ1 · Մաթեմատիկա &amp; Վիճակագրություն</button>
     <button class="nav-btn" onclick="showModule(1)">Մ2 · Pandas</button>
     <button class="nav-btn" onclick="showModule(2)">Մ3 · ML</button>
-    <button class="nav-btn" onclick="showModule(3)">Մ4 · Վիզուալ</button>
-    <button class="nav-btn" onclick="showModule(4)">Մ5 · Կիրառ.</button>
-    <button class="nav-btn" onclick="showModule(5)">Նախ. &amp; Ամփ.</button>
+    <button class="nav-btn" onclick="showModule(3)">Մ4 · Վիզուալիզացիա</button>
+    <button class="nav-btn" onclick="showModule(4)">Մ5 · Կիրառում</button>
+    <button class="nav-btn" onclick="showModule(5)">Նախագիծ &amp; Ամփոփում</button>
     <button class="nav-btn" onclick="showModule(6)" id="quiz-nav-btn">Թեստ</button>
     <button class="nav-btn" onclick="showModule(7)" id="cert-nav-btn">Վկայական</button>
   </nav>
@@ -1040,37 +1040,66 @@
       </div>
     </div>
 
-    <h3 class="section-title">Ինչ է տվյալագիտությունը</h3>
-    <p class="content-text">Տվյալագիտությունը նշանակում է տվյալների միջոցով հասկանալ երևույթները և ողջամիտ որոշումներ ընդունել։</p>
+    <h3 class="section-title">Ի՞նչ է տվյալագիտությունը</h3>
+    <p class="content-text">Տվյալագիտությունը (Data Science) նշանակում է՝ օգտագործել տվյալներ՝ հասկանալու համար աշխարհը և ճիշտ որոշումներ ընդունելու համար։</p>
+    <p class="content-text">Պարզ ասած՝ մենք վերցնում ենք թվեր → վերլուծում ենք → հասկանում ենք ինչ է կատարվում</p>
     <div class="example-box">
       <strong>Կյանքի օրինակներ</strong>
-      Ո՞ր ուսանողներն են ավելի լավ սովորում · Ո՞ր խաղն է ամենահայտնի · Ո՞ր ապրանքն է շատ վաճառվում
+      Ո՞ր ուսանողներն են ավելի լավ սովորում · Ո՞ր խաղն է ամենահայտնի · Ո՞ր ապրանքն է ամենաշատը վաճառվում · Քանի ժամ սովորելիս է գնահատականը բարձրանում
+    </div>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff">
+      <strong>Հարց</strong>
+      Ամենալավ համակարգչային խաղը որոշելու համար ի՞նչ տվյալներ կհավաքես: Օրինակ՝ խաղացողների քանակը, թե՞ խաղում անցկացրած ընդհանուր ժամանակը։
     </div>
 
     <h3 class="section-title">Միջին արժեք (Mean)</h3>
-    <p class="content-text">Թվերի գումարը բաժանած դրանց քանակին։</p>
+    <p class="content-text">Սա թվաբանական միջինն է։ Գումարում ենք բոլոր թվերը, բաժանում ենք քանակին։</p>
     <div class="example-box">
-      <strong>Օրինակ</strong>
+      <strong>Բանաձև &amp; Օրինակ</strong>
+      Mean = (x₁ + x₂ + … + xₙ) / n<br><br>
       (2 + 4 + 6) / 3 = <strong>4</strong>
+    </div>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff">
+      <strong>Փորձիր ինքդ</strong>
+      Գտիր mean-ը՝ <strong>3, 7, 10</strong>
     </div>
 
     <h3 class="section-title">Միջին անդամ (Median)</h3>
-    <p class="content-text">Թվերը դասավորում ենք աճման կարգով և վերցնում կենտրոնական արժեքը։</p>
+    <p class="content-text">Median-ը «կենտրոնի թիվն» է։ Քայլ 1՝ դասավորել թվերը, Քայլ 2՝ վերցնել կենտրոնականը։</p>
     <div class="example-box">
       <strong>Կենտ քանակ</strong>
       1, 3, 5 → median = <strong>3</strong><br><br>
       <strong>Զույգ քանակ</strong>
       1, 3, 5, 7 → (3 + 5) / 2 = <strong>4</strong>
     </div>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff">
+      <strong>Հարց</strong>
+      Median-ը կախվա՞ծ է ամենամեծ թվից:
+    </div>
 
     <h3 class="section-title">Ամենահաճախ հանդիպող (Mode)</h3>
+    <p class="content-text">Mode-ը այն թիվն է, որը ամենաշատն է կրկնվում։</p>
     <div class="example-box">
       <strong>Օրինակ</strong>
       1, 2, 2, 3 → mode = <strong>2</strong>
     </div>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff">
+      <strong>Փորձիր ինքդ</strong>
+      Գտիր mode-ը՝ <strong>4, 4, 5, 6, 6, 6</strong>
+    </div>
 
-    <h3 class="section-title">Կորելացիա (Correlation)</h3>
-    <p class="content-text">Ցույց է տալիս՝ արդյոք երկու փոփոխական կապված են։</p>
+    <h3 class="section-title">Outlier (շատ մեծ կամ փոքր թիվ)</h3>
+    <p class="content-text">Երբ տվյալներից մեկը շատ է տարբերվում մյուսներից, կոչվում է <strong>outlier</strong>։</p>
+    <div class="example-box">
+      <strong>Օրինակ` ինչո՞ւ է կարևոր</strong>
+      Տրված է՝ 1, 2, 3, 100<br><br>
+      Mean = (1+2+3+100)/4 = <strong>26.5</strong> — «խաբվեց» մեծ թվից<br>
+      Median = (2+3)/2 = <strong>2.5</strong> — մնաց իրականին մոտ<br><br>
+      → Mean-ը կարող է «խաբվել» · Median-ը ավելի կայուն է
+    </div>
+
+    <h3 class="section-title">Կոռելյացիա (Correlation)</h3>
+    <p class="content-text">Correlation-ը ցույց է տալիս՝ երկու բան կապված են, թե ոչ։</p>
     <div class="stats-row">
       <span class="stat-pill">+1 = ուժեղ դրական կապ</span>
       <span class="stat-pill">0 = կապ չկա</span>
@@ -1084,7 +1113,20 @@
         <div class="corr-labels"><span>-1</span><span>0</span><span>+1</span></div>
       </div>
     </div>
-    <p class="content-text" style="font-size:0.85rem;color:var(--heritage)">Օրինակ — Սովորելու ժամեր ↔ Գնահատական. ուժեղ դրական կապ (~+0.9)</p>
+    <div class="example-box">
+      <strong>Կարևոր միտք</strong>
+      Correlation ≠ պատճառ<br>
+      Սովորելու ժամեր ↑ → Գնահատական ↑ (~+0.9 դրական կապ)<br>
+      Խաղալու ժամեր ↑ → Գնահատական ↓ (բացասական կապ)<br><br>
+      Նույնիսկ եթե երկու բան կապված են, դա դեռ <strong>չի նշանակում,</strong>որ մեկը պատճառ է մյուսի։ Օրինակ խաղալը պատճառ չէ ցածր գնահատականի, սակայն սովորաբար շատ խաղացող աշակերտները ավելի քիչ ժամանակ են տրամադրում սովորելուն։
+    </div>
+
+    <h3 class="section-title">Ստուգիր քեզ</h3>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff8f0">
+      <strong>Պատկերացրու դու ուսուցիչ ես</strong>
+      Քո աշակերտների գնահատականներն են՝ <strong>5/100, 6/100, 7/100, 8/100, 100/100</strong><br><br>
+      Հարց՝ Եթե դու ասես «միջին գնահատականը 25.2/100 է», արդյո՞ք դա ճիշտ պատկեր ցույց կտա: Ո՞րն է ավելի ճիշտ՝ mean-ը, թե՞ median-ը:
+    </div>
 
     <h3 class="section-title">Առաջադրանքներ</h3>
     <div class="tasks-grid">
@@ -1095,14 +1137,32 @@
       </div>
       <div class="task-card" id="t1-2" onclick="toggleTask('t1-2')">
         <div class="task-num">Առաջ. 02</div>
-        <div class="task-text">Տրված է՝ <strong>1, 2, 3, 100</strong><br><br>Ո՞րն է mean-ը? Ո՞րն է median-ը?<br>Ո՞րն է ավելի ճիշտ ներկայացնում տվյալները և ինչու:</div>
+        <div class="task-text">Տրված է՝ <strong>1, 2, 3, 100</strong><br><br>Գտնել mean-ը, գտնել median-ը։<br>Ո՞րն է ավելի ճիշտ ներկայացնում տվյալները և ինչու:</div>
         <button class="task-toggle">[ Նշել որպես կատարված ]</button>
       </div>
       <div class="task-card" id="t1-3" onclick="toggleTask('t1-3')">
-        <div class="task-num">Քննարկում</div>
-        <div class="task-text">Ինչու՞ է <code class="inline">median</code>-ը ավելի լավ, երբ կա շատ մեծ կամ փոքր (outlier) թիվ:</div>
+        <div class="task-num">Առաջ. 03</div>
+        <div class="task-text">Ինչու՞ է <code class="inline">median</code>-ը ավելի օգտակար և ճշգրիտ, երբ կա outlier:</div>
         <button class="task-toggle">[ Նշել որպես կատարված ]</button>
       </div>
+      <div class="task-card" id="t1-4" onclick="toggleTask('t1-4')">
+        <div class="task-num">Առաջ. 04</div>
+        <div class="task-text">Գտիր mean և median՝ <strong>10, 10, 10, 10, 50</strong><br><br>Ո՞րն է ավելի ճիշտ նկարագրում տվյալները:</div>
+        <button class="task-toggle">[ Նշել որպես կատարված ]</button>
+      </div>
+      <div class="task-card" id="t1-5" onclick="toggleTask('t1-5')">
+        <div class="task-num">Առաջ. 05</div>
+        <div class="task-text">Կարո՞ղ է լինել <strong>երկու mode</strong>: Բեր կոնկրետ օրինակ։</div>
+        <button class="task-toggle">[ Նշել որպես կատարված ]</button>
+      </div>
+    </div>
+
+    <h3 class="section-title" style="margin-top:2rem">Ամփոփում</h3>
+    <div class="summary-grid">
+      <div class="summary-card"><h4>Տվյալագիտություն</h4>Տվյալներ → Վերլուծություն → Հասկացություն</div>
+      <div class="summary-card"><h4>Mean / Median / Mode</h4>Երեք հիմնական կենտրոնական ցուցանիշ</div>
+      <div class="summary-card"><h4>Outlier</h4>Շատ մեծ/փոքր թիվ, որը «խաբում» է mean-ին</div>
+      <div class="summary-card"><h4>Correlation</h4>Կապ կա, բայց չի նշանակում պատճառ</div>
     </div>
 
     <button class="btn-complete" onclick="completeModule(0)">▸ Մոդուլ 1 — Ավարտ</button>
@@ -1118,8 +1178,23 @@
       </div>
     </div>
 
-    <h3 class="section-title">Տվյալների աղյուսակ</h3>
-    <p class="content-text">Տվյալները պահվում են աղյուսակներում՝ տողերով (rows) և սյուներով (columns):</p>
+    <h3 class="section-title">Ի՞նչ է Pandas-ը</h3>
+    <p class="content-text">Pandas-ը Python ծրագրավորման լեզվի գրադարան է։ Այն օգտագործվում է տվյալներ կարդալու (ֆայլերից, օրինակ՝ Excel), տվյալներ մաքրելու, վերլուծելու և հաշվարկներ կատարելու համար։</p>
+    <div class="example-box">
+      <strong>Կարևոր միտք</strong>
+      Pandas-ը <strong>առանձին լեզու չէ,</strong> այն աշխատում է Python-ի ներսում։<br><br>
+      Պարզ ասած՝ <strong>Pandas-ը գործիք է տվյալների հետ աշխատելու համար</strong>
+    </div>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff">
+      <strong>Ինչ պետք է իմանաս մինչև Pandas</strong>
+      Քանի որ Pandas-ը Python-ում է, պետք է իմանաս հիմնական Python-ը՝<br><br>
+      փոփոխականներ — <code class="inline">x = 5</code><br>
+      ցանկեր (lists) — <code class="inline">numbers = [1, 2, 3]</code><br>
+      ֆունկցիաներ — <code class="inline">print(numbers)</code>
+    </div>
+
+    <h3 class="section-title">Տվյալների աղյուսակ &amp; DataFrame</h3>
+    <p class="content-text">Տվյալները պահվում են աղյուսակներում՝ տողերով (rows) և սյուներով (columns)։ DataFrame-ը Pandas-ի հիմնական օբյեկտն է։ Կարող ես մտածել՝ <strong>DataFrame = Excel table Python-ում</strong>։</p>
     <div class="example-box">
       <strong>Կառուցվածք</strong>
       Անուն | Տարիք | Գնահատական<br>
@@ -1127,15 +1202,7 @@
       Արամ &nbsp; | 16 &nbsp;&nbsp;&nbsp;| 85
     </div>
 
-    <h3 class="section-title">Տվյալների խնդիրներ</h3>
-    <p class="content-text">Իրական տվյալները հաճախ լինում են «կեղտոտ» (dirty data):</p>
-    <div class="stats-row">
-      <span class="stat-pill">Բացակայող արժեքներ</span>
-      <span class="stat-pill">Սխալ թվեր</span>
-      <span class="stat-pill">Տեքստի տարբեր ձևաչափեր</span>
-    </div>
-
-    <h3 class="section-title">Pandas գրադարան</h3>
+    <h3 class="section-title">Ստեղծել DataFrame &amp; հիմնական հաշվարկներ</h3>
     <div class="code-editor-wrap">
       <div class="code-editor-toolbar">
         <div class="code-editor-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
@@ -1146,20 +1213,48 @@
 import numpy as np
 
 data = {
-    "name": ["Անի", "Արամ", "Մարի"],
+    "name": ["Անահիտ", "Նարեկ", "Մարի"],
     "age": [15, 16, 17],
     "score": [90, 85, 95]
 }
 df = pd.DataFrame(data)
 print(df.to_string(index=False))
 print()
+
+# Հիմնական հաշվարկներ
 print("Միջ. գնահ.:", df["score"].mean())
+print("Max score: ", df["score"].max())
+print("Min score: ", df["score"].min())
 print("Std dev:   ", round(df["score"].std(), 2))
-print("Max score: ", df["score"].max())</textarea>
+print()
+
+# Ֆիլտրում — score > 85
+print("Բարձր գնահ. (>85):")
+print(df[df["score"] > 85].to_string(index=False))
+print()
+
+# Նոր սյուն
+df["passed"] = df["score"] >= 85
+print("Passed սյունով:")
+print(df.to_string(index=False))</textarea>
       <div class="code-output" id="m2c1-out"></div>
     </div>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff">
+      <strong>Կարևոր գաղափար</strong>
+      Յուրաքանչյուր սյուն տվյալների ցանկ է։<br>
+      Ֆիլտրումը <code class="inline">df[df["score"] > 85]</code> տվյալագիտության հիմքն է։<br>
+      Նոր սյուն ավելացնելը (feature engineering) ML-ի կարևոր քայլերից է։
+    </div>
 
-    <h3 class="section-title">Հիմնական հրամաններ</h3>
+    <h3 class="section-title">Տվյալագիտության խնդիրներից մեկը՝ Dirty Data</h3>
+    <p class="content-text">Իրական տվյալները հաճախ լինում են «կեղտոտ»՝ բացակայող արժեքներ, սխալ թվեր կամ տեքստ թվի փոխարեն։ Առանց մաքրման → սխալ տվյալներ → սխալ եզրակացություններ։</p>
+    <div class="stats-row">
+      <span class="stat-pill">Բացակայող արժեքներ (NaN)</span>
+      <span class="stat-pill">Սխալ թվեր (-2 տարիք)</span>
+      <span class="stat-pill">Տեքստ թվի փոխարեն</span>
+    </div>
+
+    <h3 class="section-title">Մաքրել տվյալները</h3>
     <div class="code-editor-wrap">
       <div class="code-editor-toolbar">
         <div class="code-editor-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
@@ -1179,12 +1274,43 @@ print()
 print("NaN-ների քանակ:")
 print(df.isnull().sum().to_string())
 print()
+
+# Տարբերակ 1 — dropna() (հեռացնել)
 df2 = df.dropna()
-print("After dropna:")
+print("After dropna():")
 print(df2.to_string(index=False))
 print()
-print("Score mean (clean):", np.mean(df2["score"].values))</textarea>
+
+# Տարբերակ 2 — fillna() (լրացնել միջինով)
+df3 = df.copy()
+df3["score"] = df3["score"].fillna(df3["score"].mean())
+print("After fillna(mean):")
+print(df3.to_string(index=False))</textarea>
       <div class="code-output" id="m2c2-out"></div>
+    </div>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff">
+      <strong>Երբ օգտագործել dropna(), երբ fillna()</strong>
+      <code class="inline">dropna()</code> — եթե NaN-ներ քիչ են և կարող ես հանել<br>
+      <code class="inline">fillna(0)</code> — եթե ուզում ես 0-ով լրացնել<br>
+      <code class="inline">fillna(mean)</code> — եթե ուզում ես «ողջամիտ» արժեք պահպանել
+    </div>
+
+    <h3 class="section-title">Ամփոփել վերլուծությունը describe() ֆունկցիայով</h3>
+    <div class="code-editor-wrap">
+      <div class="code-editor-toolbar">
+        <div class="code-editor-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+        <span class="code-editor-label">Python · Pandas</span>
+        <button class="run-btn" onclick="runCode('m2c3')">&#9654; Գործ.</button>
+      </div>
+      <textarea class="code-textarea" id="m2c3" spellcheck="false">import pandas as pd
+
+df = pd.DataFrame({
+    "name":  ["Անահիտ", "Նարեկ", "Մարի", "Արամ", "Անի"],
+    "age":   [15, 16, 17, 15, 16],
+    "score": [90, 85, 95, 78, 88]
+})
+print(df.describe().to_string())</textarea>
+      <div class="code-output" id="m2c3-out"></div>
     </div>
 
     <h3 class="section-title">Առաջադրանքներ</h3>
@@ -1197,7 +1323,7 @@ df = pd.<span class="fn">DataFrame</span>({<br>
 &nbsp;&nbsp;<span class="str">"age"</span>: [<span class="num">15</span>, <span class="num">16</span>, <span class="kw">None</span>, <span class="num">17</span>],<br>
 &nbsp;&nbsp;<span class="str">"score"</span>: [<span class="num">80</span>, <span class="num">90</span>, <span class="num">85</span>, <span class="kw">None</span>]<br>
 })</div>
-          Հեռացնել դատարկ արժեքները։
+          Հեռացնել NaN արժեքները <code class="inline">dropna()</code>-ով։
         </div>
         <button class="task-toggle">[ Նշել որպես կատարված ]</button>
       </div>
@@ -1211,6 +1337,36 @@ df = pd.<span class="fn">DataFrame</span>({<br>
         <div class="task-text">Pandas-ով գտնել միջին գնահատականը (mean score) DataFrame-ից:</div>
         <button class="task-toggle">[ Նշել որպես կատարված ]</button>
       </div>
+      <div class="task-card" id="t2-4" onclick="toggleTask('t2-4')">
+        <div class="task-num">Առաջ. 04</div>
+        <div class="task-text">Ընտրել միայն score &gt; 85 ունեցող տողերը ֆիլտրման միջոցով:</div>
+        <button class="task-toggle">[ Նշել որպես կատարված ]</button>
+      </div>
+      <div class="task-card" id="t2-5" onclick="toggleTask('t2-5')">
+        <div class="task-num">Առաջ. 05</div>
+        <div class="task-text">Ավելացնել <code class="inline">"passed"</code> սյուն, որտեղ <code class="inline">True</code> է, եթե score ≥ 85:</div>
+        <button class="task-toggle">[ Նշել որպես կատարված ]</button>
+      </div>
+      <div class="task-card" id="t2-6" onclick="toggleTask('t2-6')">
+        <div class="task-num">Առաջ. 06</div>
+        <div class="task-text">Բացատրել՝ <strong>երբ</strong> օգտ. <code class="inline">dropna()</code>, երբ՝ <code class="inline">fillna()</code>:</div>
+        <button class="task-toggle">[ Նշել որպես կատարված ]</button>
+      </div>
+    </div>
+
+    <h3 class="section-title" style="margin-top:2rem">Փոքր նախագիծ</h3>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff8f0">
+      <strong>Ստեղծիր քո DataFrame</strong><br><br>
+      Ավելացրու առնվազն 5 մարդ և կատարիր՝<br>
+      mean · ֆիլտրում · մաքրում · նոր սյուն
+    </div>
+
+    <h3 class="section-title" style="margin-top:2rem">Ամփոփում</h3>
+    <div class="summary-grid">
+      <div class="summary-card"><h4>Pandas</h4>Python-ի գրադարան տվյալների հետ աշխատելու համար</div>
+      <div class="summary-card"><h4>DataFrame</h4>Տողեր + Սյուներ = Excel table Python-ում</div>
+      <div class="summary-card"><h4>Հաշվարկներ</h4>mean, max, min, std, describe()</div>
+      <div class="summary-card"><h4>Մաքրում</h4>dropna() · fillna() — մաքրելն անհրաժեշտ է</div>
     </div>
 
     <button class="btn-complete" onclick="completeModule(1)">▸ Մոդուլ 2 — Ավարտ</button>
@@ -1226,14 +1382,33 @@ df = pd.<span class="fn">DataFrame</span>({<br>
       </div>
     </div>
 
-    <h3 class="section-title">Ինչ է Machine Learning-ը</h3>
-    <p class="content-text">Համակարգիչը <strong>սովորում է</strong> տվյալներից և կարող է կանխատեսումներ կատարել նոր, անծանոթ տեղեկությունների հիման վրա։</p>
+    <h3 class="section-title">Ի՞նչ է Machine Learning-ը</h3>
+    <p class="content-text">Machine Learning նշանակում է՝ <strong>համակարգիչը սովորում է օրինակներից</strong>, ոչ թե միայն կանոններից։</p>
+    <div class="example-box">
+      <strong>Կարևոր տարբերություն</strong>
+      <strong>Սովորական ծրագրավորում</strong> — մենք գրում ենք կանոնները<br>
+      &nbsp;&nbsp;եթե միավոր ≥ 50 → անցավ · եթե &lt; 50 → չանցավ<br><br>
+      <strong>Machine Learning</strong> — համակարգիչը <em>գտնում</em> է կանոնները<br>
+      &nbsp;&nbsp;տեսնում է շատ ուսանողների տվյալներ → ինքն է սովորում
+    </div>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff">
+      <strong>Հարց</strong>
+      Ինչը կընտրեիր՝ ինքդ գրել 100 կանոն, թե՞ թույլ տալ համակարգչին սովորել տվյալներից:
+    </div>
 
     <h3 class="section-title">Գծային ռեգրեսիա (Linear Regression)</h3>
-    <p class="content-text">Օգտագործվում է <strong>թվային արժեք</strong> կանխատեսելու համար:</p>
+    <p class="content-text">Սա ամենապարզ ML մոդելներից է։ Գաղափարը՝ գտնել ուղիղ գիծ, որը նկարագրում է տվյալները։</p>
     <div class="example-box">
-      <strong>Օրինակ</strong>
-      Սովորելու ժամեր → Կանխատեսվող գնահատական
+      <strong>Բանաձև՝ y = a + b·x</strong>
+      x → սովորելու ժամեր · y → գնահատական<br>
+      b → որքան է աճում գնահատականը մեկ ժամ ավելացնելիս<br>
+      a → «մեկնարկային» արժեք (0 ժամ → a)<br><br>
+      Եթե b=10, a=40 → 3 ժամ=<strong>70</strong> 6 ժամ=<strong>100</strong><br><br>
+       <strong>Model limitation</strong> 8 ժամ → 120 — սա <em>իրականում</em> սխալ է, մոդելն «անսահման» է(գնահատականը չի կարող 100-ից բարձր լինել)
+    </div>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff">
+      <strong>Հարց</strong>
+      Եթե սովորես 0 ժամ, ի՞նչ կլինի արդյունքը (ըստ մոդելի):
     </div>
     <div class="code-editor-wrap">
       <div class="code-editor-toolbar">
@@ -1246,7 +1421,6 @@ df = pd.<span class="fn">DataFrame</span>({<br>
 hours = np.array([1, 2, 3, 4, 5])
 score = np.array([50, 60, 70, 80, 90])
 
-# numpy polyfit — linear regression
 b, a = np.polyfit(hours, score, 1)
 
 print(f"Slope  (b): {b:.2f}")
@@ -1257,27 +1431,65 @@ for h in [3, 6, 8]:
     pred = a + b * h
     print(f"  {h} ժամ → կանխ. գնահ. {pred:.1f}")
 
-# Correlation coefficient
 r = np.corrcoef(hours, score)[0, 1]
 print(f"\nCorrelation r = {r:.4f}")</textarea>
       <div class="code-output" id="m3c1-out"></div>
     </div>
 
     <h3 class="section-title">Որոշման ծառ (Decision Tree)</h3>
-    <p class="content-text">Աշխատում է հաջորդական հարցերի շղթայով:</p>
+    <p class="content-text">Այս մոդելը մտածում է <strong>հաջորդական հարցերով</strong> — նման է մարդու մտածելակերպին:</p>
     <div class="example-box">
       <strong>Ծառի օրինակ</strong>
       Սովորե՞լ ես ≥ 3 ժամ<br>
-      ↳ Այո → <strong>Հավանականություն բարձր է</strong><br>
-      ↳ Ոչ &nbsp;→ Ունե՞ս նախկին հիմք<br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↳ Այո → Միջին · Ոչ → Ցածր
+      ↳ Այո → <strong>լավ արդյունք</strong><br>
+      ↳ Ոչ → Ունե՞ս հիմք<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↳ Այո → Միջին · Ոչ → Ցածր<br><br>
+      <strong>Բանկի օրինակ</strong> — Ունե՞ս աշխատանք → Եկամուտը բարձր է → վարկն ընդունված է
     </div>
 
     <h3 class="section-title">K-Nearest Neighbors (KNN)</h3>
     <p class="content-text">Նոր տվյալը <strong>դասվում է</strong> իր ամենամոտ «հարևան»-ների հիման վրա:</p>
     <div class="example-box">
-      <strong>Կյանքի օրինակ</strong>
-      Եթե 5 ընկերից 4-ը սիրում են ֆիլմը, ապա հավանական է, որ դու նույնպես կսիրես → KNN ասում է "Recommend"
+      <strong>«Ասա ով է քո ընկերը, ասեմ ով ես դու»</strong><br><br>
+      5 ընկերից 4-ը սիրում են ֆիլմը → դու հավանաբար կսիրես → KNN ասում է "Recommend"(խորհուրդ տալ)<br><br>
+      <strong>Ինչ է անում KNN</strong> — գտնում է մոտ տվյալները · նայում նրանց պատասխաններին · ընտրում մեծամասնությունը
+    </div>
+
+    <h3 class="section-title" style="margin-top:1.5rem">Խաղ․ Դու Akinator-ն ես</h3>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff8f0">
+      <strong>Պատկերացրու դու այն խաղն ես, որը կարողանում է կռահել, թե ինչ են մտածում</strong><br><br>
+      Դու մտածում ես որևէ կերպարի մասին, իսկ խաղը քեզ տալիս է հարցեր, իսկ վերջում… <em>գուշակում է ճիշտը</em>:<br><br>
+
+      <strong>Ինչպե՞ս է դա աշխատում</strong><br>
+      Խաղն ունի շատ տվյալներ — հազարավոր մարդիկ պատասխանել են հարցերին, օրինակ՝<br>
+      «Իրական մարդ է՞» · «Ֆիլմում է՞» · «Ունի՞ գերբնական ուժեր»<br><br>
+
+      <strong>Decision Tree (հիմնական գաղափար)</strong><br>
+      Խաղը աշխատում է հարցերի շղթայով, ամեն հարց → ճյուղ, ամեն պատասխան → նոր ուղղություն:<br>
+      Իրական մարդ է՞ → Այո → Քաղաքական գործիչ է՞ → Ոչ → Գիտնական է՞<br><br>
+
+      <strong>KNN (մոտիկ գաղափար)</strong><br>
+      Խաղը նաև «հիշում է» նման պատասխանները․ նման պատասխաններ = նման արդյունք»<br>
+      Եթե դու պատասխանում ես նման մարդկանց, ովքեր մտածել են նույն կերպարի մասին → խաղը կկռահի նույնը<br><br>
+
+      <strong>Ինչո՞ւ է այն այդքան ճշգրիտ</strong><br>
+      Քանի որ ունի շատ տվյալներ՝ յուրաքանչյուր նոր խաղ ավելի խելացի է դառնում(սովորում է տվյալներից)
+    </div>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff">
+      <strong>Փորձիր ինքդ</strong><br>
+      Մտածիր կերպար՝ սուպերհերոս, YouTuber, կամ խաղի հերոս։ Ի՞նչ 5 հարց կտայիր, որ արագ հասնես պատասխանին:<br><br>
+      <strong>⚠️ Հետաքրքիր միտք</strong> — Եթե սխալ պատասխաններ տաս, խաղը կարող է սխալվել։<br>
+      Սա ցույց է տալիս՝ <em>Machine Learning-ը կախված է տվյալների որակից</em><br><br>
+      <strong>🎯 Մարտահրավեր</strong> — Ստեղծիր քո «Akinator»-ը:<br>
+      Ընտրիր 1 թեմա (կենդանիներ, խաղեր, դասընկերներ) և գրիր 5 հարց, որով կկարողանաս գուշակել:<br><br>
+      <strong>💡 Ամփոփենք միտքը՝</strong> Akinator-ը կախարդանք չէ, դա Decision Tree + KNN + շատ տվյալների ճիշտ օգտագործում է։
+    </div>
+
+    <div class="example-box">
+      <strong>Համեմատություն</strong>
+      Linear Regression → <em>թիվ</em> է կանխատեսում (գնահ., գին)<br>
+      Decision Tree → <em>հարցերով</em> որոշում է (Այո/Ոչ)<br>
+      KNN → <em>հարևաններով</em> որոշում է (մոտ նմաններ)
     </div>
 
     <h3 class="section-title">Առաջադրանքներ</h3>
@@ -1289,14 +1501,32 @@ print(f"\nCorrelation r = {r:.4f}")</textarea>
       </div>
       <div class="task-card" id="t3-2" onclick="toggleTask('t3-2')">
         <div class="task-num">Առաջ. 02</div>
-        <div class="task-text">Բերել կոնկրետ օրինակ, որտեղ կարող ենք օգտագործել Decision Tree (ոչ ուսումնական բնագավառ):</div>
+        <div class="task-text">Բերել կոնկրետ օրինակ Decision Tree-ի համար <strong>ոչ կրթական</strong> ոլորտից (գիտություն, ֆինանսներ, սպորտ):</div>
         <button class="task-toggle">[ Նշել որպես կատարված ]</button>
       </div>
       <div class="task-card" id="t3-3" onclick="toggleTask('t3-3')">
         <div class="task-num">Առաջ. 03</div>
-        <div class="task-text">Բացատրել KNN ալգորիթմը սեփական բառերով, առանց մաթեմատիկական բանաձևերի:</div>
+        <div class="task-text">Բացատրել Linear Regression-ը <strong>սեփական բառերով</strong>, առանց մաթեմատիկական բանաձևերի:</div>
         <button class="task-toggle">[ Նշել որպես կատարված ]</button>
       </div>
+      <div class="task-card" id="t3-4" onclick="toggleTask('t3-4')">
+        <div class="task-num">Առաջ. 04</div>
+        <div class="task-text">Ի՞նչ խնդիր կա այս կանխատեսման մեջ՝ <strong>8 ժամ → 120 միավոր</strong>:</div>
+        <button class="task-toggle">[ Նշել որպես կատարված ]</button>
+      </div>
+      <div class="task-card" id="t3-5" onclick="toggleTask('t3-5')">
+        <div class="task-num">Առաջ. 05</div>
+        <div class="task-text">Կարո՞ղ է KNN-ը <strong>սխալվել</strong>: Ե՞րբ և ինչո՞ւ:</div>
+        <button class="task-toggle">[ Նշել որպես կատարված ]</button>
+      </div>
+    </div>
+
+    <h3 class="section-title" style="margin-top:2rem">Ամփոփում</h3>
+    <div class="summary-grid">
+      <div class="summary-card"><h4>Machine Learning</h4>Համակարգիչը սովորում է օրինակներից, ոչ թե կանոններից</div>
+      <div class="summary-card"><h4>Linear Regression</h4>Թվային արժեք կանխատեսելու ուղիղ գծի մոդել</div>
+      <div class="summary-card"><h4>Decision Tree</h4>Հաջորդող հարցերով դասակարգում՝ նման մարդու մտածողությանը</div>
+      <div class="summary-card"><h4>KNN</h4>Ամենամոտ հարևանների մեծամասնություն → կանխատեսում</div>
     </div>
 
     <button class="btn-complete" onclick="completeModule(2)">▸ Մոդուլ 3 — Ավարտ</button>
@@ -1313,22 +1543,42 @@ print(f"\nCorrelation r = {r:.4f}")</textarea>
     </div>
 
     <h3 class="section-title">Ինչու է կարևոր</h3>
-    <p class="content-text">Գրաֆիկները օգնում են ավելի հեշտ հասկանալ տվյալները, նկատել ձևաչափերը (patterns) և ներկայացնել արդյունքները:</p>
+    <p class="content-text">Պատկերացրու ունես մարզիկների ցատկի երկարության թվերը՝ 210սմ, 160սմ, 195սմ, 90սմ, 155սմ։ Իսկ հիմա պատկերացրու, որ այդ մարզիկները ոչ թե 5-ն են, այլ 1000-ը։ Արդեն դժվար է արագ համեմատել և գալ եզրահանգման։ Հիմա պատկերացրու նույնը գրաֆիկով՝ <strong>միանգամից</strong> տեսնում ես ով է ամենաբարձրը, ամենացածրը, ընդհանուր պատկերը։</p>
+    <div class="example-box">
+      <strong>Կարևոր միտք</strong>
+      Լավ գրաֆիկ = արագ հասկացողություն<br>
+      Գրաֆիկները <em>պատմություն</em> են պատմում, նրանք պարզապես միայն նկարներ չեն
+    </div>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff">
+      <strong>Հարց</strong>
+      Եթե դու ներկայացնես տվյալներ դասարանին, կընտրես աղյուսակ, թե՞ գրաֆիկ: Ինչո՞ւ:
+    </div>
 
     <h3 class="section-title">Գրաֆիկների տեսակներ</h3>
     <div class="stats-row" style="flex-wrap:wrap">
-      <span class="stat-pill">Line Chart — ժամանակ</span>
-      <span class="stat-pill">Bar Chart — համեմատ.</span>
-      <span class="stat-pill">Pie Chart — տոկոս</span>
+      <span class="stat-pill">Line Chart — ժամանակի ընթացքում փոփոխություն</span>
+      <span class="stat-pill">Bar Chart — համեմատություն</span>
+      <span class="stat-pill">Pie Chart — տոկոսներ</span>
       <span class="stat-pill">Scatter Plot — կապ</span>
     </div>
+    <div class="example-box" style="margin-top:1rem">
+      <strong>Երբ ո՞րն օգտագործել</strong><br>
+      Line Chart → ջերմաստիճան, գների փոփոխություն ժամանակի ընթացքում<br>
+      Bar Chart → ուսանողների գնահատականներ, վաճառքների համեմատություն<br>
+      Pie Chart → քանի տոկոսն է սիրում ֆուտբոլ<br>
+      Scatter Plot → սովորելու ժամեր ↔ գնահատականի կապ
+    </div>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff">
+      <strong>Փոքր հարց</strong>
+      Եթե Line Chart-ի գիծը շատ է «տատանվում», ի՞նչ կարող է դա նշանակել:
+    </div>
 
-    <h3 class="section-title">Matplotlib</h3>
+    <h3 class="section-title">Matplotlib — Line Chart</h3>
     <div class="code-editor-wrap">
       <div class="code-editor-toolbar">
         <div class="code-editor-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
         <span class="code-editor-label">Python · Matplotlib</span>
-        <button class="run-btn" onclick="runCode('m4c1')">&#9654; Գործ.</button>
+        <button class="run-btn" onclick="runCode('m4c1')">&#9654; Գործարկել</button>
       </div>
       <textarea class="code-textarea" id="m4c1" spellcheck="false">import numpy as np
 import matplotlib
@@ -1361,34 +1611,34 @@ print(f"Max: {y.max()}  Min: {y.min()}  Mean: {y.mean():.1f}")</textarea>
       <div class="code-output" id="m4c1-out"></div>
     </div>
 
-    <h3 class="section-title">Bar chart — ուսանողների գնահ.</h3>
+    <h3 class="section-title">Bar Chart — ուսանողների գնահատականներ</h3>
     <div class="code-editor-wrap">
       <div class="code-editor-toolbar">
         <div class="code-editor-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
         <span class="code-editor-label">Python · Bar Chart</span>
-        <button class="run-btn" onclick="runCode('m4c2')">&#9654; Գործ.</button>
+        <button class="run-btn" onclick="runCode('m4c2')">&#9654; Գործարկել</button>
       </div>
       <textarea class="code-textarea" id="m4c2" spellcheck="false">import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-names  = ["Անի", "Արամ", "Մարի"]
-scores = np.array([90, 80, 95])
+names  = ["Անի", "Գայանե", "Սամվել"]
+scores = np.array([10, 8, 9])
 colors = ['#415A77', '#778DA9', '#1B263B']
 
 fig, ax = plt.subplots(figsize=(5, 3))
 bars = ax.bar(names, scores, color=colors, width=0.5, edgecolor='white', linewidth=0.8)
 
 for bar, val in zip(bars, scores):
-    ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.8,
+    ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.1,
             str(val), ha='center', va='bottom', fontsize=10, fontweight='bold')
 
-ax.set_ylim(0, 110)
+ax.set_ylim(0, 12)
 ax.set_title('Ուսանողների գնահատականներ', fontsize=12)
-ax.set_ylabel('Գնահ.')
+ax.set_ylabel('Գնահատական')
 ax.axhline(scores.mean(), color='#c85a5a', linestyle='--', linewidth=1.2,
-           label=f'Միջ. {scores.mean():.0f}')
+           label=f'Միջին {scores.mean():.1f}')
 ax.legend(fontsize=9)
 ax.grid(axis='y', alpha=0.3)
 plt.tight_layout()
@@ -1401,48 +1651,75 @@ img_b64 = base64.b64encode(buf.read()).decode()
 plt.close()
 
 print(f"__PLOT__{img_b64}")
-print(f"Ամ. բ.: {names[scores.argmax()]} ({scores.max()})")
-print(f"Ամ. ց.: {names[scores.argmin()]} ({scores.min()})")
-print(f"Միջ. գնահ.: {scores.mean():.2f}")</textarea>
+print(f"Ամենաբարձրը՝ {names[scores.argmax()]} ({scores.max()})")
+print(f"Ամենացածրը՝ {names[scores.argmin()]} ({scores.min()})")
+print(f"Միջին գնահատական՝ {scores.mean():.2f}")</textarea>
       <div class="code-output" id="m4c2-out"></div>
     </div>
 
-    <!-- Mini inline bar chart -->
+    <!-- Single interactive bar demo with new names -->
     <div style="background:var(--parchment);border-radius:6px;padding:1.25rem;margin:1rem 0">
-      <div style="font-family:'Source Code Pro',monospace;font-size:0.72rem;color:var(--heritage);margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.08em">Ինտ. դեմո</div>
-      <div id="barDemo" style="display:flex;gap:1rem;align-items:flex-end;height:100px">
+      <div style="font-family:'Source Code Pro',monospace;font-size:0.72rem;color:var(--heritage);margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.08em"></div>
+      <div style="display:flex;gap:1rem;align-items:flex-end;height:100px">
         <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
-          <div style="width:100%;background:var(--heritage);border-radius:3px 3px 0 0;height:90px;transition:all 0.3s"></div>
-          <span style="font-family:'Source Code Pro',monospace;font-size:0.72rem;color:var(--midnight)">Անի 90</span>
+          <div style="width:100%;background:var(--heritage);border-radius:3px 3px 0 0;height:100px;transition:all 0.3s"></div>
+          <span style="font-family:'Source Code Pro',monospace;font-size:0.72rem;color:var(--midnight)">Անի 10</span>
         </div>
         <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
           <div style="width:100%;background:var(--celestial);border-radius:3px 3px 0 0;height:80px;transition:all 0.3s"></div>
-          <span style="font-family:'Source Code Pro',monospace;font-size:0.72rem;color:var(--midnight)">Արամ 80</span>
+          <span style="font-family:'Source Code Pro',monospace;font-size:0.72rem;color:var(--midnight)">Գայանե 8</span>
         </div>
         <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
-          <div style="width:100%;background:var(--midnight);border-radius:3px 3px 0 0;height:95px;transition:all 0.3s"></div>
-          <span style="font-family:'Source Code Pro',monospace;font-size:0.72rem;color:var(--midnight)">Մարի 95</span>
+          <div style="width:100%;background:var(--midnight);border-radius:3px 3px 0 0;height:90px;transition:all 0.3s"></div>
+          <span style="font-family:'Source Code Pro',monospace;font-size:0.72rem;color:var(--midnight)">Սամվել 9</span>
         </div>
       </div>
+      <p style="font-size:0.88rem;color:var(--heritage);margin-top:0.75rem">Ո՞վ է լավագույնը · Միջինը մոտավորապես ի՞նչ է · Կա՞ մեծ տարբերություն</p>
+    </div>
+
+    <h3 class="section-title">⚠️ Սխալ գրաֆիկները կարող են խաբել</h3>
+    <div class="example-box">
+      <strong>Կարևոր կանոն</strong>
+      Եթե Y առանցքը սկսվում է 80-ից (ոչ 0-ից) → տարբերությունները <em>ավելի մեծ</em> կթվան<br><br>
+      Լավ data scientist-ը <strong>չի խաբվում</strong> գրաֆիկից:<br><br>
+      <strong>Հարց</strong> — Կարո՞ղ է նույն տվյալները տարբեր գրաֆիկներով տարբեր «պատմություն» ցույց տալ:
     </div>
 
     <h3 class="section-title">Առաջադրանքներ</h3>
     <div class="tasks-grid">
       <div class="task-card" id="t4-1" onclick="toggleTask('t4-1')">
-        <div class="task-num">Առաջ. 01</div>
-        <div class="task-text">Python-ով կառուցել bar chart Անի (90), Արամ (80), Մարի (95) գնահ. համար: Ավելացնել title և labels:</div>
+        <div class="task-num">Առաջադրանք 01</div>
+        <div class="task-text">Python-ով կառուցել bar chart՝ Անի (10), Գայանե (8), Սամվել (9) գնահատականների համար: Ավելացնել վերնագիր և label-ներ:</div>
         <button class="task-toggle">[ Նշել որպես կատարված ]</button>
       </div>
       <div class="task-card" id="t4-2" onclick="toggleTask('t4-2')">
-        <div class="task-num">Առաջ. 02</div>
-        <div class="task-text">Ի՞նչ տեղեկություն կարելի է կարդալ դեմոյի bar chart-ից: Ո՞վ ունի ամենաբարձր գնահատականը:</div>
+        <div class="task-num">Առաջադրանք 02</div>
+        <div class="task-text">Դեմոյի bar chart-ից պարզել՝ ո՞վ ունի ամենաբարձր գնահատականը, ո՞վ՝ ամենացածրը, ի՞նչ է ցույց տալիս կարմիր գիծը:</div>
         <button class="task-toggle">[ Նշել որպես կատարված ]</button>
       </div>
       <div class="task-card" id="t4-3" onclick="toggleTask('t4-3')">
-        <div class="task-num">Առաջ. 03</div>
-        <div class="task-text">Բացատրել՝ <em>երբ</em> ենք օգտ. <code class="inline">line chart</code>-ը, <em>երբ</em>՝ <code class="inline">bar chart</code>-ը:</div>
+        <div class="task-num">Առաջադրանք 03</div>
+        <div class="task-text">Բացատրել՝ <em>երբ</em> ենք օգտագործում <code class="inline">line chart</code>-ը, <em>երբ</em>՝ <code class="inline">bar chart</code>-ը:</div>
         <button class="task-toggle">[ Նշել որպես կատարված ]</button>
       </div>
+      <div class="task-card" id="t4-4" onclick="toggleTask('t4-4')">
+        <div class="task-num">Առաջադրանք 04</div>
+        <div class="task-text">Տրված է՝ օրեր [1, 2, 3, 4, 5] → գնահատականներ [60, 65, 70, 90, 95]<br>Ի՞նչ է ցույց տալիս գրաֆիկը: Կա՞ առաջընթաց:</div>
+        <button class="task-toggle">[ Նշել որպես կատարված ]</button>
+      </div>
+      <div class="task-card" id="t4-5" onclick="toggleTask('t4-5')">
+        <div class="task-num">Մինի նախագիծ — Անձնական գրաֆիկ</div>
+        <div class="task-text">Ստեղծիր <strong>քո անձնական գրաֆիկը</strong> — քնելու ժամեր, սովորելու ժամեր, խաղալու ժամեր: Կառուցիր գրաֆիկ և պարզիր՝ ինչ է ցույց տալիս:</div>
+        <button class="task-toggle">[ Նշել որպես կատարված ]</button>
+      </div>
+    </div>
+
+    <h3 class="section-title" style="margin-top:2rem">Ամփոփում</h3>
+    <div class="summary-grid">
+      <div class="summary-card"><h4>Ինչու գրաֆիկներ</h4>Արագ հասկանալ · Օրինաչափությունների նկատում · Ճիշտ ներկայացնել տվյալները</div>
+      <div class="summary-card"><h4>4 տեսակ</h4>Line · Bar · Pie · Scatter — ամեն մեկն ունի իր կիրառությունը</div>
+      <div class="summary-card"><h4>Կարդալ</h4>Տեսնել ամենաբարձր և ամենացածր արժեքները · Գտնել միջինը · Նկատել փոփոխությունները</div>
+      <div class="summary-card"><h4>Չխաբվել</h4>Ստուգել Y առանցքի սկիզբը · Հարցնել՝ ի՞նչ է թաքնված</div>
     </div>
 
     <button class="btn-complete" onclick="completeModule(3)">▸ Մոդուլ 4 — Ավարտ</button>
@@ -1458,37 +1735,83 @@ print(f"Միջ. գնահ.: {scores.mean():.2f}")</textarea>
       </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:0.5rem">
+    <h3 class="section-title">Տվյալագիտությունը մեր շուրջն է</h3>
+    <p class="content-text">Դու արդեն օգտագործում ես տվյալագիտություն ամեն օր՝ YouTube-ը առաջարկում է տեսանյութեր, Google-ը ընտրում է որոնման արդյունքներ, խաղերը հարմարեցվում են քո մակարդակին:</p>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff">
+      <strong>Հարց</strong>
+      Դու ես ընտրել այսօրվա դիտելու տեսանյութը, թե՞ համակարգիչն է <em>քեզ</em> առաջարկել:
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1rem">
       <div class="example-box">
         <strong>Բժշկություն</strong>
-        Հիվանդությունների վաղ կանխագուշակում, բժշկական գրառումների վերլուծություն, Մագնիսառեզոնանսային շերտագրության ախտ. վ.
+        Հիվանդությունների վաղ հայտնաբերում · MRI և CT պատկերների վերլուծություն · Քաղցկեղի հայտնաբերում<br><br>
+        <em>Երբեմն համակարգիչը նկատում է այն, ինչ մարդը կարող է բաց թողնել, բայց վերջնական որոշումը միշտ բժշկինն է</em>
       </div>
       <div class="example-box">
         <strong>Ֆինանսներ</strong>
-        Շուկայի փոփոխությունների կանխատեսում, խարդախությունների հայտնաբերում, ռիսկերի գնահատում
+        Խարդախ գործարքների հայտնաբերում · Շուկայի կանխատեսում · Վարկային ռիսկի գնահատում<br><br>
+        <em>Եթե քարտով գնում է կատարվում ուրիշ երկրից, ապա համակարգը կարող է դա համարել կասկածելի</em>
       </div>
       <div class="example-box">
-        <strong>Ինժեներություն</strong>
-        Ռոբոտների կառավարում, սենսորների տվյալների անոմալիա, Որակի ստուգում
+        <strong>ճարտարագիտություն &amp; Ռոբոտներ</strong>
+        Ռոբոտների կառավարում · Սենսորների տվյալների վերլուծություն · Գործարաններում որակի ստուգում<br><br>
+        <em>Մեքենան կարող է կանխատեսել, որ ինչ-որ մաս շուտով կկոտրվի և նախապես զգուշացնել</em>
       </div>
       <div class="example-box">
-        <strong>Հասարակություն</strong>
-        Ընտրությունների արդյունքների կանխագուշակում, հանրային կարծիքի վերլուծություն, երթևեկության կառավարում
+        <strong>Սպորտ</strong>
+        Խաղացողների արագություն · Փոխանցումների ճշգրտություն · Գոլերի հավանականություն<br><br>
+        <em>Կարող են կանխատեսել ո՞ր թիմն ավելի ուժեղ է, բայց սպորտը <strong>անհնար է ճշգրիտ կանխատեսել։</strong> Տվյալները պարզապես օգնում են հասկանալ հավանականությունը</em>
       </div>
+    </div>
+
+    <h3 class="section-title">Պատմություն</h3>
+    <div class="example-box" style="border-color:var(--heritage);background:#fff8f0">
+      <strong>Պատկերացրու քեզ ասում են՝ «միջին աշխատավարձը 500,000 է»</strong><br><br>
+      Դու մտածում ես՝ բոլորը հարուստ են:<br>
+      Բայց իրականում մի քանի <strong>շատ բարձր</strong> աշխատավարձ ունեցող մարդիկ բարձրացնում են միջինը, իսկ մեծ մասը կարող է ստանալ շատ ավելի քիչ:<br><br>
+      → Median-ը այս դեպքում <em>իրական պատկերն է</em> · Մի թիվը միշտ չի տալիս <strong>ամբողջ պատկերը</strong>
     </div>
 
     <h3 class="section-title">Առաջադրանքներ</h3>
     <div class="tasks-grid">
       <div class="task-card" id="t5-1" onclick="toggleTask('t5-1')">
-        <div class="task-num">Առաջ. 01</div>
-        <div class="task-text">Բերել <strong>ձեր</strong> կյանքից կոնկրետ մեկ օրինակ, որտեղ տվյալագիտությունն արդեն ազդում է Ձեր ամենօրյա ընտրությունների վրա:</div>
+        <div class="task-num">Առաջադրանք 01</div>
+        <div class="task-text">Բեր օրինակ <strong>քո</strong> կյանքից, որտեղ տվյալները ազդում են քո ամենօրյա ընտրության վրա:</div>
         <button class="task-toggle">[ Նշել որպես կատարված ]</button>
       </div>
       <div class="task-card" id="t5-2" onclick="toggleTask('t5-2')">
-        <div class="task-num">Առաջ. 02</div>
-        <div class="task-text">Ինչպե՞ս կարող են ֆիլմերի կայքերը օգտագործել տվյալագիտությունը ֆիլմ/սերիալ առաջարկելու համար: Ի՞նչ տվյալներ են հավաքում:</div>
+        <div class="task-num">Առաջադրանք 02</div>
+        <div class="task-text">Ինչպե՞ս են ֆիլմերի կայքերը առաջարկում ֆիլմեր։ Ի՞նչ տվյալներ են նրանք օգտագործում:</div>
         <button class="task-toggle">[ Նշել որպես կատարված ]</button>
       </div>
+      <div class="task-card" id="t5-3" onclick="toggleTask('t5-3')">
+        <div class="task-num">Առաջադրանք 03 · Սպորտ</div>
+        <div class="task-text">Ինչպե՞ս կարող են սպորտային թիմերը կանխատեսել խաղի արդյունքը։ Ի՞նչ տվյալներ կօգտագործեն:</div>
+        <button class="task-toggle">[ Նշել որպես կատարված ]</button>
+      </div>
+      <div class="task-card" id="t5-4" onclick="toggleTask('t5-4')">
+        <div class="task-num">Առաջադրանք 04</div>
+        <div class="task-text">Ինչպես է տվյալագիտությունը օգնում բժշկությանը — կոնկրետ օրինակ բեր:</div>
+        <button class="task-toggle">[ Նշել որպես կատարված ]</button>
+      </div>
+      <div class="task-card" id="t5-5" onclick="toggleTask('t5-5')">
+        <div class="task-num">Առաջադրանք 05 · Մտածողական</div>
+        <div class="task-text">Կարո՞ղ է տվյալագիտությունը <strong>սխալ եզրակացությունների</strong> բերել — երբ և ինչու:</div>
+        <button class="task-toggle">[ Նշել որպես կատարված ]</button>
+      </div>
+      <div class="task-card" id="t5-6" onclick="toggleTask('t5-6')">
+        <div class="task-num">Մինի նախագիծ</div>
+        <div class="task-text">Ստեղծիր <strong>քո սեփական կանխատեսման գաղափարը։</strong> ֆիլմերի առաջարկ, խաղի արդյունքի կամ գնահատականի կանխատեսում: Գրիր թե ի՞նչ տվյալներ կհավաքես և ի՞նչ ես փորձում կանխատեսել:</div>
+        <button class="task-toggle">[ Նշել որպես կատարված ]</button>
+      </div>
+    </div>
+
+    <h3 class="section-title" style="margin-top:2rem">Ամփոփում</h3>
+    <div class="summary-grid">
+      <div class="summary-card"><h4>Տվյալագիտությունն ամենուր է</h4>YouTube · Google · Խաղեր · Բժշկություն · Բանկ։ Տվյալները միշտ օգտագործվում են</div>
+      <div class="summary-card"><h4>Կանխատեսում</h4>Ֆիլմեր, բժշկություն, սպորտ, ինժեներություն, բայց <em>վերջնական որոշումը մարդունն է</em></div>
+      <div class="summary-card"><h4>Թիվն ու հարցը</h4>Տվյալը ոչ միայն թիվն է․ հարցրու ի՞նչ է ասում այդ թիվը, և ի՞նչ ցույց է տալիս հարաբերական պատկերը</div>
     </div>
 
     <button class="btn-complete" onclick="completeModule(4)">▸ Մոդուլ 5 — Ավարտ</button>
@@ -1514,7 +1837,7 @@ score = [<span class="num">50</span>, <span class="num">60</span>, <span class="
       <ol class="project-steps">
         <li>
           <span class="step-num">1</span>
-          <span>Matplotlib-ով կառուցել <strong>scatter plot</strong> կամ line chart: hours → score: ավելացնել title, xlabel, ylabel:</span>
+          <span>Matplotlib-ով կառուցել <strong>scatter plot</strong> կամ line chart: hours → score: Ավելացնել title, xlabel, ylabel:</span>
         </li>
         <li>
           <span class="step-num">2</span>
@@ -1522,15 +1845,15 @@ score = [<span class="num">50</span>, <span class="num">60</span>, <span class="
         </li>
         <li>
           <span class="step-num">3</span>
-          <span>Կա՞ կապ hours-ի և score-ի միջև: Ինչ տեսակի կոռ.: (+ / − / 0) — Արդ. բացատրել <strong>ձեր խոսքերով</strong>:</span>
+          <span>Կա՞ կապ hours-ի և score-ի միջև: Ի՞նչ տեսակի կոռելյացիա: (+ / − / 0) — Արդյունքը բացատրել <strong>քո խոսքերով</strong>:</span>
         </li>
       </ol>
     </div>
 
-    <h3 class="section-title" style="margin-top:2.5rem">Ամփոփ. — Ինչ սովորեցիք</h3>
+    <h3 class="section-title" style="margin-top:2.5rem">Ամփոփում․ Ինչ սովորեցիք</h3>
     <div class="summary-grid">
       <div class="summary-card">
-        <h4>Վիճակ.</h4>
+        <h4>Վիճակագրություն</h4>
         Mean, Median, Mode, Correlation — հիմնական ցուցանիշներ
       </div>
       <div class="summary-card">
@@ -1539,7 +1862,7 @@ score = [<span class="num">50</span>, <span class="num">60</span>, <span class="
       </div>
       <div class="summary-card">
         <h4>ML</h4>
-        Linear Regression, Decision Tree, KNN — ուսուցման 3 ռազմավարություն
+        Linear Regression, Decision Tree, KNN — ուսուցման ռազմավարություններ
       </div>
       <div class="summary-card">
         <h4>Վիզուալիզացիա</h4>
@@ -1597,7 +1920,7 @@ score = [<span class="num">50</span>, <span class="num">60</span>, <span class="
 
       <div class="quiz-q" id="qq3">
         <div class="quiz-q-num">ՀԱՐՑ 03</div>
-        <div class="quiz-q-text">Եթե correlation-ը (կոռելացիան) հավասար է <code class="inline">+0.95</code>, դա նշանակում է՝</div>
+        <div class="quiz-q-text">Եթե correlation-ը (կոռելյացիան) հավասար է <code class="inline">+0.95</code>, դա նշանակում է՝</div>
         <div class="quiz-options">
           <label class="quiz-option"><input type="radio" name="q3" value="a"> Կապ չկա</label>
           <label class="quiz-option"><input type="radio" name="q3" value="b"> Ուժեղ բացասական կապ</label>
@@ -1729,7 +2052,7 @@ score = [<span class="num">50</span>, <span class="num">60</span>, <span class="
 
       <div class="quiz-q" id="qq14">
         <div class="quiz-q-num">ՀԱՐՑ 14</div>
-        <div class="quiz-q-text">Machine Learning-ը Netflix-ում հիմնականում օգտագործվում է՝</div>
+        <div class="quiz-q-text">Machine Learning-ը ֆիլմեր դիտելու կայքերում հիմնականում օգտագործվում է՝</div>
         <div class="quiz-options">
           <label class="quiz-option"><input type="radio" name="q14" value="a"> Ֆիլմեր ստեղծելու համար</label>
           <label class="quiz-option"><input type="radio" name="q14" value="b"> Օգտատերերին ֆիլմեր խորհուրդ տալու համար (recommendation system)</label>
@@ -1778,7 +2101,7 @@ score = [<span class="num">50</span>, <span class="num">60</span>, <span class="
     <div id="cert-unlocked-section" style="display:none">
       <div id="cert-score-banner" style="background:#e8f5e9;border:1px solid #4caf50;border-radius:6px;padding:1.25rem 2rem;margin-bottom:1.5rem;font-family:'Source Code Pro',monospace;font-size:0.88rem;color:#1b5e20;display:flex;align-items:center;gap:0.75rem;line-height:1.6;">
         <span style="font-size:1.4rem">✓</span>
-        <span id="cert-score-text">Հաջողությամբ անցել եք թեստը!</span>
+        <span id="cert-score-text">Հաջողությամբ անցել եք թեստը</span>
       </div>
 
       <div class="cert-form-wrap">
@@ -1800,7 +2123,7 @@ score = [<span class="num">50</span>, <span class="num">60</span>, <span class="
 </div><!-- /container -->
 
 <footer>
-  MitqLab · Տվյալագիտություն · 2-ժամյա ծրագիր &nbsp;|&nbsp; © 2026
+  MitqLab · Տվյալագիտություն · 2-ժամյա դասընթաց &nbsp;|&nbsp; © 2026
 </footer>
 
 <script>
@@ -1854,9 +2177,7 @@ score = [<span class="num">50</span>, <span class="num">60</span>, <span class="
   async function initPyodide() {
     const statusEl = document.getElementById('pyStatus');
     try {
-      // Explicit indexURL avoids the DataCloneError from postMessage(URL) and
-      // prevents the threaded-wasm probe that causes "wasm instantiation failed".
-      const PYODIDE_CDN = 'https://cdn.jsdelivr.net/pyodide/v0.27.0/full/';
+      const PYODIDE_CDN = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/';
       pyodideInstance = await loadPyodide({ indexURL: PYODIDE_CDN });
       await pyodideInstance.loadPackage(['numpy', 'matplotlib', 'pandas']);
       await pyodideInstance.runPythonAsync(`
@@ -2003,7 +2324,7 @@ _stdout_buf.getvalue()
     const pct = Math.round((correct / total) * 100);
     quizPassed = pct >= 80;
     const disp = document.getElementById('quizScoreDisplay');
-    disp.textContent = `Ձ. ա.: ${correct}/${total} (${pct}%) — ${quizPassed ? '✓ Հ. (PASS)' : '✗ Կ. (FAIL)'}`;
+    disp.textContent = `${correct}/${total} (${pct}%) — ${quizPassed ? '✓ Հաջողված (PASS)' : '✗ Ձախողված (FAIL)'}`;
     disp.classList.add('show');
     disp.style.color = quizPassed ? '#2e7d32' : '#c62828';
 
@@ -2036,7 +2357,7 @@ _stdout_buf.getvalue()
 
   function generateCert() {
     const name = document.getElementById('certName').value.trim();
-    if (!name) { alert('Ն. Ձ. ա.'); return; }
+    if (!name) { alert('Խնդրում ենք մուտքագրել ձեր անունը'); return; }
     
     const canvas = document.getElementById('certCanvas');
     const ctx = canvas.getContext('2d');
@@ -2131,10 +2452,10 @@ _stdout_buf.getvalue()
       ctx.fillText('Տվյալագիտություն — հիմունքներ', W/2, 390);
       ctx.font = '15px Georgia, serif';
       ctx.fillStyle = '#415A77';
-      ctx.fillText('Machine Learning · Pandas · Matplotlib · Վիճ.', W/2, 415);
+      ctx.fillText('Machine Learning · Pandas · Matplotlib · Վիճակագրություն', W/2, 415);
 
       // Score badge
-      const scoreText = "Արդ.: " + quizScore + " / 15   ·   " + Math.round(quizScore/15*100) + "%";
+      const scoreText = "Արդյունք: " + quizScore + " / 15   ·   " + Math.round(quizScore/15*100) + "%";
       ctx.font = 'bold 12px "Courier New", monospace';
       const scoreW = ctx.measureText(scoreText).width;
       const badgeW = scoreW + 48;
@@ -2165,7 +2486,7 @@ _stdout_buf.getvalue()
       // Footer
       ctx.font = '11px "Courier New", monospace';
       ctx.fillStyle = '#778DA9';
-      ctx.fillText('MitqLab · Տվյալ. Ա. (Data Science) · 2026', W/2, H-42);
+      ctx.fillText('MitqLab · Տվյալագիտություն (Data Science) · 2026', W/2, H-42);
 
       // Show
       canvas.style.display = 'block';
