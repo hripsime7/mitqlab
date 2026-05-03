@@ -1,86 +1,109 @@
-# 🧠 MitqLab — Տվյալագիտություն հայերեն
+# MitqLab — Armenian Data Science Course
 
-> **Free Armenian-language data science education for children and teenagers.**
-> Անվճար հայկական կրթական հարթակ՝ տվյալագիտության, Python-ի և Machine Learning-ի համար։
+> **"Տվյալագիտություն հիմունքներից մինչև Machine Learning"**  
+> A complete, free, offline-capable Data Science course in Armenian — built for high school students in Armenia, powered by Gemma 4.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-778DA9?style=flat-square)](LICENSE)
-[![Language](https://img.shields.io/badge/Language-Armenian%20🇦🇲-E0E1DD?style=flat-square)]()
-[![Made for Kids](https://img.shields.io/badge/Audience-Ages%209--14-1B263B?style=flat-square)]()
-[![Try it now](https://img.shields.io/badge/Try%20it%20now-GitHub-415A77?style=flat-square)](https://github.com/hripsime7/mitqlab)
+🔗 **Live demo:** https://hripsime7.github.io/mitqlab/
 
 ---
 
-## 🌍 What is MitqLab?
+## What is MitqLab?
 
-MitqLab (**Միտք** = *Mind*) is a free, open-source, browser-based learning platform that teaches data science and programming to Armenian-speaking children and teenagers — entirely in Armenian, with no installation required.
+MitqLab is a fully interactive, browser-based Data Science course taught entirely in Armenian (Հայերեն). It was built to make data science education accessible to Armenian-speaking students who have no access to quality materials in their native language.
 
-Every lesson runs directly in the browser. Students write and execute real Python code — powered by **Pyodide** — without installing anything.
-
----
-
-## 🚀 Try it now
-
-**No installation needed!** Just click the link below:
-
-👉 **[https://github.com/hripsime7/mitqlab](https://github.com/hripsime7/mitqlab)**
-
-1. Clone or download the repository
-2. Open `index.html` in any modern browser (Chrome, Firefox, Edge, Safari)
-3. Start learning!
-
-> ⚠️ On first load, Pyodide downloads ~10 MB of WebAssembly to enable real Python in the browser. This takes 5–15 seconds depending on connection speed. After that, all code runs instantly.
+The course runs in a single HTML file — no installation, no server, no dependencies. A student opens the link and starts learning immediately.
 
 ---
 
-## ✨ Features
+## The Problem It Solves
 
-- 🇦🇲 **Fully in Armenian** — lessons, UI, examples, and feedback
-- 🐍 **Real Python in the browser** — powered by Pyodide (no install needed)
-- 📊 **numpy + matplotlib + pandas** — real data science libraries, not simulations
-- 📝 **Interactive code editors** — edit and run code on every lesson page
-- 📈 **Live chart rendering** — matplotlib plots appear inline in the browser
-- 🏆 **15-question quiz** — with instant feedback and explanations
-- 🎓 **Downloadable certificate** — generated on canvas after passing the quiz
-- 📱 **Mobile-friendly** — works on phones and tablets
-- 💸 **Completely free** — no login, no paywall, no ads
+Data science education is almost entirely in English. For students in Armenia — especially outside Yerevan — this is a real barrier. MitqLab removes that barrier by delivering a full curriculum in Armenian, with an AI tutor that answers questions in Armenian, powered by Gemma 4.
 
 ---
 
-## 📚 Curriculum (v1.0)
+## Features
 
-| Module | Topic | Duration |
-|--------|-------|----------|
-| 01 | Մաթեմատիկա & Վիճակագրություն — Mean, Median, Mode, Correlation | 20 min |
-| 02 | Տվյալներ & Pandas — DataFrames, cleaning, NaN handling | 25 min |
-| 03 | Machine Learning — Linear Regression, Decision Tree, KNN | 30 min |
-| 04 | Վիզուալիզացիա — Matplotlib line, bar, scatter charts | 20 min |
-| 05 | Կիրառություններ — Medicine, Finance, Engineering, Governance | 15 min |
-| 06 | Ավարտական Թեստ — 15 questions, 80% passing threshold | 15 min |
-| 07 | Վկայական — Personalized downloadable certificate | — |
+### 📚 5 Complete Learning Modules (2 hours total)
+| Module | Topics |
+|--------|--------|
+| Մ1 · Mathematics & Statistics | Mean, Median, Mode, Outliers, Correlation |
+| Մ2 · Pandas | DataFrames, filtering, cleaning, dropna, fillna |
+| Մ3 · Machine Learning | Linear Regression, Decision Tree, KNN |
+| Մ4 · Data Visualization | Matplotlib — line, bar, pie, scatter charts |
+| Մ5 · Real-world Applications | Medicine, finance, sports, engineering |
 
-**Total: ~2 hours · Beginner level · Ages 9–14**
+### 🤖 AI Tutor powered by Gemma 4
+- Answers student questions **in Armenian** in real time
+- Context-aware: knows which module the student is on
+- **Two modes:**
+  - **Ollama (offline)** — runs Gemma 4 locally, works without internet
+  - **Google AI (cloud)** — uses Gemini API with model fallback chain
+- Thinking-token cleanup so Gemma's internal reasoning never leaks to students
+- Quick-prompt buttons: Explain · Hint · Code · Practice
+
+### 💻 In-Browser Python Execution
+- Powered by **Pyodide** — runs real Python in the browser
+- Students write and run NumPy, Pandas, Matplotlib code with one click
+- Matplotlib plots render inline as images
+- No installation needed
+
+### 🎓 Quiz & Certificate
+- 15-question final exam covering all 5 modules
+- 80% passing threshold (12/15)
+- Personalized downloadable PNG certificate on completion
+- Progress bar tracks completion across modules
 
 ---
 
-## 🛠️ Tech Stack
+## How Gemma 4 Is Used
+
+Gemma 4 (`gemma-4-31b-it` via Google AI Studio, or `gemma4:e4b` via Ollama) serves as the AI tutor. The integration includes:
+
+- **System prompt** scoped to the student's active module and topic list
+- **Few-shot anchoring** with a sample Armenian Q&A to lock response format
+- **`thinkingConfig: MINIMAL`** to suppress reasoning overhead on cloud mode
+- **Empty thought block injection** (`<|channel>thought<channel|>`) per Gemma 4 docs to stabilize no-thinking behavior
+- **Regex-based thought tag stripping** to catch any leaked `<think>`, `<thought>`, or `<|think|>` tokens before they reach the student
+- **Model fallback chain:** if `gemma-4-31b-it` fails, tries `gemma-4-26b-a4b-it` → `gemma-3-27b-it` → `gemini-2.0-flash-lite` → `gemini-1.5-flash-8b`
+
+---
+
+## Running Locally with Ollama (Offline Mode)
+
+1. Download and install Ollama from [ollama.com](https://ollama.com)
+2. Pull the model:
+   ```
+   ollama pull gemma4:e4b
+   ```
+3. Start Ollama with CORS enabled:
+   - **Mac / Linux:** `OLLAMA_ORIGINS=* ollama serve`
+   - **Windows (PowerShell):** `$env:OLLAMA_ORIGINS="*"; ollama serve`
+4. Open the site and enter your IP address (`127.0.0.1` if running locally)
+5. To stop: press `Ctrl + C` in the terminal
+
+> The model is 5.3 GB. Responses may take 10–60 seconds depending on hardware.
+
+---
+
+## Tech Stack
 
 | Technology | Purpose |
-|------------|---------|
-| HTML / CSS / JS | Single-file app, zero build step |
-| [Pyodide v0.27](https://pyodide.org) | CPython compiled to WebAssembly |
-| numpy | Array math, statistics, linear regression |
-| pandas | DataFrames, data cleaning |
-| matplotlib (Agg backend) | Chart rendering → base64 PNG inline |
-| Canvas API | Certificate generation |
+|-----------|---------|
+| Vanilla HTML/CSS/JS | Single-file app, zero build step |
+| Pyodide | In-browser Python runtime |
+| Gemma 4 (Ollama) | Offline AI tutor |
+| Gemini API | Cloud AI tutor with fallback |
+| Matplotlib via Pyodide | In-browser chart rendering |
+| GitHub Pages | Instant deployment |
 
 ---
 
-## 📥 Download & Run
+## Social Impact
 
-```bash
-# Clone the repository
-git clone https://github.com/hripsime7/mitqlab.git
-
-# Open the file
-cd mitqlab
-open index.html   # or just double-click it
+- **Language:** Entire course and AI tutor operate in Armenian
+- **Free:** No cost to students or schools
+- **Offline-capable:** Works without internet via Ollama — important for schools with limited connectivity
+- **No installation:** Opens in any browser, on any device
+- **Completeness:** Covers statistics → Pandas → ML → visualization → real applications in one session
+ood Hackathon](https://www.kaggle.com/competitions/gemma-4-good-hackathon)** on Kaggle.  
+The hackathon required using Gemma — this project runs Gemma 4 locally via Ollama as its primary AI tutor. The Google AI option is an optional fallback for users who cannot run Ollama locally.
