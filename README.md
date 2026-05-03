@@ -105,5 +105,3 @@ Gemma 4 (`gemma-4-31b-it` via Google AI Studio, or `gemma4:e4b` via Ollama) serv
 - **Offline-capable:** Works without internet via Ollama — important for schools with limited connectivity
 - **No installation:** Opens in any browser, on any device
 - **Completeness:** Covers statistics → Pandas → ML → visualization → real applications in one session
-ood Hackathon](https://www.kaggle.com/competitions/gemma-4-good-hackathon)** on Kaggle.  
-The hackathon required using Gemma — this project runs Gemma 4 locally via Ollama as its primary AI tutor. The Google AI option is an optional fallback for users who cannot run Ollama locally.
