@@ -1293,6 +1293,10 @@
     background: white;
     border-top: 1px solid var(--parchment);
     align-items: flex-end;
+    flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
   }
 
   .lab-input {
@@ -1337,6 +1341,7 @@
     padding: 0.5rem 1rem 0;
     flex-wrap: wrap;
     background: var(--cloud);
+    flex-shrink: 0;
   }
   .lab-starter-btn {
     font-family: 'Source Code Pro', monospace;
