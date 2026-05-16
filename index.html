@@ -4524,8 +4524,8 @@ Max 250 words. Bold key terms with **. Use triple backticks for code examples. B
   }
 
   const TUTOR_MODELS = [
-    { id: 'gemma-4-31b-it',     label: 'Gemma 4 31B',       sysInstruction: true, thinkingSupport: true },
-    { id: 'gemma-4-26b-a4b-it', label: 'Gemma 4 26B (MoE)', sysInstruction: true, thinkingSupport: true },
+    { id: 'gemma-4-31b-it',     label: 'Gemma 4 31B',       sysInstruction: true },
+    { id: 'gemma-4-26b-a4b-it', label: 'Gemma 4 26B (MoE)', sysInstruction: true },
   ];
 
   let _ollamaSetupShown = false;
@@ -4692,7 +4692,6 @@ ${conceptMap}`;
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelDef.id}:streamGenerateContent?alt=sse&key=${key}`;
     const genConfig = { temperature: 0.5, maxOutputTokens: maxTokens || 600,
       stopSequences: ['*   Armenian', '* Armenian', '*   Warm', '*   Under', '* Under'] };
-    if (modelDef.thinkingSupport) genConfig.thinkingConfig = { thinkingLevel: 'MINIMAL' };
     const body = {
       contents: buildContents(apiMessages, systemPrompt, modelDef.sysInstruction, imageBase64, imageMime),
       generationConfig: genConfig
