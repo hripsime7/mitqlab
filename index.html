@@ -721,6 +721,21 @@
   .code-output.visible { display: block; }
   .code-output.error { color: #e88080; }
 
+  /* Streaming cursor */
+  .stream-cursor {
+    display: inline-block;
+    color: var(--heritage);
+    opacity: 1;
+    animation: blink-cursor 0.75s step-end infinite;
+    font-weight: 300;
+    margin-left: 1px;
+    vertical-align: baseline;
+  }
+  @keyframes blink-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
   .pyodide-status {
     position: fixed;
     bottom: 1.2rem;
@@ -973,6 +988,369 @@
   }
 
   canvas { max-width: 100%; }
+
+  /* ─── ROADMAP WIZARD ─── */
+  .roadmap-field { display:flex; flex-direction:column; gap:0.35rem; }
+  .roadmap-label { font-family:'Source Code Pro',monospace; font-size:0.68rem; color:var(--heritage); letter-spacing:0.06em; }
+  .roadmap-chip {
+    font-family:'Source Code Pro',monospace;
+    font-size:0.7rem;
+    padding:0.28rem 0.65rem;
+    border:1px solid var(--parchment);
+    background:white;
+    color:var(--midnight);
+    border-radius:20px;
+    cursor:pointer;
+    transition:all 0.15s;
+    white-space:nowrap;
+  }
+  .roadmap-chip:hover { border-color:var(--celestial); background:rgba(119,141,169,0.07); }
+  .roadmap-chip.selected { background:var(--midnight); color:var(--cloud); border-color:var(--midnight); }
+
+  /* ─── LABORATORY SECTION ─── */
+  .lab-section {
+    display: none;
+    animation: fadeSlide 0.35s ease forwards;
+  }
+  .lab-section.active { display: block; }
+
+  /* Break lab out of the container width */
+  .lab-section-outer {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+  }
+
+  .lab-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+
+  @media (max-width: 860px) {
+    .lab-layout { grid-template-columns: 1fr; }
+  }
+
+  .lab-panel {
+    background: white;
+    border: 1px solid var(--parchment);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 900px;
+  }
+
+  .lab-panel-header {
+    background: var(--midnight);
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .lab-panel-title {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.75rem;
+    color: var(--celestial);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .lab-sandbox-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .lab-code-textarea {
+    width: 100%;
+    background: var(--midnight);
+    color: #a8c8e8;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.85rem;
+    padding: 1rem 1.25rem;
+    border: none;
+    outline: none;
+    resize: none;
+    flex: 1;
+    min-height: 0;
+    line-height: 1.65;
+    tab-size: 4;
+    white-space: pre;
+    overflow-x: auto;
+    box-sizing: border-box;
+  }
+
+  .lab-output {
+    background: #0d1520;
+    border-top: 1px solid rgba(119,141,169,0.15);
+    padding: 0.75rem 1.25rem;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.82rem;
+    color: #7ec8a0;
+    min-height: 48px;
+    max-height: 220px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    line-height: 1.6;
+    display: none;
+  }
+  .lab-output.visible { display: block; }
+  .lab-output.error { color: #e88080; }
+  .lab-output img.plot-img { max-width: 100%; border-radius: 4px; margin-top: 0.5rem; display: block; }
+
+  .lab-sandbox-footer {
+    background: #111d2e;
+    border-top: 1px solid rgba(119,141,169,0.1);
+    padding: 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .lab-hints {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.68rem;
+    color: rgba(119,141,169,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  .lab-run-btn {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.75rem;
+    background: var(--heritage);
+    color: white;
+    border: none;
+    padding: 0.4rem 1.1rem;
+    border-radius: 3px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .lab-run-btn:hover { background: var(--celestial); }
+  .lab-run-btn.running { background: var(--celestial); opacity: 0.7; pointer-events: none; }
+
+  .lab-clear-btn {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.72rem;
+    background: transparent;
+    color: rgba(119,141,169,0.5);
+    border: 1px solid rgba(119,141,169,0.2);
+    padding: 0.35rem 0.75rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .lab-clear-btn:hover { color: var(--celestial); border-color: var(--celestial); }
+
+  /* Lab AI chat panel */
+  .lab-chat-body {
+    display: flex;
+    flex-direction: column;
+    height: 900px;
+  }
+
+  .lab-chat-settings {
+    padding: 0.75rem 1rem;
+    background: var(--cloud);
+    border-bottom: 1px solid var(--parchment);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .lab-mode-row {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .lab-mode-btn {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.72rem;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--celestial);
+    background: transparent;
+    color: var(--heritage);
+    border-radius: 3px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+  .lab-mode-btn.active { background: var(--midnight); color: var(--celestial); border-color: var(--midnight); }
+
+  .lab-api-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .lab-api-input {
+    flex: 1;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.78rem;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--parchment);
+    border-radius: 4px;
+    outline: none;
+    background: white;
+    color: var(--midnight);
+    transition: border-color 0.2s;
+  }
+  .lab-api-input:focus { border-color: var(--celestial); }
+
+  .lab-api-save {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.72rem;
+    background: var(--heritage);
+    color: white;
+    border: none;
+    padding: 0.4rem 0.85rem;
+    border-radius: 3px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .lab-api-save:hover { background: var(--midnight); }
+
+  .lab-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    background: var(--cloud);
+  }
+
+  .lab-msg {
+    max-width: 85%;
+    padding: 0.6rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.87rem;
+    line-height: 1.6;
+    word-break: break-word;
+  }
+  .lab-msg.user {
+    align-self: flex-end;
+    background: var(--midnight);
+    color: var(--cloud);
+    border-radius: 8px 8px 2px 8px;
+  }
+  .lab-msg.bot {
+    align-self: flex-start;
+    background: white;
+    color: var(--midnight);
+    border: 1px solid var(--parchment);
+    border-radius: 8px 8px 8px 2px;
+  }
+  .lab-msg.thinking {
+    align-self: flex-start;
+    background: white;
+    border: 1px solid var(--parchment);
+    border-radius: 8px;
+    display: flex;
+    gap: 5px;
+    padding: 0.7rem 1rem;
+    align-items: center;
+  }
+  .lab-msg.thinking span {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--celestial);
+    animation: bounce 1.2s infinite;
+  }
+  .lab-msg.thinking span:nth-child(2) { animation-delay: 0.2s; }
+  .lab-msg.thinking span:nth-child(3) { animation-delay: 0.4s; }
+  .lab-error-msg {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.78rem;
+    color: #c62828;
+    background: #fdecea;
+    border: 1px solid #e57373;
+    border-radius: 6px;
+    padding: 0.6rem 0.9rem;
+    line-height: 1.55;
+  }
+
+  .lab-input-row {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: white;
+    border-top: 1px solid var(--parchment);
+    align-items: flex-end;
+  }
+
+  .lab-input {
+    flex: 1;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.88rem;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid var(--parchment);
+    border-radius: 6px;
+    outline: none;
+    resize: none;
+    overflow-y: hidden;
+    line-height: 1.5;
+    color: var(--midnight);
+    transition: border-color 0.2s;
+    min-height: 38px;
+    max-height: 90px;
+  }
+  .lab-input:focus { border-color: var(--celestial); }
+
+  .lab-send-btn {
+    font-size: 1.1rem;
+    background: var(--midnight);
+    color: var(--cloud);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .lab-send-btn:hover { background: var(--heritage); }
+  .lab-send-btn:disabled { opacity: 0.5; pointer-events: none; }
+
+  .lab-starter-btns {
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem 0;
+    flex-wrap: wrap;
+    background: var(--cloud);
+  }
+  .lab-starter-btn {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.68rem;
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--parchment);
+    background: white;
+    color: var(--heritage);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.03em;
+  }
+  .lab-starter-btn:hover { border-color: var(--celestial); color: var(--midnight); }
 
   /* ─── AI TUTOR ─── */
   #ai-tutor-btn {
@@ -1356,6 +1734,205 @@
     #ai-tutor-btn { bottom: 1rem; right: 1rem; }
   }
 
+  /* ─── IMAGE UPLOAD IN TUTOR ─── */
+  .tutor-img-btn {
+    width: 32px; height: 32px;
+    background: transparent;
+    border: 1px solid var(--parchment);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+    flex-shrink: 0;
+    align-self: flex-end;
+    color: var(--celestial);
+  }
+  .tutor-img-btn:hover { background: var(--parchment); border-color: var(--celestial); }
+  .tutor-img-btn.has-img { background: var(--heritage); border-color: var(--heritage); color: white; }
+
+  #tutor-img-preview-wrap {
+    padding: 0 1rem 0.4rem;
+    background: white;
+    display: none;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex-shrink: 0;
+  }
+  #tutor-img-preview-wrap.show { display: flex; }
+  #tutor-img-preview {
+    max-height: 120px;
+    max-width: 100%;
+    border-radius: 6px;
+    border: 1px solid var(--parchment);
+    object-fit: contain;
+    align-self: flex-start;
+  }
+  #tutor-img-clear {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.65rem;
+    color: var(--heritage);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    align-self: flex-start;
+    letter-spacing: 0.04em;
+    text-decoration: underline;
+  }
+  .tutor-msg.user img.msg-image {
+    display: block;
+    max-height: 100px;
+    max-width: 200px;
+    border-radius: 4px;
+    margin-bottom: 0.3rem;
+    object-fit: contain;
+  }
+
+  /* ─── LEARNING PATH TRACKER ─── */
+  #tutor-tracker-panel {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.85rem 1rem;
+    gap: 0.6rem;
+    background: var(--cloud);
+    min-height: 220px;
+    max-height: 360px;
+  }
+  #tutor-tracker-panel.show { display: flex; }
+
+  .tracker-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.2rem;
+  }
+  .tracker-title-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    color: var(--midnight);
+  }
+  .tracker-reset-btn {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.6rem;
+    color: var(--heritage);
+    background: none;
+    border: 1px solid var(--parchment);
+    border-radius: 3px;
+    padding: 2px 7px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.15s;
+  }
+  .tracker-reset-btn:hover { border-color: var(--celestial); color: var(--midnight); }
+
+  .tracker-module-group {
+    background: white;
+    border: 1px solid var(--parchment);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .tracker-module-title {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.09em;
+    color: var(--celestial);
+    text-transform: uppercase;
+    padding: 0.5rem 0.85rem;
+    background: var(--midnight);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .tracker-module-pct {
+    font-size: 0.6rem;
+    color: var(--parchment);
+    opacity: 0.7;
+  }
+  .tracker-concept {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 0.85rem;
+    border-top: 1px solid var(--parchment);
+    font-size: 0.8rem;
+    color: var(--midnight);
+    transition: background 0.15s;
+    cursor: default;
+  }
+  .tracker-concept:first-of-type { border-top: none; }
+  .tracker-concept.mastered { background: rgba(65,90,119,0.04); }
+  .tracker-status-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    border: 1.5px solid var(--parchment);
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .tracker-concept.mastered .tracker-status-dot {
+    background: var(--heritage);
+    border-color: var(--heritage);
+  }
+  .tracker-concept.reviewing .tracker-status-dot {
+    background: #d4a847;
+    border-color: #d4a847;
+  }
+  .tracker-concept-name { flex: 1; }
+  .tracker-concept.mastered .tracker-concept-name { color: var(--heritage); }
+  .tracker-concept-tag {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.58rem;
+    padding: 1px 5px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+  .tracker-concept.mastered .tracker-concept-tag {
+    background: rgba(65,90,119,0.12);
+    color: var(--heritage);
+  }
+  .tracker-concept.reviewing .tracker-concept-tag {
+    background: rgba(212,168,71,0.15);
+    color: #9a7820;
+  }
+  .tracker-empty {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.72rem;
+    color: var(--celestial);
+    text-align: center;
+    padding: 1.5rem 1rem;
+    opacity: 0.6;
+    letter-spacing: 0.05em;
+  }
+
+  .tutor-tab-row {
+    display: flex;
+    border-bottom: 1px solid rgba(119,141,169,0.2);
+    flex-shrink: 0;
+    background: white;
+  }
+  .tutor-tab {
+    flex: 1;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.07em;
+    padding: 0.45rem 0.5rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--heritage);
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    text-transform: uppercase;
+  }
+  .tutor-tab.active {
+    color: var(--midnight);
+    border-bottom-color: var(--heritage);
+    font-weight: 700;
+  }
+  .tutor-tab:hover:not(.active) { background: var(--cloud); }
+
 </style>
 </head>
 <body>
@@ -1401,6 +1978,7 @@
 
   <!-- NAV -->
   <nav class="module-nav">
+    <button class="nav-btn" onclick="showLabSection()" id="lab-nav-btn">Լաբորատորիա</button>
     <button class="nav-btn active" onclick="showModule(0)">Մ1 · Մաթեմատիկա &amp; Վիճակագրություն</button>
     <button class="nav-btn" onclick="showModule(1)">Մ2 · Pandas</button>
     <button class="nav-btn" onclick="showModule(2)">Մ3 · ML</button>
@@ -1410,6 +1988,269 @@
     <button class="nav-btn" onclick="showModule(6)" id="quiz-nav-btn">Թեստ</button>
     <button class="nav-btn" onclick="showModule(7)" id="cert-nav-btn">Վկայական</button>
   </nav>
+
+  <!-- ═══ LABORATORY ═══ -->
+  <div class="lab-section" id="lab-section">
+    <div class="module-header">
+      <div class="module-number" style="color:var(--celestial);opacity:0.7;font-size:2rem">⚗</div>
+      <div class="module-info">
+        <h2>Լաբորատորիա</h2>
+        <div class="module-duration">ԱԶԱՏ ՊՐԱԿՏԻԿԱ</div>
+      </div>
+    </div>
+
+    <div class="lab-section-outer">
+    <div class="lab-layout">
+
+      <!-- LEFT: Python Sandbox -->
+      <div class="lab-panel">
+        <div class="lab-panel-header">
+          <div class="lab-panel-title">
+            Python Sandbox
+          </div>
+          <div class="code-editor-dots" style="gap:5px">
+            <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+          </div>
+        </div>
+        <div class="lab-sandbox-body">
+          <textarea class="lab-code-textarea" id="lab-code" spellcheck="false"># Ազատ դաշտ ստեղծագործելու համար։ Գրի՜ր քո կոդը։</textarea>
+          <div class="lab-output" id="lab-output"></div>
+        </div>
+        <div class="lab-sandbox-footer">
+          <span class="lab-hints">Python3&nbsp;·&nbsp; Ստեղծիր</span>
+          <div style="display:flex;gap:0.5rem">
+            <button class="lab-clear-btn" onclick="labClearCode()">Մաքրել</button>
+            <button class="lab-clear-btn" id="lab-ask-ai-btn" onclick="labAskAboutOutput()" style="display:none;color:var(--heritage);border-color:var(--celestial)" title="Ուղարկիր կոդը և ելքը AI-ին">🤖 AI-ին հարցրու</button>
+            <button class="lab-run-btn" id="lab-run-btn" onclick="labRunCode()">&#9654; Գործարկել</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: AI Chat (lab version) -->
+      <div class="lab-panel">
+        <div class="lab-panel-header">
+          <div class="lab-panel-title">
+            AI Դասավանդող
+          </div>
+          <div style="font-family:'Source Code Pro',monospace;font-size:0.62rem;color:var(--celestial);letter-spacing:0.07em" id="lab-subtitle">Gemma 4 · Ollama · Հայերեն</div>
+        </div>
+
+        <div class="lab-chat-body">
+          <!-- Settings -->
+          <div class="lab-chat-settings">
+            <div class="lab-mode-row">
+              <button class="lab-mode-btn active" id="lab-btn-ollama" onclick="setLabMode('ollama')">Ollama</button>
+              <button class="lab-mode-btn" id="lab-btn-gemini" onclick="setLabMode('gemini')">Gemma 4 Cloud</button>
+            </div>
+
+            <!-- Ollama setup -->
+            <div id="lab-ollama-row" style="display:flex;flex-direction:column;gap:0.5rem">
+              <div style="font-size:0.72rem;color:var(--heritage);line-height:1.65;background:#f4f6f9;border-radius:5px;padding:0.5rem 0.7rem;border-left:3px solid var(--celestial)">
+                <strong style="display:block;margin-bottom:0.2rem;color:var(--midnight)">Ollama-ի տեղադրում</strong>
+                1. Բեռնիր <a href="https://ollama.com/download" target="_blank" style="color:var(--celestial)">ollama.com/download</a>-ից<br>
+                2. Տեղադրիր և գործարկիր Ollama-ն<br>
+                3. Տերմինալում կատարիր՝ <code style="background:rgba(65,90,119,0.12);padding:0.1em 0.35em;border-radius:3px;font-size:0.9em">ollama run gemma4:e4b</code><br>
+                4. Մուտքագրիր Ollama-ի հոսթ հասցեն ստորև<br><br>
+                <strong style="color:var(--midnight)">IP հասցեի մասին</strong><br>
+                IP հասցեն (Internet Protocol address) նույնացնում է յուրաքանչյուր սարք ցանցում — ինչպես փոստային հասցեն տան համար։<br><br>
+                <span style="color:var(--midnight);font-weight:600">127.0.0.1</span> — loopback հասցե, նշանակում է «այս համակարգիչը»։ Օգտագործիր, եթե Ollama-ն և բրաուզերը <em>նույն</em> մեքենայի վրա են աշխատում։<br><br>
+                <span style="color:var(--midnight);font-weight:600">192.168.x.x</span> — տեղական ցանցի (LAN) հասցե։ Օգտագործիր, եթե Ollama-ն <em>այլ</em> սարքի վրա է (օր.՝ ցանցային սերվեր կամ մեկ այլ ԱՀ)։ Սարքի IP-ն գտնելու համար՝ Windows-ում՝ <code style="background:rgba(65,90,119,0.12);padding:0.1em 0.35em;border-radius:3px">ipconfig</code>, Linux/Mac-ում՝ <code style="background:rgba(65,90,119,0.12);padding:0.1em 0.35em;border-radius:3px">ip a</code>
+              </div>
+              <select id="lab-ollama-model" onchange="saveLabOllamaModel()" style="padding:4px 8px;border:1px solid var(--celestial);border-radius:4px;font-family:'Source Code Pro',monospace;font-size:0.72rem;background:#fff;color:var(--midnight)">
+                <option value="gemma4:e4b">gemma4:e4b — 9.6 ԳԲ (առաջնային)</option>
+                <option value="gemma4:e2b">gemma4:e2b — 7.2 ԳԲ (թեթև)</option>
+                <option value="gemma4:26b">gemma4:26b — 18 ԳԲ (հզոր)</option>
+                <option value="gemma4:31b">gemma4:31b — 20 ԳԲ (առավելագույն)</option>
+              </select>
+              <div style="display:flex;gap:0.5rem;align-items:center">
+                <input type="text" class="lab-api-input" id="lab-ollama-ip"
+                  placeholder="օր.՝ 127.0.0.1 կամ 192.168.1.42">
+                <button class="lab-api-save" onclick="saveLabOllamaIp()">Պահել</button>
+              </div>
+            </div>
+
+            <!-- Google AI setup -->
+            <div id="lab-gemini-row" style="display:none;flex-direction:column;gap:0.5rem">
+              <div style="font-size:0.72rem;color:var(--heritage);line-height:1.65;background:#f4f6f9;border-radius:5px;padding:0.5rem 0.7rem;border-left:3px solid var(--celestial)">
+                <strong style="display:block;margin-bottom:0.2rem;color:var(--midnight)">Google AI API բանալու ստացում</strong>
+                1. Այց արա <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--celestial)">aistudio.google.com/apikey</a><br>
+                2. Մուտք գործիր Google-ի հաշվով<br>
+                3. Սեղմիր <strong>«Create API key»</strong><br>
+                4. Պատճենիր և տեղադրիր ստորև
+              </div>
+              <div style="display:flex;gap:0.5rem;align-items:center">
+                <input type="password" class="lab-api-input" id="lab-gemini-key"
+                  placeholder="Google AI Studio API բանալի...">
+                <button class="lab-api-save" onclick="saveLabApiKey()">Պահել</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab row: Chat / Learning Path -->
+          <div class="tutor-tab-row" style="background:var(--cloud);justify-content:space-between;padding-right:0.5rem">
+            <div style="display:flex">
+              <button class="tutor-tab active" id="lab-tab-chat" onclick="switchLabTab('chat')">Զրույց</button>
+              <button class="tutor-tab" id="lab-tab-tracker" onclick="switchLabTab('tracker')">Ուսուցման Ուղի</button>
+            </div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <button class="tutor-lang-btn active" id="lab-lang-hy" onclick="setLabLang('hy')" style="font-size:0.65rem;padding:2px 7px">🇦🇲</button>
+              <button class="tutor-lang-btn" id="lab-lang-en" onclick="setLabLang('en')" style="font-size:0.65rem;padding:2px 7px">🇬🇧</button>
+            </div>
+          </div>
+
+          <!-- CHAT TAB -->
+          <div id="lab-chat-tab-content" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+            <!-- Starter quick-prompts -->
+            <div class="lab-starter-btns">
+              <button class="lab-starter-btn" onclick="labQuickPrompt('test-math')">Մաթ. թեստ</button>
+              <button class="lab-starter-btn" onclick="labQuickPrompt('test-code')">Կոդ. թեստ</button>
+              <button class="lab-starter-btn" onclick="labQuickPrompt('hint')">Հուշում</button>
+              <button class="lab-starter-btn" onclick="labQuickPrompt('explain')">Բացատրել</button>
+            </div>
+
+            <!-- Messages -->
+            <div class="lab-messages" id="lab-msgs"></div>
+
+            <!-- Image preview area -->
+            <div id="lab-img-preview-wrap" style="padding:0 1rem 0.4rem;background:white;display:none;flex-direction:column;gap:0.3rem;flex-shrink:0">
+              <img id="lab-img-preview" src="" alt="preview" style="max-height:100px;max-width:100%;border-radius:6px;border:1px solid var(--parchment);object-fit:contain;align-self:flex-start">
+              <button onclick="clearLabImage()" style="font-family:'Source Code Pro',monospace;font-size:0.65rem;color:var(--heritage);background:none;border:none;cursor:pointer;padding:0;align-self:flex-start;text-decoration:underline">✕ Հեռացնել նկարը</button>
+            </div>
+
+            <!-- Input -->
+            <div class="lab-input-row">
+              <input type="file" id="lab-img-input" accept="image/*" style="display:none" onchange="handleLabImageSelect(event)">
+              <button onclick="document.getElementById('lab-img-input').click()" id="lab-img-btn" title="Կցել նկար" style="width:32px;height:32px;background:transparent;border:1px solid var(--parchment);border-radius:6px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.15s;flex-shrink:0;align-self:flex-end;color:var(--celestial)">📷</button>
+              <textarea class="lab-input" id="lab-input"
+                placeholder="Հարց տվեք հայերեն կամ անգլերեն…" rows="1"></textarea>
+              <button class="lab-send-btn" id="lab-send-btn" onclick="sendLabMessage()">➤</button>
+            </div>
+          </div>
+
+          <!-- LEARNING PATH TAB — AI Wizard -->
+          <div id="lab-tracker-panel" style="display:none;flex-direction:column;flex:1;overflow-y:auto;background:var(--cloud);min-height:220px;max-height:700px">
+            <!-- Lab tracker concepts -->
+            <div style="padding:0.85rem 1rem 0.4rem;display:flex;align-items:center;justify-content:space-between">
+              <span style="font-family:'Playfair Display',serif;font-size:0.9rem;color:var(--midnight)">📊 Ուսուցման ուղի</span>
+              <button class="tracker-reset-btn" onclick="resetLearningPath()">Մաքրել</button>
+            </div>
+            <div id="lab-tracker-body" style="padding:0 1rem 1rem"></div>
+
+            <!-- WIZARD FORM (shown first) -->
+            <div id="roadmap-wizard" style="padding:0.85rem 1rem;display:flex;flex-direction:column;gap:0.8rem">
+              <div style="font-family:'Source Code Pro',monospace;font-size:0.68rem;color:var(--heritage);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.1rem">Անհատականացված ուղի</div>
+
+              <!-- Age & Accessibility row -->
+              <div class="roadmap-field">
+                <label class="roadmap-label">Որտե՞ղ ես (ըստ ցանկության)</label>
+                <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center">
+                  <input type="number" id="roadmap-age" min="6" max="99" placeholder="Տարիքդ՝"
+                    style="width:110px;padding:0.3rem 0.6rem;border:1px solid var(--parchment);border-radius:4px;font-family:'Libre Baskerville',serif;font-size:0.82rem;color:var(--midnight);outline:none"
+                    oninput="checkRoadmapReady()">
+                  <select id="roadmap-disability" onchange="checkRoadmapReady()"
+                    style="flex:1;min-width:140px;padding:0.3rem 0.6rem;border:1px solid var(--parchment);border-radius:4px;font-family:'Libre Baskerville',serif;font-size:0.8rem;color:var(--midnight);background:white;outline:none">
+                    <option value="">Առանձնահատկություններ</option>
+                    <option value="dyslexia">Դիսլեքսիա/կարդալ-գրելու հետ խնդիրներ</option>
+                    <option value="adhd">ADHD/ուշադրության խնդիրներ</option>
+                    <option value="visual">Տեսողության խնդիրներ</option>
+                    <option value="hearing">Լսողության խնդիրներ</option>
+                    <option value="motivation">Մոտիվացիայի պակաս</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Topic -->
+              <div class="roadmap-field">
+                <label class="roadmap-label">Ի՞նչ ես ուզում սովորել</label>
+                <div style="display:flex;gap:0.4rem;flex-wrap:wrap">
+                  <button class="roadmap-chip" data-key="topic" data-val="Python կոդավորում" onclick="pickChip(this)">Python</button>
+                  <button class="roadmap-chip" data-key="topic" data-val="Մաthematika ev vichakagrutyun" onclick="pickChip(this)">Մաթեմատիկա</button>
+                  <button class="roadmap-chip" data-key="topic" data-val="Data Science" onclick="pickChip(this)">Տվյալագիտություն</button>
+                  <button class="roadmap-chip" data-key="topic" data-val="Machine Learning" onclick="pickChip(this)">Մեքենայական ուսուցում</button>
+                </div>
+              </div>
+
+              <!-- Timeframe — SLIDER in DAYS -->
+              <div class="roadmap-field">
+                <label class="roadmap-label" style="display:flex;justify-content:space-between;align-items:center">
+                  Ժամանակաշրջան
+                  <span id="slider-label" style="font-family:'Source Code Pro',monospace;font-size:0.72rem;color:var(--heritage);font-weight:700">30 ор</span>
+                </label>
+                <input type="range" id="time-slider" min="1" max="180" value="30" step="1"
+                  oninput="updateTimeSlider(this.value)"
+                  style="width:100%;accent-color:var(--heritage);cursor:pointer;height:4px;margin:0.3rem 0">
+                <div style="display:flex;justify-content:space-between;font-family:'Source Code Pro',monospace;font-size:0.58rem;color:var(--celestial)">
+                  <span>1 օր</span><span>6 ամիս</span>
+                </div>
+              </div>
+
+              <!-- Current level -->
+              <div class="roadmap-field">
+                <label class="roadmap-label" style="display:flex;justify-content:space-between;align-items:center">
+                  Ներկա մակարդակ 📋
+                  <button onclick="toggleAssessment()" style="font-family:'Source Code Pro',monospace;font-size:0.6rem;color:var(--celestial);background:none;border:1px solid var(--celestial);border-radius:3px;padding:0.15rem 0.45rem;cursor:pointer;letter-spacing:0.04em;transition:all 0.2s" onmouseover="this.style.background='rgba(119,141,169,0.1)'" onmouseout="this.style.background='none'">📋 Անցնել թեստ</button>
+                </label>
+                <div style="display:flex;gap:0.4rem;flex-wrap:wrap">
+                  <button class="roadmap-chip" data-key="from" data-val="zro — voch mi pordz chunem" onclick="pickChip(this)">Զրո</button>
+                  <button class="roadmap-chip" data-key="from" data-val="sksnak — himunqnere mi pokr gitem" onclick="pickChip(this)">Սկսնակ</button>
+                  <button class="roadmap-chip" data-key="from" data-val="mjin — haskanom em bayc voch kayun" onclick="pickChip(this)">Միջին</button>
+                  <button class="roadmap-chip" data-key="from" data-val="uzhegh — azat grum/luzum em" onclick="pickChip(this)">Ուժեղ</button>
+                </div>
+                <!-- Assessment box (hidden by default) -->
+                <div id="assessment-box" style="display:none;margin-top:0.5rem;background:white;border:1px solid var(--parchment);border-radius:5px;padding:0.75rem">
+                  <div style="font-family:'Source Code Pro',monospace;font-size:0.65rem;color:var(--heritage);letter-spacing:0.06em;margin-bottom:0.5rem">АРАГNАHАТУM · QUICK TEST</div>
+                  <div id="assessment-questions"></div>
+                  <button onclick="scoreAssessment()" style="margin-top:0.5rem;font-family:'Source Code Pro',monospace;font-size:0.68rem;padding:0.35rem 0.85rem;background:var(--heritage);color:white;border:none;border-radius:3px;cursor:pointer;letter-spacing:0.05em">Ստugel тесту</button>
+                </div>
+              </div>
+
+              <!-- Target -->
+              <div class="roadmap-field">
+                <label class="roadmap-label">Նպատակ</label>
+                <div style="display:flex;gap:0.4rem;flex-wrap:wrap">
+                  <button class="roadmap-chip" data-key="to" data-val="haskanal himunqnere" onclick="pickChip(this)">Հիմունքներ</button>
+                  <button class="roadmap-chip" data-key="to" data-val="masznakel mrzuytsi kam olimpiadayi" onclick="pickChip(this)">Մրցույթ / Օլիմպիադա</button>
+                  <button class="roadmap-chip" data-key="to" data-val="ML project karucnel" onclick="pickChip(this)">ML project</button>
+                  <button class="roadmap-chip" data-key="to" data-val="ashxatanq gtel Data Science-um" onclick="pickChip(this)">Աշխատանք</button>
+                </div>
+                <!-- Optional reason box -->
+                <button onclick="toggleReason()" style="margin-top:0.35rem;font-family:'Source Code Pro',monospace;font-size:0.6rem;color:var(--celestial);background:none;border:1px dashed var(--celestial);border-radius:3px;padding:0.2rem 0.55rem;cursor:pointer;letter-spacing:0.04em;align-self:flex-start;transition:all 0.2s" onmouseover="this.style.background='rgba(119,141,169,0.08)'" onmouseout="this.style.background='none'">Կարող ես գրել քո պատճատը
+            
+                </button>
+                <textarea id="reason-text" placeholder="Ինչու՞ ես ուզում սովորել? (օրինակ՝ ուզում եմ հաղթել ML-ի մրցույթում, կամ ուզում եմ գտնել աշխատանք)" style="display:none;margin-top:0.35rem;width:100%;padding:0.5rem 0.7rem;font-family:'Libre Baskerville',serif;font-size:0.8rem;border:1px solid var(--parchment);border-radius:4px;resize:vertical;min-height:56px;color:var(--midnight);outline:none;line-height:1.5" oninput="checkRoadmapReady()"></textarea>
+              </div>
+
+              <button id="roadmap-generate-btn" onclick="generateRoadmap()" style="margin-top:0.3rem;font-family:'Source Code Pro',monospace;font-size:0.75rem;padding:0.6rem 1.2rem;background:var(--midnight);color:var(--cloud);border:none;border-radius:3px;cursor:pointer;letter-spacing:0.07em;opacity:0.4;transition:all 0.2s" disabled>▶ Ստեղծել անհատականացված ուղի</button>
+            </div>
+
+            <!-- AI RESULT (shown after generation) -->
+            <div id="roadmap-result" style="display:none;flex-direction:column;gap:0;flex:1">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:0.6rem 1rem;border-bottom:1px solid var(--parchment);background:white;flex-shrink:0;flex-wrap:wrap;gap:0.4rem">
+                <div>
+                  <div style="font-family:'Source Code Pro',monospace;font-size:0.68rem;color:var(--heritage);letter-spacing:0.08em">Անձնական ուղի</div>
+                  <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.25rem">
+                    <div style="height:3px;width:120px;background:rgba(119,141,169,0.15);border-radius:2px;overflow:hidden"><div id="roadmap-pbar" style="height:100%;background:linear-gradient(90deg,var(--heritage),var(--celestial));border-radius:2px;transition:width 0.3s;width:0%"></div></div>
+                    <span id="roadmap-plabel" style="font-family:'Source Code Pro',monospace;font-size:0.62rem;color:var(--celestial)"></span>
+                  </div>
+                </div>
+                <div style="display:flex;gap:0.4rem;flex-wrap:wrap;align-items:center">
+                  <label style="font-family:'Source Code Pro',monospace;font-size:0.6rem;color:var(--celestial);letter-spacing:0.05em">Ա <input type="range" min="10" max="18" value="14" step="1" oninput="applyRoadmapFontSize(this.value)" style="width:48px;accent-color:var(--heritage);vertical-align:middle;height:3px"> <span id="roadmap-font-label" style="opacity:0.7">14px</span></label>
+                  <button onclick="downloadRoadmapCSV()" style="font-family:'Source Code Pro',monospace;font-size:0.62rem;color:white;background:var(--heritage);border:none;border-radius:3px;padding:0.25rem 0.55rem;cursor:pointer;letter-spacing:0.04em">⬇ CSV</button>
+                  <button onclick="downloadRoadmapPNG()" style="font-family:'Source Code Pro',monospace;font-size:0.62rem;color:white;background:var(--celestial);border:none;border-radius:3px;padding:0.25rem 0.55rem;cursor:pointer;letter-spacing:0.04em">⬇ PNG</button>
+                  <button onclick="resetRoadmap()" style="font-family:'Source Code Pro',monospace;font-size:0.62rem;color:var(--celestial);background:none;border:none;cursor:pointer;letter-spacing:0.05em">↩ Հետ</button>
+                </div>
+              </div>
+              <!-- Table wrap -->
+              <div id="roadmap-table-wrap" style="padding:0.7rem 1rem;flex:1;overflow-y:auto"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </div><!-- /lab-section-outer -->
+  </div><!-- /lab-section -->
 
   <!-- ═══ MODULE 1 ═══ -->
   <div class="module-panel active" id="module-0">
@@ -2534,17 +3375,6 @@ score = [<span class="num">50</span>, <span class="num">60</span>, <span class="
     showModule(idx + 1);
   }
 
-  // ─── MODULE NAVIGATION ───
-  function showModule(idx) {
-    document.querySelectorAll('.module-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    const panel = document.getElementById('module-' + idx);
-    const btn = document.querySelectorAll('.nav-btn')[idx];
-    if (panel) panel.classList.add('active');
-    if (btn) btn.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
   // ─── TASK TOGGLE ───
   function toggleTask(id) {
     const card = document.getElementById(id);
@@ -2565,6 +3395,19 @@ score = [<span class="num">50</span>, <span class="num">60</span>, <span class="
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+`);
+      await pyodideInstance.runPythonAsync(`
+import builtins
+_input_values = []
+def _mock_input(prompt=''):
+    if prompt:
+        print(prompt, end='')
+    if _input_values:
+        val = _input_values.pop(0)
+        print(val)
+        return val
+    return ''
+builtins.input = _mock_input
 `);
       pyodideReady = true;
       statusEl.textContent = '✓ Python պատրաստ';
@@ -2883,6 +3726,556 @@ _stdout_buf.getvalue()
   updateProgress();
 
   // ═══════════════════════════════════════════════
+  // LABORATORY — Python sandbox + AI chat
+  // ═══════════════════════════════════════════════
+
+  // ─── Lab navigation ───
+  function showLabSection() {
+    // Hide all module panels
+    document.querySelectorAll('.module-panel').forEach(p => p.classList.remove('active'));
+    // Show lab
+    const lab = document.getElementById('lab-section');
+    if (lab) lab.classList.add('active');
+    // Update nav buttons
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    const labBtn = document.getElementById('lab-nav-btn');
+    if (labBtn) labBtn.classList.add('active');
+    // Show welcome message if first visit
+    if (labMessages.length === 0) labShowWelcome();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Patch showModule after DOM ready so tutor's override can also chain properly
+  document.addEventListener('DOMContentLoaded', function() {
+    const _prevShowModule = window.showModule;
+    window.showModule = function(idx) {
+      const lab = document.getElementById('lab-section');
+      if (lab) lab.classList.remove('active');
+      const labBtn = document.getElementById('lab-nav-btn');
+      if (labBtn) labBtn.classList.remove('active');
+      _prevShowModule(idx);
+    };
+  });
+
+  // ─── Lab Python Sandbox ───
+  async function labRunCode() {
+    const textarea = document.getElementById('lab-code');
+    const output   = document.getElementById('lab-output');
+    const btn      = document.getElementById('lab-run-btn');
+
+    if (!pyodideReady) {
+      output.textContent = '⏳ Python-ը դեռ բեռնվում է, սպասեք…';
+      output.classList.add('visible');
+      output.classList.remove('error');
+      return;
+    }
+
+    btn.classList.add('running');
+    btn.textContent = '⏳ ...';
+    output.classList.remove('error');
+    output.innerHTML = '';
+
+    const code = textarea.value;
+    const wrappedCode = `
+import sys, io as _io
+_stdout_buf = _io.StringIO()
+sys.stdout = _stdout_buf
+try:
+${code.split('\n').map(l => '    ' + l).join('\n')}
+finally:
+    sys.stdout = sys.__stdout__
+_stdout_buf.getvalue()
+`;
+
+    try {
+      const result = await pyodideInstance.runPythonAsync(wrappedCode);
+      const text = result ? String(result) : '';
+
+      if (text.includes('__PLOT__')) {
+        const lines = text.split('\n');
+        const fragment = document.createDocumentFragment();
+        lines.forEach(line => {
+          if (line.startsWith('__PLOT__')) {
+            const b64 = line.slice('__PLOT__'.length);
+            const img = document.createElement('img');
+            img.src = 'data:image/png;base64,' + b64;
+            img.className = 'plot-img';
+            fragment.appendChild(img);
+          } else if (line.trim()) {
+            const pre = document.createElement('div');
+            pre.textContent = line;
+            fragment.appendChild(pre);
+          }
+        });
+        output.innerHTML = '';
+        output.appendChild(fragment);
+      } else {
+        output.textContent = text || '(Ելք չկա)';
+      }
+      output.classList.add('visible');
+    } catch(e) {
+      output.textContent = 'Error: ' + e.message;
+      output.classList.add('visible', 'error');
+    }
+
+    btn.classList.remove('running');
+    btn.innerHTML = '&#9654; Գործարկել';
+
+    // Show "Ask AI" button whenever there is output
+    const askBtn = document.getElementById('lab-ask-ai-btn');
+    if (askBtn) askBtn.style.display = output.classList.contains('visible') ? 'inline-flex' : 'none';
+  }
+
+  function labAskAboutOutput() {
+    const code = (document.getElementById('lab-code') || {}).value || '';
+    const outputEl = document.getElementById('lab-output');
+    const outputText = (outputEl ? outputEl.innerText || outputEl.textContent : '').trim();
+    if (!code && !outputText) return;
+
+    // Build a rich context message
+    const msg = 'Ստուգիր, խնդրեմ, հետևյալ Python կոդը և ելքի արդյունքը.\n\n```python\n' +
+      code.trim() + '\n```\n\n' +
+      (outputText ? '**Ելք (output):**\n```\n' + outputText.slice(0, 600) + '\n```\n\n' : '') +
+      'Ի՞նչ կա սխալ կամ ինչպե՞ս կարելի է բարելավել:';
+
+    // Switch to chat tab and send
+    switchLabTab('chat');
+    setTimeout(() => sendLabMessage(msg), 100);
+  }
+
+  function labClearCode() {
+    document.getElementById('lab-code').value = '';
+    const output = document.getElementById('lab-output');
+    output.innerHTML = '';
+    output.classList.remove('visible', 'error');
+    document.getElementById('lab-code').focus();
+    const askBtn = document.getElementById('lab-ask-ai-btn');
+    if (askBtn) askBtn.style.display = 'none';
+  }
+
+  // Tab key support in lab textarea
+  document.addEventListener('DOMContentLoaded', function() {
+    const labCode = document.getElementById('lab-code');
+    if (labCode) {
+      labCode.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          const s = this.selectionStart;
+          const v = this.value;
+          this.value = v.substring(0, s) + '    ' + v.substring(this.selectionEnd);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+        if (e.key === 'Enter' && e.ctrlKey) {
+          e.preventDefault();
+          labRunCode();
+          return;
+        }
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const s = this.selectionStart;
+          const v = this.value;
+          const lineStart = v.lastIndexOf('\n', s - 1) + 1;
+          const currentLine = v.substring(lineStart, s);
+          const indent = currentLine.match(/^(\s*)/)[1];
+          const extra = currentLine.trimEnd().endsWith(':') ? '    ' : '';
+          const insertion = '\n' + indent + extra;
+          this.value = v.substring(0, s) + insertion + v.substring(this.selectionEnd);
+          this.selectionStart = this.selectionEnd = s + insertion.length;
+        }
+      });
+    }
+    const labInput = document.getElementById('lab-input');
+    if (labInput) {
+      labInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendLabMessage();
+        }
+      });
+      labInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = Math.min(this.scrollHeight, 90) + 'px';
+      });
+    }
+  });
+
+  // ─── Lab AI Chat ───
+  let labMessages = [];
+  let labThinking = false;
+  let labImageBase64 = null;
+  let labImageMime = null;
+  let labMode = localStorage.getItem('mitqlab_tutor_mode') || 'ollama';
+  let labApiKey = localStorage.getItem('mitqlab_gemini_key') || '';
+  let labOllamaIp = localStorage.getItem('mitqlab_ollama_ip') || '';
+
+  function setLabMode(mode) {
+    labMode = mode;
+    localStorage.setItem('mitqlab_tutor_mode', mode);
+    document.getElementById('lab-ollama-row').style.display = mode === 'ollama' ? 'flex' : 'none';
+    document.getElementById('lab-gemini-row').style.display = mode === 'gemini' ? 'flex' : 'none';
+    document.getElementById('lab-btn-ollama').classList.toggle('active', mode === 'ollama');
+    document.getElementById('lab-btn-gemini').classList.toggle('active', mode === 'gemini');
+    const sub = document.getElementById('lab-subtitle');
+    if (sub) sub.textContent = (mode === 'ollama' ? 'Gemma 4 · Ollama' : 'Gemma 4 · Cloud') + ' · Հայերեն';
+  }
+
+  function saveLabApiKey() {
+    const inp = document.getElementById('lab-gemini-key');
+    const key = inp.value.trim();
+    if (!key) return;
+    labApiKey = key;
+    localStorage.setItem('mitqlab_gemini_key', key);
+    // sync to main tutor too
+    tutorApiKey = key;
+    inp.value = '';
+    inp.placeholder = '✓ Պահպանված է';
+    inp.style.borderColor = '#4caf50';
+    setTimeout(() => { inp.placeholder = 'Google AI Studio API բանալի...'; inp.style.borderColor = ''; }, 2500);
+  }
+
+  function saveLabOllamaIp() {
+    const inp = document.getElementById('lab-ollama-ip');
+    const ip = inp.value.trim();
+    if (!ip) return;
+    labOllamaIp = ip;
+    localStorage.setItem('mitqlab_ollama_ip', ip);
+    tutorOllamaIp = ip;
+    inp.value = '';
+    inp.placeholder = '✓ ' + ip + ' պահպանված է';
+    inp.style.borderColor = '#4caf50';
+    setTimeout(() => { inp.placeholder = 'IP հասցե, օր.՝ 127.0.0.1'; inp.style.borderColor = ''; }, 2500);
+  }
+
+  function labShowWelcome() {
+    labAddBot('Արի թեստ հանձնիր, որպեսզի հասկանանք քո թույլ կողմերը մաթեմատիկայում կամ ծրագրավորման մեջ։ Այնուհետև, ես քեզ կառաջարկեմ հայերեն կրթական աղբյուրներ սովորելու համար։');
+  }
+
+  function labQuickPrompt(type) {
+    const prompts = {
+      'test-math': 'Տուր ինձ 3 կարճ թեստ հարց մաթեմատիկայից (mean, median, correlation) — ուզում եմ ստուգել իմ գիտելիքները։',
+      'test-code': 'Տուր ինձ 3 Python կոդ գրելու հարց սկսնակ մակարդակի — ուզում եմ ստուգել ծրագրավորման հմտությունները։',
+      'hint': 'Ես Python-ում եմ խնդիր ունեմ, տուր ընդհանուր հուշում ինչ ֆունկցիաներ/հրամաններ կան Python-ում, բայց մի բացատրիր ամեն ինչ — ինքս ուզում եմ հայտնաբերել։',
+      'explain': 'Բացատրիր ինձ հայերեն — ինչ է Python-ի list comprehension-ը պարզ, հասկանալի ձևով, կարճ օրինակով։'
+    };
+    sendLabMessage(prompts[type]);
+  }
+
+  function labAddUser(text, imageBase64, imageMime) {
+    const msgs = document.getElementById('lab-msgs');
+    const div = document.createElement('div');
+    div.className = 'lab-msg user';
+    if (imageBase64) {
+      const img = document.createElement('img');
+      img.src = `data:${imageMime || 'image/jpeg'};base64,${imageBase64}`;
+      img.style.cssText = 'max-width:100%;max-height:180px;border-radius:6px;display:block;margin-bottom:0.35rem;object-fit:contain';
+      div.appendChild(img);
+    }
+    if (text) div.appendChild(document.createTextNode(text));
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function labAddBot(text) {
+    const msgs = document.getElementById('lab-msgs');
+    const div = document.createElement('div');
+    div.className = 'lab-msg bot';
+    div.innerHTML = text
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/`([^`]+)`/g, '<code style="background:rgba(65,90,119,0.12);padding:0.1em 0.35em;border-radius:3px;font-family:\'Source Code Pro\',monospace;font-size:0.88em">$1</code>')
+      .replace(/\n/g, '<br>');
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function renderMarkdown(text) {
+    // Escape HTML first
+    let t = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+    // ── Code blocks (triple backtick) ──
+    t = t.replace(/```[\w]*\n?([\s\S]*?)```/g, (_, code) =>
+      `<pre style="background:var(--midnight);color:#a8c8e8;font-family:'Source Code Pro',monospace;font-size:0.82em;padding:0.75rem 1rem;border-radius:6px;overflow-x:auto;margin:0.5rem 0;line-height:1.6">${code.trim()}</pre>`
+    );
+
+    // ── Inline code ──
+    t = t.replace(/`([^`]+)`/g,
+      `<code style="background:rgba(65,90,119,0.12);padding:0.1em 0.35em;border-radius:3px;font-family:'Source Code Pro',monospace;font-size:0.88em">$1</code>`
+    );
+
+    // ── Math: \frac{a}{b} → a/b styled ──
+    t = t.replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g,
+      `<span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 0.15em;font-size:0.9em"><span style="border-bottom:1px solid currentColor;padding:0 0.2em;line-height:1.3">$1</span><span style="padding:0 0.2em;line-height:1.3">$2</span></span>`
+    );
+
+    // ── Math: \sqrt{x} ──
+    t = t.replace(/\\sqrt\{([^}]+)\}/g, '&radic;<span style="border-top:1px solid currentColor;padding:0 0.1em">$1</span>');
+
+    // ── Math: superscripts x^{2} or x^2 ──
+    t = t.replace(/\^{([^}]+)}/g, '<sup>$1</sup>');
+    t = t.replace(/\^(\w)/g, '<sup>$1</sup>');
+
+    // ── Math: subscripts x_{i} or x_i ──
+    t = t.replace(/_{([^}]+)}/g, '<sub>$1</sub>');
+
+    // ── Greek letters ──
+    const greek = {
+      '\\\\alpha':'&alpha;','\\\\beta':'&beta;','\\\\gamma':'&gamma;','\\\\delta':'&delta;',
+      '\\\\epsilon':'&epsilon;','\\\\zeta':'&zeta;','\\\\eta':'&eta;','\\\\theta':'&theta;',
+      '\\\\lambda':'&lambda;','\\\\mu':'&mu;','\\\\nu':'&nu;','\\\\xi':'&xi;',
+      '\\\\pi':'&pi;','\\\\rho':'&rho;','\\\\sigma':'&sigma;','\\\\tau':'&tau;',
+      '\\\\phi':'&phi;','\\\\chi':'&chi;','\\\\psi':'&psi;','\\\\omega':'&omega;',
+      '\\\\Sigma':'&Sigma;','\\\\Delta':'&Delta;','\\\\Pi':'&Pi;','\\\\Omega':'&Omega;',
+      '\\\\Gamma':'&Gamma;','\\\\Lambda':'&Lambda;','\\\\Theta':'&Theta;'
+    };
+    for (const [pat, rep] of Object.entries(greek)) t = t.replace(new RegExp(pat,'g'), rep);
+
+    // ── Common math operators ──
+    t = t.replace(/\\times/g,'&times;').replace(/\\cdot/g,'&middot;')
+         .replace(/\\leq/g,'&le;').replace(/\\geq/g,'&ge;')
+         .replace(/\\neq/g,'&ne;').replace(/\\approx/g,'&asymp;')
+         .replace(/\\infty/g,'&infin;').replace(/\\pm/g,'&plusmn;')
+         .replace(/\\sum/g,'&sum;').replace(/\\int/g,'&int;')
+         .replace(/\\rightarrow/g,'&rarr;').replace(/\\leftarrow/g,'&larr;')
+         .replace(/\\in/g,'&isin;').replace(/\\notin/g,'&notin;')
+         .replace(/\\subset/g,'&sub;').replace(/\\forall/g,'&forall;')
+         .replace(/\\exists/g,'&exist;').replace(/\\nabla/g,'&nabla;')
+         .replace(/\\partial/g,'&part;');
+
+    // ── Strip remaining lone backslash-commands ──
+    t = t.replace(/\\[a-zA-Z]+/g, '');
+
+    // ── Bold: **text** ──
+    t = t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+    // ── Italic: *text* (but not lone asterisks) ──
+    t = t.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+
+    // ── Inline math hint: $...$ (simple expressions) ──
+    t = t.replace(/\$([^$\n]{1,60})\$/g,
+      `<span style="font-family:'Source Code Pro',monospace;background:rgba(65,90,119,0.08);padding:0.05em 0.3em;border-radius:3px">$1</span>`
+    );
+
+    // ── Subtle hint text ──
+    t = t.replace(/_\((.+?)\)_/g, '<em style="font-size:0.78em;opacity:0.6">($1)</em>');
+
+    // ── Newlines ──
+    t = t.replace(/\n/g, '<br>');
+
+    return t;
+  }
+
+  function makeStreamingBubble(msgsEl, className) {
+    const div = document.createElement('div');
+    div.className = className;
+    // Add blinking cursor while streaming
+    const cursor = document.createElement('span');
+    cursor.className = 'stream-cursor';
+    cursor.textContent = '▍';
+    div.appendChild(cursor);
+    msgsEl.appendChild(div);
+
+    let _raw = '';
+    let _rafId = null;
+    let _lastRender = 0;
+    const RENDER_INTERVAL = 80; // ms — render at most every 80ms to avoid flicker
+
+    function flush() {
+      _rafId = null;
+      const now = Date.now();
+      if (now - _lastRender < RENDER_INTERVAL) {
+        _rafId = setTimeout(flush, RENDER_INTERVAL - (now - _lastRender));
+        return;
+      }
+      _lastRender = now;
+      // Preserve cursor element during innerHTML swap
+      div.innerHTML = renderMarkdown(_raw);
+      div.appendChild(cursor);
+      msgsEl.scrollTop = msgsEl.scrollHeight;
+    }
+
+    return {
+      append(chunk) {
+        _raw += chunk;
+        if (!_rafId) _rafId = requestAnimationFrame(flush);
+      },
+      finalize() {
+        // Cancel any pending render, do final render without cursor
+        if (_rafId) { clearTimeout(_rafId); cancelAnimationFrame(_rafId); _rafId = null; }
+        cursor.remove();
+        // Soft cross-fade: briefly fade out cursor, then render clean markdown
+        div.style.transition = 'opacity 0.12s ease';
+        div.style.opacity = '0.85';
+        requestAnimationFrame(() => {
+          div.innerHTML = renderMarkdown(_raw);
+          div.style.opacity = '1';
+          msgsEl.scrollTop = msgsEl.scrollHeight;
+        });
+        return _raw;
+      }
+    };
+  }
+
+  function handleLabImageSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    labImageMime = file.type;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      labImageBase64 = e.target.result.split(',')[1];
+      document.getElementById('lab-img-preview').src = e.target.result;
+      document.getElementById('lab-img-preview-wrap').style.display = 'flex';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function clearLabImage() {
+    labImageBase64 = null;
+    labImageMime = null;
+    document.getElementById('lab-img-preview-wrap').style.display = 'none';
+    document.getElementById('lab-img-preview').src = '';
+    document.getElementById('lab-img-input').value = '';
+  }
+
+  function labAddError(text) {
+    const msgs = document.getElementById('lab-msgs');
+    const div = document.createElement('div');
+    div.className = 'lab-error-msg';
+    div.innerHTML = '⚠ ' + text;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function labShowThinking() {
+    labThinking = true;
+    document.getElementById('lab-send-btn').disabled = true;
+    const msgs = document.getElementById('lab-msgs');
+    const div = document.createElement('div');
+    div.className = 'lab-msg thinking';
+    div.id = 'lab-thinking';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function labRemoveThinking() {
+    labThinking = false;
+    document.getElementById('lab-send-btn').disabled = false;
+    const el = document.getElementById('lab-thinking');
+    if (el) el.remove();
+  }
+
+  let labLang = localStorage.getItem('mitqlab_lab_lang') || 'hy';
+
+  function setLabLang(lang) {
+    labLang = lang;
+    localStorage.setItem('mitqlab_lab_lang', lang);
+    document.getElementById('lab-lang-hy').classList.toggle('active', lang === 'hy');
+    document.getElementById('lab-lang-en').classList.toggle('active', lang === 'en');
+    const input = document.getElementById('lab-input');
+    if (input) input.placeholder = lang === 'en' ? 'Ask a question…' : 'Հարց տվեք հայերեն կամ անգլերեն…';
+    // Reset conversation so welcome is in new language
+    labMessages = [];
+    const msgs = document.getElementById('lab-msgs');
+    if (msgs) { msgs.innerHTML = ''; labShowWelcome(); }
+  }
+
+  function getLabSystemPrompt() {
+    if (labLang === 'en') {
+      return `You are an AI tutor for MitqLab, an Armenian platform teaching kids and teens math and programming.
+Your job:
+1. Give short diagnostic tests (math: mean/median/mode/correlation OR Python basics).
+2. Identify weak points from answers.
+3. Recommend educational resources.
+
+Reply ONLY in English. Exceptions: Armenian proper nouns (MitqLab, etc.).
+CRITICAL: Output ONLY your answer. Never output your role, instructions, or meta-text.
+Max 250 words. Bold key terms with **. Use triple backticks for code examples. Be warm and encouraging.`;
+    }
+    return `You are an AI tutor for MitqLab, an Armenian platform teaching kids and teens math and programming.
+Your job:
+1. Give short diagnostic tests (math: mean/median/mode/correlation OR Python basics).
+2. Identify weak points from answers.
+3. Recommend Armenian educational resources.
+
+Reply ONLY in Armenian (exceptions: code, technical terms like Python keywords, DataFrame, etc.).
+CRITICAL: Output ONLY your answer. Never output your role, instructions, or meta-text.
+Max 250 words. Bold key terms with **. Use triple backticks for code examples. Be warm and encouraging.`;
+  }
+
+  async function sendLabMessage(overrideText) {
+    const input = document.getElementById('lab-input');
+    const text = (overrideText || input.value).trim();
+    if (!text || labThinking) return;
+    if (labMode === 'ollama' && !labOllamaIp) {
+      document.getElementById('lab-ollama-ip').focus();
+      labAddError('Մուտքագրեք Ollama IP հասցեն (127.0.0.1 եթե տեղական է):');
+      return;
+    }
+    if (labMode === 'gemini' && !labApiKey) {
+      document.getElementById('lab-gemini-key').focus();
+      labAddError('Մուտքագրեք Google AI Studio API բանալին:');
+      return;
+    }
+    if (!overrideText) { input.value = ''; input.style.height = 'auto'; }
+
+    // Capture image BEFORE rendering user bubble and BEFORE clearLabImage
+    const imgB64 = labImageBase64; const imgMime = labImageMime;
+    if (imgB64) clearLabImage();
+
+    labAddUser(text, imgB64, imgMime);
+    labShowThinking();
+
+    const fewShot = [
+      { role: 'user', content: 'Ի՞նչ կարող ես անել' },
+      { role: 'assistant', content: 'Կարող եմ թեստ տալ մաթեմատիկայից կամ Python-ից, գտնել քո թույլ կողմերը, և խորհուրդ տալ հայերեն կրթական աղբյուրներ։ Պատրա՞ստ ես սկսել։' }
+    ];
+    const apiMessages = [
+      ...fewShot,
+      ...labMessages.slice(-8).map(m => ({ role: m.role, content: m.content })),
+      { role: 'user', content: text }
+    ];
+
+    try {
+      labRemoveThinking();
+      const bubble = makeStreamingBubble(document.getElementById('lab-msgs'), 'lab-msg bot');
+      if (labMode === 'ollama') {
+        await callOllama(apiMessages, getLabSystemPrompt(), c => bubble.append(c), labOllamaIp);
+      } else {
+        const primary = TUTOR_MODELS.find(m => m.id === (tutorModel || 'gemma-4-31b-it')) || TUTOR_MODELS[0];
+        await callGemini(primary, apiMessages, getLabSystemPrompt(), imgB64, imgMime, c => bubble.append(c));
+      }
+      const reply = cleanReply(bubble.finalize());
+      labMessages.push({ role: 'user', content: text });
+      labMessages.push({ role: 'assistant', content: reply });
+    } catch(e) {
+      labRemoveThinking();
+      labAddError('Կապ չհաջողվեց: ' + e.message);
+    }
+  }
+
+  // Sync credentials from main tutor to lab on load
+  (function syncLabCredentials() {
+    setTimeout(() => {
+      setLabMode(labMode);
+      if (labOllamaIp) {
+        const inp = document.getElementById('lab-ollama-ip');
+        if (inp) { inp.placeholder = '✓ ' + labOllamaIp; inp.style.borderColor = '#4caf50'; }
+      }
+      if (labApiKey) {
+        const inp = document.getElementById('lab-gemini-key');
+        if (inp) { inp.placeholder = '✓ Պահպանված է'; inp.style.borderColor = '#4caf50'; }
+      }
+      const labSel = document.getElementById('lab-ollama-model');
+      if (labSel) labSel.value = ollamaModel;
+      // Restore saved language (buttons only — don't reset conversation on init)
+      document.getElementById('lab-lang-hy')?.classList.toggle('active', labLang === 'hy');
+      document.getElementById('lab-lang-en')?.classList.toggle('active', labLang === 'en');
+      const input = document.getElementById('lab-input');
+      if (input && labLang === 'en') input.placeholder = 'Ask a question…';
+    }, 150);
+  })();
+
+  // ═══════════════════════════════════════════════
   // AI TUTOR — MitqLab × Gemma (Google AI Studio)
   // ═══════════════════════════════════════════════
 
@@ -2930,6 +4323,7 @@ _stdout_buf.getvalue()
   let tutorThinking = false;
   let tutorModel = localStorage.getItem('mitqlab_tutor_model') || 'gemma-4-31b-it';
   let tutorLang = localStorage.getItem('mitqlab_tutor_lang') || 'hy'; // 'hy' or 'en'
+  let ollamaModel = localStorage.getItem('mitqlab_ollama_model') || 'gemma4:e4b';
 
   // Track current module (safe override — works even if showModule not yet defined)
   const _origShowModule = typeof showModule === 'function' ? showModule : function(){};
@@ -3052,6 +4446,26 @@ _stdout_buf.getvalue()
     }, 2500);
   }
 
+  function saveOllamaModel() {
+    const sel = document.getElementById('tutor-ollama-model');
+    if (!sel) return;
+    ollamaModel = sel.value;
+    localStorage.setItem('mitqlab_ollama_model', ollamaModel);
+    // Sync lab selector too
+    const labSel = document.getElementById('lab-ollama-model');
+    if (labSel) labSel.value = ollamaModel;
+  }
+
+  function saveLabOllamaModel() {
+    const sel = document.getElementById('lab-ollama-model');
+    if (!sel) return;
+    ollamaModel = sel.value;
+    localStorage.setItem('mitqlab_ollama_model', ollamaModel);
+    // Sync tutor selector too
+    const tutorSel = document.getElementById('tutor-ollama-model');
+    if (tutorSel) tutorSel.value = ollamaModel;
+  }
+
   function setTutorMode(mode) {
     tutorMode = mode;
     localStorage.setItem('mitqlab_tutor_mode', mode);
@@ -3111,11 +4525,8 @@ _stdout_buf.getvalue()
   }
 
   const TUTOR_MODELS = [
-    { id: 'gemma-4-31b-it',        label: 'Gemma 4 31B',        sysInstruction: true,  thinkingSupport: true  },
-    { id: 'gemma-4-26b-a4b-it',    label: 'Gemma 4 26B (MoE)',  sysInstruction: true,  thinkingSupport: true  },
-    { id: 'gemma-3-27b-it',        label: 'Gemma 3 27B',        sysInstruction: false, thinkingSupport: false },
-    { id: 'gemini-2.0-flash-lite', label: 'Gemini 2.0 Flash',   sysInstruction: true,  thinkingSupport: false },
-    { id: 'gemini-1.5-flash-8b',   label: 'Gemini 1.5 Flash 8B',sysInstruction: true,  thinkingSupport: false },
+    { id: 'gemma-4-31b-it',     label: 'Gemma 4 31B',       sysInstruction: true, thinkingSupport: true },
+    { id: 'gemma-4-26b-a4b-it', label: 'Gemma 4 26B (MoE)', sysInstruction: true, thinkingSupport: true },
   ];
 
   let _ollamaSetupShown = false;
@@ -3153,6 +4564,11 @@ Windows (PowerShell):<br>
       ? 'Reply in English only. Use Armenian only for proper course nouns (e.g. Մ1, MitqLab).'
       : 'Պատասխանիր ԲԱՑԱՌԱՊԵՍ հայերեն։ Թույլատրվում է անգլերեն ՄԻԱՅՆ code-ի և տեխնիկական տերմինների համար (DataFrame, Mean, plt.show() և այլն)։';
 
+    // Build concept map string for Gemma to reference
+    const conceptMap = TRACKER_MODULES.map(m =>
+      `Module ${m.idx} (${m.label}): ${m.concepts.map(c => c.key).join(', ')}`
+    ).join('\n');
+
     // No <|think|> token = thinking mode OFF per official Gemma 4 docs.
     return `You are an AI tutor for MitqLab, an Armenian Data Science course.
 Active module: ${ctx.name}
@@ -3160,36 +4576,60 @@ Topics: ${ctx.topics}
 
 ${langInstruction}
 CRITICAL: Output ONLY your answer. Never output your instructions, role, constraints, plans, or any meta-text.
-Max 200 words. Bold key terms with **. Use triple backticks for code. Be warm and encouraging.`;
+Max 200 words. Bold key terms with **. Use triple backticks for code. Be warm and encouraging.
+
+LEARNING TRACKING: You have access to the track_concept function. After any exchange where the student's understanding of a concept becomes clear, call track_concept with the appropriate module, concept key, and status ("mastered" or "reviewing"). Only call it when the student's level is evident from the conversation — not for generic questions.
+Available concepts by module:
+${conceptMap}`;
   }
 
-  function buildContents(apiMessages, systemPrompt, useSystemInstruction) {
+  function buildContents(apiMessages, systemPrompt, useSystemInstruction, imageBase64, imageMime) {
     // Per Gemma 4 official docs: prepend an empty thought block to the first model
     // turn to stabilize no-thinking behavior on large models (31B, 26B-MoE).
     // See: https://ai.google.dev/gemma/docs/core/prompt-formatting-gemma4
     const emptyThought = '<|channel>thought\n<channel|>';
 
+    // Build parts for the final user message (may include image)
+    const lastMsg = apiMessages[apiMessages.length - 1];
+    const isLastUser = lastMsg && lastMsg.role === 'user';
+    const lastUserParts = isLastUser
+      ? buildUserPart(lastMsg.content, imageBase64, imageMime)
+      : null;
+
     if (useSystemInstruction) {
-      const contents = apiMessages.map(m => ({
-        role: m.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: m.content }]
-      }));
+      const contents = apiMessages.map((m, i) => {
+        const isLast = i === apiMessages.length - 1;
+        const parts = (isLast && isLastUser && lastUserParts)
+          ? lastUserParts
+          : [{ text: m.content }];
+        return {
+          role: m.role === 'assistant' ? 'model' : 'user',
+          parts
+        };
+      });
       // Prepend empty thought block to every model turn to suppress leakage
       contents.forEach(c => {
         if (c.role === 'model') {
-          c.parts[0].text = emptyThought + c.parts[0].text;
+          c.parts[0].text = emptyThought + (c.parts[0].text || '');
         }
       });
       return contents;
     }
     // For models without system_instruction (Gemma 3): inject as opening exchange
+    const mainContents = apiMessages.map((m, i) => {
+      const isLast = i === apiMessages.length - 1;
+      const parts = (isLast && isLastUser && lastUserParts)
+        ? lastUserParts
+        : [{ text: m.content }];
+      return {
+        role: m.role === 'assistant' ? 'model' : 'user',
+        parts
+      };
+    });
     return [
       { role: 'user',  parts: [{ text: systemPrompt + '\n\nConfirm you understand and are ready.' }] },
       { role: 'model', parts: [{ text: emptyThought + 'Հասկացա։ Կպատասխանեմ ուղղակիորեն։' }] },
-      ...apiMessages.map(m => ({
-        role: m.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: m.content }]
-      }))
+      ...mainContents
     ];
   }
 
@@ -3200,8 +4640,9 @@ Max 200 words. Bold key terms with **. Use triple backticks for code. Be warm an
     return await callGemini(modelDef, apiMessages, systemPrompt);
   }
 
-  async function callOllama(apiMessages, systemPrompt) {
-    const base = tutorOllamaIp.includes(':') ? `http://${tutorOllamaIp}` : `http://${tutorOllamaIp}:11434`;
+  async function callOllama(apiMessages, systemPrompt, onChunk, ip) {
+    const activeIp = ip || tutorOllamaIp;
+    const base = activeIp.includes(':') ? `http://${activeIp}` : `http://${activeIp}:11434`;
     const url = `${base}/api/chat`;
     const messages = [
       { role: 'system', content: systemPrompt },
@@ -3212,35 +4653,99 @@ Max 200 words. Bold key terms with **. Use triple backticks for code. Be warm an
       res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model: 'gemma4:e4b', messages, stream: false,
+        body: JSON.stringify({ model: ollamaModel, messages, stream: true,
           options: { temperature: 0.5, num_predict: 600 } })
       });
-    } catch (e) {
-      showOllamaSetup();
-      throw new Error('Ollama անհասանելի է');
+    } catch (e) { showOllamaSetup(); throw new Error('Ollama անհասանելի է'); }
+    if (!res.ok) throw new Error('Ollama HTTP ' + res.status);
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let full = '';
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      for (const line of decoder.decode(value).split('\n').filter(Boolean)) {
+        try { const chunk = JSON.parse(line)?.message?.content || ''; full += chunk; if (onChunk) onChunk(chunk); } catch {}
+      }
     }
-    if (!res.ok) { throw new Error('Ollama HTTP ' + res.status); }
-    const data = await res.json();
-    return data?.message?.content || '';
+    return full;
   }
 
-  async function callGemini(modelDef, apiMessages, systemPrompt) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelDef.id}:generateContent?key=${tutorApiKey}`;
-    const genConfig = { temperature: 0.5, maxOutputTokens: 600,
+  // ── Native Gemma 4 function calling: track_concept tool declaration ──
+  const GEMMA4_TOOLS = [{
+    functionDeclarations: [{
+      name: 'track_concept',
+      description: 'Record that the student has demonstrated understanding (mastered) or needs review (reviewing) of a specific concept. Call this after any exchange where the student\'s knowledge level of a concept becomes clear.',
+      parameters: {
+        type: 'OBJECT',
+        properties: {
+          module:  { type: 'INTEGER', description: 'Module index 0-4' },
+          concept: { type: 'STRING',  description: 'Concept key, e.g. "mean", "dataframe", "knn"' },
+          status:  { type: 'STRING',  enum: ['mastered', 'reviewing'], description: 'mastered = student understands well; reviewing = needs more practice' }
+        },
+        required: ['module', 'concept', 'status']
+      }
+    }]
+  }];
+
+  async function callGemini(modelDef, apiMessages, systemPrompt, imageBase64, imageMime, onChunk, maxTokens, useTools) {
+    const key = tutorApiKey || labApiKey;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelDef.id}:streamGenerateContent?alt=sse&key=${key}`;
+    const genConfig = { temperature: 0.5, maxOutputTokens: maxTokens || 600,
       stopSequences: ['*   Armenian', '* Armenian', '*   Warm', '*   Under', '* Under'] };
     if (modelDef.thinkingSupport) genConfig.thinkingConfig = { thinkingLevel: 'MINIMAL' };
     const body = {
-      contents: buildContents(apiMessages, systemPrompt, modelDef.sysInstruction),
+      contents: buildContents(apiMessages, systemPrompt, modelDef.sysInstruction, imageBase64, imageMime),
       generationConfig: genConfig
     };
     if (modelDef.sysInstruction) body.system_instruction = { parts: [{ text: systemPrompt }] };
+    // Attach native function calling tools when requested (tutor mode)
+    if (useTools) {
+      body.tools = GEMMA4_TOOLS;
+      body.tool_config = { function_calling_config: { mode: 'AUTO' } };
+    }
     const res = await fetch(url, { method: 'POST',
       headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data?.error?.message || 'HTTP ' + res.status);
-    const parts = data?.candidates?.[0]?.content?.parts || [];
-    const text = parts.filter(p => p.text && p.thought !== true).map(p => p.text).join('');
-    return text || parts.map(p => p.text || '').join('') || '';
+    if (!res.ok) { const e = await res.json(); throw new Error(e?.error?.message || 'HTTP ' + res.status); }
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let full = '', buf = '';
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += decoder.decode(value, { stream: true });
+      const lines = buf.split('\n'); buf = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        try {
+          const candidate = JSON.parse(line.slice(6))?.candidates?.[0];
+          if (!candidate) continue;
+          const parts = candidate.content?.parts || [];
+          // Handle native function calls from Gemma 4
+          for (const part of parts) {
+            if (part.functionCall && part.functionCall.name === 'track_concept') {
+              const args = part.functionCall.args || {};
+              if (args.module !== undefined && args.concept && args.status) {
+                markConceptStatus(args.module, args.concept, args.status);
+              }
+            }
+          }
+          // Stream text (exclude thought blocks and function call parts)
+          const chunk = parts.filter(p => p.text && p.thought !== true).map(p => p.text).join('');
+          full += chunk; if (onChunk) onChunk(chunk);
+        } catch {}
+      }
+    }
+    return full;
+  }
+
+  // Build a multimodal user content block (text + optional image)
+  function buildUserPart(text, imageBase64, imageMime) {
+    if (!imageBase64) return [{ text }];
+    return [
+      { inline_data: { mime_type: imageMime, data: imageBase64 } },
+      { text }
+    ];
   }
 
   async function sendTutorMessage(overrideText) {
@@ -3259,7 +4764,13 @@ Max 200 words. Bold key terms with **. Use triple backticks for code. Be warm an
     }
     if (!overrideText) input.value = '';
     autoResizeInput();
-    addUserMessage(text);
+
+    // Capture & clear pending image before async work
+    const imgBase64 = tutorPendingImageBase64;
+    const imgMime   = tutorPendingImageMime;
+    if (imgBase64) clearTutorImage();
+
+    addUserMessage(text, imgBase64, imgMime);
     showThinking();
 
     const ctx = MODULE_CONTEXTS[tutorCurrentModule] || MODULE_CONTEXTS[0];
@@ -3285,13 +4796,25 @@ Max 200 words. Bold key terms with **. Use triple backticks for code. Be warm an
     ];
 
     // Ollama mode: single attempt, no fallback chain
+    // (Ollama/local models don't support vision in this app; image prompt injected as text hint)
     if (tutorMode === 'ollama') {
       try {
-        const raw = await callOllama(apiMessages, systemPrompt);
+        const ollamaMessages = [...apiMessages];
+        if (imgBase64) {
+          // For Ollama, append a text hint that an image was shared
+          ollamaMessages[ollamaMessages.length - 1] = {
+            role: 'user',
+            content: text + '\n[Ուսանողը կցել է նկար — բացատրիր հիմնվելով հարցի համատեքստի վրա]'
+          };
+        }
         removeThinking();
-        addBotMessage(cleanReply(raw));
+        const bubble = makeStreamingBubble(document.getElementById('tutor-msgs'), 'tutor-msg bot');
+        await callOllama(ollamaMessages, systemPrompt, c => bubble.append(c));
+        const reply = cleanReply(bubble.finalize());
+        const cleanedReply = parseLearningPathUpdates(reply);
+        bubble.append(''); // re-render after clean
         tutorMessages.push({ role: 'user', content: text });
-        tutorMessages.push({ role: 'assistant', content: cleanReply(raw) });
+        tutorMessages.push({ role: 'assistant', content: cleanedReply });
       } catch(e) {
         removeThinking();
         // showOllamaSetup() is already called inside callOllama on failure
@@ -3299,7 +4822,7 @@ Max 200 words. Bold key terms with **. Use triple backticks for code. Be warm an
       return;
     }
 
-    // Gemini mode: fallback chain across models
+    // Gemini mode: fallback chain across models (supports image multimodal)
     const primary = TUTOR_MODELS.find(m => m.id === tutorModel) || TUTOR_MODELS[0];
     const others  = TUTOR_MODELS.filter(m => m.id !== primary.id);
     const chain   = [primary, ...others];
@@ -3307,27 +4830,36 @@ Max 200 words. Bold key terms with **. Use triple backticks for code. Be warm an
     const errors = [];
     for (const modelDef of chain) {
       try {
-        const raw = await callGemini(modelDef, apiMessages, systemPrompt);
         removeThinking();
-        const reply = cleanReply(raw);
+        const bubble = makeStreamingBubble(document.getElementById('tutor-msgs'), 'tutor-msg bot');
+        await callGemini(modelDef, apiMessages, systemPrompt, imgBase64, imgMime, c => bubble.append(c), 600, true);
+        const reply = cleanReply(bubble.finalize());
+        const cleanedReply = parseLearningPathUpdates(reply);
         tutorMessages.push({ role: 'user', content: text });
-        tutorMessages.push({ role: 'assistant', content: reply });
+        tutorMessages.push({ role: 'assistant', content: cleanedReply });
         const label = modelDef.id !== primary.id ? `\n\n_(մոդել: ${modelDef.id})_` : '';
-        addBotMessage(reply + label);
+        if (label) bubble.append(label);
         return;
       } catch(e) {
         errors.push(`${modelDef.id}: ${e.message}`);
       }
     }
     removeThinking();
-    addErrorMessage('Բոլոր Gemini մոդելները անհասանելի են:\n' + errors.join('\n'));
+    addErrorMessage('Gemma 4 մոդելը անհասանելի է:\n' + errors.join('\n'));
   }
 
-  function addUserMessage(text) {
+  function addUserMessage(text, imageBase64, imageMime) {
     const msgs = document.getElementById('tutor-msgs');
     const div = document.createElement('div');
     div.className = 'tutor-msg user';
-    div.textContent = text;
+    if (imageBase64) {
+      const img = document.createElement('img');
+      img.src = `data:${imageMime || 'image/jpeg'};base64,${imageBase64}`;
+      img.className = 'msg-image';
+      div.appendChild(img);
+    }
+    const textNode = document.createTextNode(text);
+    div.appendChild(textNode);
     msgs.appendChild(div);
     msgs.scrollTop = msgs.scrollHeight;
   }
@@ -3381,15 +4913,896 @@ Max 200 words. Bold key terms with **. Use triple backticks for code. Be warm an
     input.style.height = Math.min(input.scrollHeight, 90) + 'px';
   }
 
-  // Init tutor UI
-  (function initTutorUI() {
-    // Apply saved mode (Ollama vs Gemini) and pre-fill saved values
+  // ═══════════════════════════════════
+  // IMAGE UPLOAD (MULTIMODAL)
+  // ═══════════════════════════════════
+  let tutorPendingImageBase64 = null; // base64 string without prefix
+  let tutorPendingImageMime = null;   // e.g. 'image/jpeg'
+
+  function handleTutorImageSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    if (file.size > 4 * 1024 * 1024) {
+      alert('Նկարը շատ մեծ է (max 4MB)');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target.result;
+      const parts = dataUrl.split(',');
+      tutorPendingImageBase64 = parts[1];
+      tutorPendingImageMime = file.type || 'image/jpeg';
+      // Show preview
+      const preview = document.getElementById('tutor-img-preview');
+      preview.src = dataUrl;
+      document.getElementById('tutor-img-preview-wrap').classList.add('show');
+      document.getElementById('tutor-img-btn').classList.add('has-img');
+      document.getElementById('tutor-img-btn').textContent = '🖼';
+    };
+    reader.readAsDataURL(file);
+    // Reset input so same file can be re-selected
+    event.target.value = '';
+  }
+
+  function clearTutorImage() {
+    tutorPendingImageBase64 = null;
+    tutorPendingImageMime = null;
+    document.getElementById('tutor-img-preview-wrap').classList.remove('show');
+    document.getElementById('tutor-img-btn').classList.remove('has-img');
+    document.getElementById('tutor-img-btn').textContent = '📷';
+  }
+
+  // ═══════════════════════════════════
+  // LEARNING PATH TRACKER (FUNCTION CALLING)
+  // ═══════════════════════════════════
+  // Data shape: { [moduleIndex]: { [conceptKey]: 'mastered'|'reviewing' } }
+  let learningPath = JSON.parse(localStorage.getItem('mitqlab_learning_path') || '{}');
+
+  // Concept definitions per module (mirrors MODULE_CONTEXTS topics)
+  const TRACKER_MODULES = [
+    { idx: 0, label: 'Մ1 · Մաթ & Վիճ', concepts: [
+      { key: 'mean', name: 'Mean (Միջին արժեք)' },
+      { key: 'median', name: 'Median (Միջին անդամ)' },
+      { key: 'mode', name: 'Mode (Ամենահաճախ)' },
+      { key: 'variance', name: 'Variance (Դիսպերսիա)' },
+      { key: 'std', name: 'Standard Deviation' },
+      { key: 'correlation', name: 'Correlation (Փոխկապ.)' },
+      { key: 'outlier', name: 'Outlier' },
+    ]},
+    { idx: 1, label: 'Մ2 · Pandas', concepts: [
+      { key: 'dataframe', name: 'DataFrame' },
+      { key: 'series', name: 'Series' },
+      { key: 'head_describe', name: 'head / describe' },
+      { key: 'dropna_fillna', name: 'dropna / fillna' },
+      { key: 'groupby', name: 'groupby' },
+      { key: 'boolean_indexing', name: 'Boolean indexing' },
+      { key: 'loc_iloc', name: 'loc / iloc' },
+    ]},
+    { idx: 2, label: 'Մ3 · ML', concepts: [
+      { key: 'supervised_unsupervised', name: 'Supervised vs Unsupervised' },
+      { key: 'linear_regression', name: 'Linear Regression' },
+      { key: 'decision_tree', name: 'Decision Tree' },
+      { key: 'knn', name: 'KNN' },
+      { key: 'train_test_split', name: 'Train/Test split' },
+      { key: 'overfitting', name: 'Overfitting' },
+    ]},
+    { idx: 3, label: 'Մ4 · Visualisation', concepts: [
+      { key: 'plt_plot_bar', name: 'plot / bar / pie' },
+      { key: 'scatter_hist', name: 'scatter / hist' },
+      { key: 'labels_title', name: 'Labels & Title' },
+      { key: 'seaborn_heatmap', name: 'Seaborn heatmap' },
+    ]},
+    { idx: 4, label: 'Մ5 · Application', concepts: [
+      { key: 'real_world_cases', name: 'Real-world cases' },
+      { key: 'recommendation', name: 'Recommendation systems' },
+    ]},
+  ];
+
+  function saveLearningPath() {
+    localStorage.setItem('mitqlab_learning_path', JSON.stringify(learningPath));
+  }
+
+  // Called by the AI (function calling) to mark a concept
+  function markConceptStatus(moduleIdx, conceptKey, status) {
+    if (!learningPath[moduleIdx]) learningPath[moduleIdx] = {};
+    learningPath[moduleIdx][conceptKey] = status;
+    saveLearningPath();
+    renderTrackerPanel();
+    // After any mastered concept, check if we should proactively suggest what to study next
+    if (status === 'mastered') {
+      _maybeShowNextStepRecommendation(moduleIdx, conceptKey);
+    }
+  }
+
+  // Debounce timer for next-step suggestions (avoid firing on every chunk during streaming)
+  let _nextStepTimer = null;
+  function _maybeShowNextStepRecommendation(masteredModuleIdx, masteredConceptKey) {
+    clearTimeout(_nextStepTimer);
+    _nextStepTimer = setTimeout(() => {
+      // Find first unmastered concept across all modules
+      let nextConcept = null, nextModuleLabel = '';
+      for (const m of TRACKER_MODULES) {
+        for (const c of m.concepts) {
+          const st = learningPath[m.idx]?.[c.key];
+          if (!st || st === 'reviewing') {
+            nextConcept = c;
+            nextModuleLabel = m.label;
+            break;
+          }
+        }
+        if (nextConcept) break;
+      }
+
+      // Find concepts marked as 'reviewing' (prioritise those)
+      let reviewConcept = null, reviewModuleLabel = '';
+      for (const m of TRACKER_MODULES) {
+        for (const c of m.concepts) {
+          if (learningPath[m.idx]?.[c.key] === 'reviewing') {
+            reviewConcept = c;
+            reviewModuleLabel = m.label;
+            break;
+          }
+        }
+        if (reviewConcept) break;
+      }
+
+      const msgs = document.getElementById('tutor-msgs');
+      if (!msgs) return;
+
+      // Count mastered total
+      let mastered = 0, total = 0;
+      TRACKER_MODULES.forEach(m => m.concepts.forEach(c => {
+        total++;
+        if (learningPath[m.idx]?.[c.key] === 'mastered') mastered++;
+      }));
+
+      let suggestion = '';
+      if (reviewConcept) {
+        suggestion = tutorLang === 'en'
+          ? `💡 **Study tip:** I noticed **${reviewConcept.name}** still needs review. Want me to give you a quick exercise on it?`
+          : `💡 **Հաջորդ քայլ:** Ես նկատեցի, որ **${reviewConcept.name}** թեման դեռ կրկնելու կարիք ունի։ Ուզու՞մ ես, որ վարժություն տամ:`;
+      } else if (nextConcept) {
+        suggestion = tutorLang === 'en'
+          ? `✅ Well done mastering that! Next up: **${nextConcept.name}** (${nextModuleLabel}). Ready to dive in?`
+          : `✅ Հիանալի! Հաջորդ թեման կլինի **${nextConcept.name}** (${nextModuleLabel})։ Սկսու՞մ ենք:`;
+      } else if (mastered === total) {
+        suggestion = tutorLang === 'en'
+          ? `🎉 You've mastered all ${total} concepts! Consider doing the final quiz or building a personal project.`
+          : `🎉 Դու յուրացրել ես բոլոր ${total} թեմաները! Փորձիր ավարտական թեստ կամ ստեղծիր անձնական նախագիծ:`;
+      }
+
+      if (suggestion) {
+        // Only inject if the last message isn't already a next-step tip
+        const lastMsg = msgs.lastElementChild;
+        if (lastMsg && lastMsg.classList.contains('next-step-tip')) return; // avoid spam
+        const tip = document.createElement('div');
+        tip.className = 'tutor-msg bot next-step-tip';
+        tip.style.cssText = 'border-left:3px solid var(--celestial);background:rgba(119,141,169,0.07);font-size:0.88rem';
+        tip.innerHTML = suggestion
+          .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+          .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+          .replace(/\n/g,'<br>');
+        msgs.appendChild(tip);
+        msgs.scrollTop = msgs.scrollHeight;
+      }
+    }, 1200); // wait 1.2s to let streaming finish
+  }
+
+  function resetLearningPath() {
+    learningPath = {};
+    saveLearningPath();
+    renderTrackerPanel();
+  }
+
+  function renderTrackerPanel() {
+    const body = document.getElementById('tracker-body');
+    if (!body) return;
+
+    // Check if anything tracked
+    let total = 0, mastered = 0;
+    TRACKER_MODULES.forEach(m => {
+      m.concepts.forEach(c => {
+        total++;
+        const st = learningPath[m.idx]?.[c.key];
+        if (st === 'mastered') mastered++;
+      });
+    });
+
+    if (mastered === 0) {
+      body.innerHTML = '<div class="tracker-empty">Դեռ ոչ մի թեմա չի հայտնաբերվել։<br>Հարցրեք AI-ին՝ ուսուցումը սկսելու համար։</div>';
+      return;
+    }
+
+    let html = '';
+    TRACKER_MODULES.forEach(m => {
+      const mMastered = m.concepts.filter(c => learningPath[m.idx]?.[c.key] === 'mastered').length;
+      const mReviewing = m.concepts.filter(c => learningPath[m.idx]?.[c.key] === 'reviewing').length;
+      if (mMastered === 0 && mReviewing === 0) return;
+      const pct = Math.round(mMastered / m.concepts.length * 100);
+      html += `<div class="tracker-module-group">
+        <div class="tracker-module-title">${m.label}<span class="tracker-module-pct">${pct}%</span></div>`;
+      m.concepts.forEach(c => {
+        const st = learningPath[m.idx]?.[c.key];
+        if (!st) return;
+        const tag = st === 'mastered' ? 'Հասկացած' : 'Կրկնել';
+        html += `<div class="tracker-concept ${st}">
+          <div class="tracker-status-dot"></div>
+          <span class="tracker-concept-name">${c.name}</span>
+          <span class="tracker-concept-tag">${tag}</span>
+        </div>`;
+      });
+      html += '</div>';
+    });
+    body.innerHTML = html || '<div class="tracker-empty">Մակարդակը սահմանված չէ</div>';
+  }
+
+  // Parse AI response for function-call-style concept updates
+  // The system prompt instructs Gemma to emit JSON function calls in a special block
+  function parseLearningPathUpdates(text) {
+    // Look for: <!--TRACK:{"module":1,"concept":"mean","status":"mastered"}-->
+    const regex = /<!--TRACK:([\s\S]*?)-->/g;
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      try {
+        const obj = JSON.parse(match[1]);
+        if (obj.module !== undefined && obj.concept && obj.status) {
+          markConceptStatus(obj.module, obj.concept, obj.status);
+        }
+      } catch(e) {}
+    }
+    // Strip TRACK comments from displayed text
+    return text.replace(/<!--TRACK:[\s\S]*?-->/g, '').trim();
+  }
+
+  // ═══════════════════════════════════
+  // TAB SWITCHING
+  // ═══════════════════════════════════
+  function switchTutorTab(tab) {
+    const chatContent = document.getElementById('tutor-chat-content');
+    const trackerPanel = document.getElementById('tutor-tracker-panel');
+    const tabChat = document.getElementById('tab-chat');
+    const tabTracker = document.getElementById('tab-tracker');
+    if (tab === 'chat') {
+      chatContent.style.display = 'flex';
+      trackerPanel.classList.remove('show');
+      tabChat.classList.add('active');
+      tabTracker.classList.remove('active');
+    } else {
+      chatContent.style.display = 'none';
+      trackerPanel.classList.add('show');
+      tabChat.classList.remove('active');
+      tabTracker.classList.add('active');
+      renderTrackerPanel();
+    }
+  }
+
+  function switchLabTab(tab) {
+    const chatContent = document.getElementById('lab-chat-tab-content');
+    const trackerPanel = document.getElementById('lab-tracker-panel');
+    const tabChat = document.getElementById('lab-tab-chat');
+    const tabTracker = document.getElementById('lab-tab-tracker');
+    if (tab === 'chat') {
+      chatContent.style.display = 'flex';
+      trackerPanel.style.display = 'none';
+      tabChat.classList.add('active');
+      tabTracker.classList.remove('active');
+    } else {
+      chatContent.style.display = 'none';
+      trackerPanel.style.display = 'flex';
+      tabChat.classList.remove('active');
+      tabTracker.classList.add('active');
+      renderLabTrackerPanel();
+      restoreRoadmapIfSaved();
+    }
+  }
+
+  function renderLabTrackerPanel() {
+    const body = document.getElementById('lab-tracker-body');
+    if (!body) return;
+    let total = 0, mastered = 0;
+    TRACKER_MODULES.forEach(m => {
+      m.concepts.forEach(c => {
+        total++;
+        if (learningPath[m.idx]?.[c.key] === 'mastered') mastered++;
+      });
+    });
+    if (mastered === 0) {
+      body.innerHTML = '<div class="tracker-empty">Դեռ ոչ մի թեմա չի հայտնաբերվել։<br>Հարցրեք AI-ին՝ ուսուցումը սկսելու համար։</div>';
+      return;
+    }
+    let html = '';
+    TRACKER_MODULES.forEach(m => {
+      const mMastered = m.concepts.filter(c => learningPath[m.idx]?.[c.key] === 'mastered').length;
+      const mReviewing = m.concepts.filter(c => learningPath[m.idx]?.[c.key] === 'reviewing').length;
+      if (mMastered === 0 && mReviewing === 0) return;
+      const pct = Math.round(mMastered / m.concepts.length * 100);
+      html += `<div class="tracker-module-group">
+        <div class="tracker-module-title">${m.label}<span class="tracker-module-pct">${pct}%</span></div>`;
+      m.concepts.forEach(c => {
+        const st = learningPath[m.idx]?.[c.key];
+        if (!st) return;
+        const tag = st === 'mastered' ? 'Հասկացած' : 'Կրկնել';
+        html += `<div class="tracker-concept ${st}">
+          <div class="tracker-status-dot"></div>
+          <span class="tracker-concept-name">${c.name}</span>
+          <span class="tracker-concept-tag">${tag}</span>
+        </div>`;
+      });
+      html += '</div>';
+    });
+    body.innerHTML = html || '<div class="tracker-empty">Մակարդակը սահմանված չէ</div>';
+  }
+
+  // Init tracker rendering
+  renderTrackerPanel();
+
+  // ═══════════════════════════════════
+  // AI-POWERED LEARNING ROADMAP WIZARD
+  // ═══════════════════════════════════
+  const roadmapSelections = { topic: null, from: null, to: null };
+  let roadmapDays = 30;
+  let _roadmapTasks = [];
+  let _assessmentResult = null;
+  let _roadmapFontSize = 14;
+
+  // ── Font size slider ──
+  function applyRoadmapFontSize(val) {
+    _roadmapFontSize = parseInt(val);
+    const lbl = document.getElementById('roadmap-font-label');
+    if (lbl) lbl.textContent = val + 'px';
+    document.querySelectorAll('.rtask-cell').forEach(el => el.style.fontSize = val + 'px');
+    const tbl = document.getElementById('roadmap-tbl');
+    if (tbl) tbl.style.fontSize = val + 'px';
+  }
+
+  // ── Day slider ──
+  function updateTimeSlider(val) {
+    roadmapDays = parseInt(val);
+    const label = document.getElementById('slider-label');
+    if (!label) return;
+    if (roadmapDays === 1)        label.textContent = '1 օր';
+    else if (roadmapDays < 7)     label.textContent = roadmapDays + ' օր';
+    else if (roadmapDays < 14)    label.textContent = '1 շաբաթ';
+    else if (roadmapDays < 30)    label.textContent = Math.round(roadmapDays/7) + ' շաբաթ';
+    else if (roadmapDays < 60)    label.textContent = '1 ամիս';
+    else if (roadmapDays < 90)    label.textContent = '2 ամիս';
+    else if (roadmapDays < 150)   label.textContent = Math.round(roadmapDays/30) + ' ամիս';
+    else                          label.textContent = '6 ամիս';
+    checkRoadmapReady();
+  }
+
+  function pickChip(btn) {
+    const key = btn.dataset.key;
+    btn.closest('.roadmap-field').querySelectorAll('.roadmap-chip').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    roadmapSelections[key] = btn.dataset.val;
+    checkRoadmapReady();
+  }
+
+  function checkRoadmapReady() {
+    const allPicked = roadmapSelections.topic && roadmapSelections.from && roadmapSelections.to;
+    const btn = document.getElementById('roadmap-generate-btn');
+    if (btn) { btn.disabled = !allPicked; btn.style.opacity = allPicked ? '1' : '0.4'; }
+  }
+
+  // ── Assessment quick test ──
+  const ASSESSMENT_BY_TOPIC = {
+    python: [
+      { q: 'x = 5; print(x + 2) — inch ktpi', a: '7', opts: ['5','7','52','Error'] },
+      { q: 'if 3 > 2: print("A") else: print("B")', a: 'A', opts: ['A','B','Error','3'] },
+      { q: 'for i in range(3) — qani hat?', a: '3', opts: ['2','3','4','1'] },
+    ],
+    math: [
+      { q: 'Mean of [2, 4, 6]', a: '4', opts: ['3','4','6','12'] },
+      { q: 'Median of [1, 3, 5, 7]', a: '4', opts: ['3','4','5','3.5'] },
+    ],
+    ds: [
+      { q: 'df.shape — inch karveriadartsi', a: 'Rows & cols', opts: ['Rows & cols','Column names','Data types','Values'] },
+      { q: 'NaN — inch e', a: 'Batskacan ardzek', opts: ['Zero','Batskacan ardzek','False','Error'] },
+    ],
+    ml: [
+      { q: 'Overfitting — er kara', a: 'Train high, test low', opts: ['Both high','Train high, test low','Both low','Train low, test high'] },
+    ],
+  };
+
+  function getAssessmentQs() {
+    const t = (roadmapSelections.topic || '').toLowerCase();
+    if (t.includes('python')) return ASSESSMENT_BY_TOPIC.python;
+    if (t.includes('mat')) return ASSESSMENT_BY_TOPIC.math;
+    if (t.includes('data')) return ASSESSMENT_BY_TOPIC.ds;
+    if (t.includes('ml') || t.includes('machine')) return ASSESSMENT_BY_TOPIC.ml;
+    return ASSESSMENT_BY_TOPIC.python;
+  }
+
+  function toggleAssessment() {
+    const box = document.getElementById('assessment-box');
+    if (!box) return;
+    const open = box.style.display === 'none';
+    box.style.display = open ? 'block' : 'none';
+    if (open) {
+      const qs = getAssessmentQs();
+      document.getElementById('assessment-questions').innerHTML = qs.map((item, i) => `
+        <div style="margin-bottom:0.6rem">
+          <div style="font-weight:600;margin-bottom:0.3rem;font-family:'Libre Baskerville',serif;font-size:0.82rem">${i+1}. ${item.q}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:0.3rem">
+            ${item.opts.map(opt => `<label style="display:flex;align-items:center;gap:0.3rem;font-size:0.78rem;cursor:pointer;padding:0.2rem 0.55rem;border:1px solid var(--parchment);border-radius:3px;background:white">
+              <input type="radio" name="aq${i}" value="${opt}" style="accent-color:var(--heritage)"> ${opt}
+            </label>`).join('')}
+          </div>
+        </div>`).join('');
+    }
+  }
+
+  function scoreAssessment() {
+    const qs = getAssessmentQs();
+    let score = 0;
+    qs.forEach((item, i) => {
+      const sel = document.querySelector(`input[name="aq${i}"]:checked`);
+      if (sel && sel.value === item.a) score++;
+    });
+    const pct = Math.round(score / qs.length * 100);
+    let levelVal;
+    if (pct < 34)      levelVal = 'zro — voch mi pordz chunem';
+    else if (pct < 67) levelVal = 'sksnak — himunqnere mi pokr gitem';
+    else               levelVal = 'mjin — haskanom em bayc voch kayun';
+    document.querySelectorAll('[data-key="from"]').forEach(b => {
+      b.classList.remove('selected');
+      if (b.dataset.val === levelVal) b.classList.add('selected');
+    });
+    roadmapSelections.from = levelVal;
+    _assessmentResult = `Test: ${score}/${qs.length} (${pct}%)`;
+    const box = document.getElementById('assessment-box');
+    const old = box.querySelector('.assessment-note');
+    if (old) old.remove();
+    const note = document.createElement('div');
+    note.className = 'assessment-note';
+    note.style.cssText = 'margin-top:0.5rem;font-family:"Source Code Pro",monospace;font-size:0.7rem;color:var(--heritage);padding:0.3rem 0.5rem;background:rgba(65,90,119,0.07);border-radius:3px';
+    note.textContent = '\u2713 ' + _assessmentResult;
+    box.appendChild(note);
+    checkRoadmapReady();
+  }
+
+  function toggleReason() {
+    const ta = document.getElementById('reason-text');
+    if (ta) ta.style.display = ta.style.display === 'none' ? 'block' : 'none';
+  }
+
+  // ── Phase-1 gap analysis prompt ──
+  async function _runGapAnalysis(topic, from, assessmentResult, ageNote, disNote, reasonNote) {
+    const gapPrompt = 'You are an expert data-science curriculum designer.\n' +
+      'Topic: ' + topic + '\nLearner level: ' + from +
+      (assessmentResult ? '\nTest result: ' + assessmentResult : '') +
+      ageNote + disNote + reasonNote + '\n\n' +
+      'Identify the 3 most critical knowledge gaps for this learner in 1-2 sentences each.\n' +
+      'Reply ONLY with a JSON array of strings. Example: ["Gap 1","Gap 2","Gap 3"]';
+    const sys = 'Reply ONLY with a JSON array of strings. No preamble. No markdown.';
+    const messages = [{ role: 'user', content: gapPrompt }];
+    let raw = '';
+    if (labMode === 'ollama') {
+      await callOllama(messages, sys, c => { raw += c; }, labOllamaIp);
+    } else {
+      const m = TUTOR_MODELS.find(x => x.id === (tutorModel || 'gemma-4-31b-it')) || TUTOR_MODELS[0];
+      await callGemini(m, messages, sys, null, null, c => { raw += c; }, 800);
+    }
+    try {
+      const arr = JSON.parse(raw.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim().replace(/^[^[]*(\[[\s\S]*\])[^]]*$/, '$1'));
+      return Array.isArray(arr) ? arr : [];
+    } catch { return []; }
+  }
+
+  // ── Streaming roadmap: accumulate chunks, parse completed day objects live ──
+  function _makeStreamingRoadmapRenderer(wrap, titleHolder) {
+    let _buf = '';
+    let _renderedDays = 0;
+    let _titleRendered = false;
+    let _planTitle = '';
+    let _tbody = null;
+    let _tableContainer = null;
+
+    function _ensureTable() {
+      if (_tableContainer) return;
+      _tableContainer = document.createElement('div');
+      _tableContainer.style.cssText = 'overflow-x:auto;max-height:60vh;overflow-y:auto';
+      const tbl = document.createElement('table');
+      tbl.id = 'roadmap-tbl';
+      tbl.style.cssText = 'width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed';
+      const fs = _roadmapFontSize;
+      tbl.innerHTML = '<colgroup><col style="width:30px"><col style="width:90px"><col><col style="width:30px"><col style="width:26px"></colgroup>' +
+        '<thead><tr style="background:var(--midnight);color:var(--cloud)">' +
+        '<th style="padding:0.42rem 0.4rem;text-align:left;font-family:\'Source Code Pro\',monospace;font-size:' + (fs-4) + 'px">Or</th>' +
+        '<th style="padding:0.42rem 0.4rem;text-align:left;font-family:\'Source Code Pro\',monospace;font-size:' + (fs-4) + 'px">Tema</th>' +
+        '<th style="padding:0.42rem 0.4rem;text-align:left;font-family:\'Source Code Pro\',monospace;font-size:' + (fs-4) + 'px">Arajadranqner</th>' +
+        '<th style="padding:0.42rem 0.4rem;text-align:center;font-family:\'Source Code Pro\',monospace;font-size:' + (fs-4) + 'px">Zh</th>' +
+        '<th style="padding:0.42rem 0.4rem;text-align:center;font-family:\'Source Code Pro\',monospace;font-size:' + (fs-4) + 'px">✓</th>' +
+        '</tr></thead>';
+      _tbody = document.createElement('tbody');
+      tbl.appendChild(_tbody);
+      _tableContainer.appendChild(tbl);
+      wrap.appendChild(_tableContainer);
+    }
+
+    function _tryRenderNextDay() {
+      // Try to find the next complete day object in buffer
+      const dayRe = /\{[^{}]*"day"\s*:\s*(\d+)[^{}]*"tasks"\s*:\s*\[([^\]]*)\][^{}]*\}/gs;
+      let match;
+      while ((match = dayRe.exec(_buf)) !== null) {
+        const dayNum = parseInt(match[1]);
+        if (dayNum <= _renderedDays) continue;
+        try {
+          // Extract the full matched object safely
+          const objStr = match[0];
+          const dayObj = JSON.parse(objStr.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f]/g,'').replace(/,\s*([}\]])/g,'$1'));
+          _ensureTable();
+          const tasks = dayObj.tasks || [];
+          const fs = _roadmapFontSize;
+          const di = dayNum - 1;
+          const bg = di % 2 === 0 ? '#ffffff' : 'rgba(65,90,119,0.035)';
+          const startIdx = _roadmapTasks.length;
+          tasks.forEach((task, ti) => {
+            _roadmapTasks.push({ day: dayNum, topic: dayObj.topic || '', text: task, hours: dayObj.hours || 1, done: false });
+            const idx = startIdx + ti;
+            const tr = document.createElement('tr');
+            tr.id = 'rtr-' + idx;
+            tr.style.cssText = 'background:' + bg + ';border-bottom:1px solid rgba(65,90,119,0.07)';
+            tr.style.animation = 'fadeSlide 0.3s ease forwards';
+            let inner = '';
+            if (ti === 0) {
+              inner += '<td rowspan="' + tasks.length + '" style="padding:0.38rem 0.4rem;font-family:\'Source Code Pro\',monospace;font-size:' + (fs-4) + 'px;color:var(--heritage);font-weight:700;vertical-align:top;border-right:2px solid rgba(65,90,119,0.1)">' + dayNum + '</td>' +
+                       '<td rowspan="' + tasks.length + '" style="padding:0.38rem 0.4rem;color:var(--midnight);font-size:' + (fs-2) + 'px;vertical-align:top;border-right:1px solid rgba(65,90,119,0.08);word-break:break-word;line-height:1.4">' + (dayObj.topic || '') + '</td>';
+            }
+            inner += '<td class="rtask-cell" style="padding:0.35rem 0.4rem;color:var(--midnight);line-height:1.55;word-break:break-word;font-size:' + fs + 'px">' + renderMarkdown(task) + '</td>';
+            if (ti === 0) {
+              inner += '<td rowspan="' + tasks.length + '" style="padding:0.38rem 0.4rem;text-align:center;color:var(--celestial);font-family:\'Source Code Pro\',monospace;font-size:' + (fs-4) + 'px;vertical-align:top">' + (dayObj.hours || 1) + '</td>';
+            }
+            inner += '<td style="padding:0.38rem 0.3rem;text-align:center;vertical-align:top">' +
+              '<div id="rcb-' + idx + '" onclick="toggleRoadmapTask(' + idx + ')" style="width:16px;height:16px;border-radius:3px;border:1.5px solid var(--celestial);background:white;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;color:white;transition:all 0.15s;flex-shrink:0"></div>' +
+              '</td>';
+            tr.innerHTML = inner;
+            _tbody.appendChild(tr);
+          });
+          _renderedDays = dayNum;
+          updateRoadmapProgress();
+        } catch(e) { /* incomplete object, wait for more chunks */ }
+      }
+      // Try to extract title early
+      if (!_titleRendered) {
+        const tm = _buf.match(/"title"\s*:\s*"([^"]+)"/);
+        if (tm) {
+          _planTitle = tm[1];
+          titleHolder.textContent = _planTitle;
+          _titleRendered = true;
+        }
+      }
+    }
+
+    return {
+      onChunk(chunk) { _buf += chunk; _tryRenderNextDay(); },
+      finalize() { return { raw: _buf, title: _planTitle }; }
+    };
+  }
+
+  // ── Generate plan (multi-step: gap analysis → streaming table) ──
+  async function generateRoadmap() {
+    if (labMode === 'ollama' && !labOllamaIp) { switchLabTab('chat'); labAddError('Nax mutqagret Ollama IP-ы.'); return; }
+    if (labMode === 'gemini' && !labApiKey)   { switchLabTab('chat'); labAddError('Add Gemini API key.'); return; }
+
+    const { topic, from, to } = roadmapSelections;
+    const ageVal = (document.getElementById('roadmap-age') || {}).value || '';
+    const disabilityVal = (document.getElementById('roadmap-disability') || {}).value || '';
+    const reasonEl = document.getElementById('reason-text');
+    const reason = reasonEl && reasonEl.style.display !== 'none' ? reasonEl.value.trim() : '';
+
+    const ageNote = ageVal ? '\nLearner age: ' + ageVal : '';
+    const disNote = disabilityVal ? '\nLearner accessibility need: ' + disabilityVal : '';
+    const reasonNote = reason ? '\nMotivation: ' + reason : '';
+
+    document.getElementById('roadmap-wizard').style.display = 'none';
+    const res = document.getElementById('roadmap-result');
+    res.style.display = 'flex';
+    const wrap = document.getElementById('roadmap-table-wrap');
+
+    // ── Phase 1: Gap analysis ──
+    wrap.innerHTML = '<div style="font-family:\'Source Code Pro\',monospace;font-size:0.75rem;color:var(--celestial);padding:1.5rem 0;letter-spacing:0.04em;text-align:center">🔍 Վերլուծում եմ հմտությունների բացթողումները…</div>';
+    let gaps = [];
+    try {
+      gaps = await _runGapAnalysis(topic, from, _assessmentResult, ageNote, disNote, reasonNote);
+    } catch(e) { /* proceed without gaps */ }
+
+    // ── Phase 2: Generate plan with gap context, streaming table ──
+    const gapContext = gaps.length ? '\nIdentified knowledge gaps to address:\n' + gaps.map((g,i) => (i+1)+'. '+g).join('\n') : '';
+    const prompt = 'You are an Armenian AI tutor. Create a personalized ' + roadmapDays + '-day study plan.\n\n' +
+      'Topic: ' + topic + '\nDays: ' + roadmapDays + '\nCurrent level: ' + from +
+      (_assessmentResult ? '\nTest result: ' + _assessmentResult : '') +
+      '\nGoal: ' + to + ageNote + disNote + reasonNote + gapContext + '\n\n' +
+      'Rules:\n- Reply ONLY with a JSON object, no markdown, no explanation\n' +
+      '- Structure:\n{\n  "title": "Plan title in Armenian",\n  "days": [\n' +
+      '    { "day": 1, "topic": "Topic name in Armenian", "tasks": ["Task 1 in Armenian", "Task 2"], "hours": 1.5 }\n  ]\n}\n' +
+      '- Include ALL ' + roadmapDays + ' days\n' +
+      '- Each day: 2-4 concrete, actionable tasks in Armenian\n' +
+      '- Prioritize the identified knowledge gaps in early days\n' +
+      '- Adapt difficulty to level: ' + from + '\n' +
+      '- If age < 12 or disability noted, use simpler language\n' +
+      '- Tasks must be specific\n' +
+      '- Do NOT use any special characters like backslashes, unescaped quotes, or newlines inside string values';
+
+    // Show gap summary + streaming title placeholder
+    _roadmapTasks = [];
+    let gapHtml = '';
+    if (gaps.length) {
+      gapHtml = '<div style="font-family:\'Source Code Pro\',monospace;font-size:0.7rem;color:var(--heritage);padding:0.6rem 0.9rem;background:rgba(65,90,119,0.06);border-left:3px solid var(--celestial);border-radius:0 4px 4px 0;margin-bottom:0.75rem">' +
+        '🎯 Հայտնաբերված բացթողումներ · <span style="opacity:0.7">' + gaps.map((g,i) => (i+1)+'. '+g).join(' &nbsp;|&nbsp; ') + '</span></div>';
+    }
+    const titleDiv = document.createElement('div');
+    titleDiv.style.cssText = 'font-family:\'Playfair Display\',serif;font-size:16px;color:var(--midnight);margin-bottom:0.5rem;font-weight:700;min-height:1.4em';
+    titleDiv.textContent = '⏳ Կազմում եմ քո ուղին…';
+    wrap.innerHTML = gapHtml;
+    wrap.appendChild(titleDiv);
+
+    try {
+      const renderer = _makeStreamingRoadmapRenderer(wrap, titleDiv);
+      const messages = [{ role: 'user', content: prompt }];
+      const sys = 'Reply ONLY with valid JSON. No markdown fences, no backticks, no preamble. Start with { and end with }.';
+      if (labMode === 'ollama') {
+        await callOllama(messages, sys, c => renderer.onChunk(c), labOllamaIp);
+      } else {
+        const m = TUTOR_MODELS.find(x => x.id === (tutorModel || 'gemma-4-31b-it')) || TUTOR_MODELS[0];
+        await callGemini(m, messages, sys, null, null, c => renderer.onChunk(c), 4000);
+      }
+      const { raw } = renderer.finalize();
+      // Finalize: also try full JSON parse to catch any missing days
+      let jsonStr = raw.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
+      const firstBrace = jsonStr.indexOf('{');
+      const lastBrace = jsonStr.lastIndexOf('}');
+      if (firstBrace !== -1) jsonStr = jsonStr.slice(firstBrace, lastBrace + 1);
+      // If streaming already rendered all rows, skip full re-render
+      const alreadyRendered = _roadmapTasks.length > 0;
+      // Remove control characters that break JSON parsing (keep \n \r \t — handled below)
+      jsonStr = jsonStr.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/g, '');
+      // Fix common LLM JSON mistakes: unescaped quotes and literal control chars inside strings.
+      // Walk char-by-char so we can distinguish structural chars from in-string chars.
+      jsonStr = (function sanitizeJsonStrings(s) {
+        let out = '';
+        let inStr = false;
+        for (let i = 0; i < s.length; i++) {
+          const ch = s[i];
+          if (inStr) {
+            if (ch === '\\') {
+              // Already-escaped sequence — pass through both chars
+              out += ch;
+              if (i + 1 < s.length) { i++; out += s[i]; }
+            } else if (ch === '\n') {
+              out += '\\n';   // literal newline inside string → escape it
+            } else if (ch === '\r') {
+              out += '\\r';
+            } else if (ch === '\t') {
+              out += '\\t';
+            } else if (ch === '"') {
+              // Peek ahead past whitespace to see if this is a legitimate string close
+              let j = i + 1;
+              while (j < s.length && (s[j] === ' ' || s[j] === '\n' || s[j] === '\r' || s[j] === '\t')) j++;
+              const next = s[j];
+              if (next === ',' || next === ']' || next === '}' || next === ':' || j >= s.length) {
+                out += ch; inStr = false;  // legitimate closing quote
+              } else {
+                out += '\\"';            // unescaped quote mid-string
+              }
+            } else {
+              out += ch;
+            }
+          } else {
+            if (ch === '"') { inStr = true; out += ch; }
+            else { out += ch; }
+          }
+        }
+        // If string ends while still inside a string, close it
+        if (inStr) out += '"';
+        return out;
+      })(jsonStr);
+      // Remove trailing commas before ] or } (common LLM mistake) — after string fix
+      jsonStr = jsonStr.replace(/,\s*([}\]])/g, '$1');
+      // Attempt parse; on failure try a second-pass aggressive repair
+      let plan;
+      try {
+        plan = JSON.parse(jsonStr);
+      } catch(parseErr) {
+        // Second-pass: strip everything after the last complete day object
+        // by finding the last '}' before the closing of the days array
+        const repaired = jsonStr.replace(/("tasks"\s*:\s*\[(?:[^\[\]]|\[(?:[^\[\]]|\[[^\[\]]*\])*\])*?)(?:,\s*"[^"]*"\s*(?=[,\]\}]))/g, '$1');
+        try {
+          plan = JSON.parse(repaired);
+        } catch(e2) {
+          // Last resort: use JSON5-style loose parse by eval in a sandboxed way
+          // Just re-throw the original error with the raw output for debugging
+          throw new Error(parseErr.message + '\n\nRaw AI output (first 400 chars):\n' + raw.slice(0, 400));
+        }
+      }
+      localStorage.setItem('mitqlab_roadmap_result', JSON.stringify(plan));
+      localStorage.removeItem('mitqlab_todo_done');
+      if (!alreadyRendered) {
+        renderRoadmapTable(plan);
+      } else {
+        // Just persist — streaming already built the table live
+        updateRoadmapProgress();
+        if (!titleDiv.textContent || titleDiv.textContent.startsWith('⏳')) {
+          titleDiv.textContent = plan.title || 'Ուղի';
+        }
+      }
+    } catch(e) {
+      wrap.innerHTML = '<div style="color:#c62828;font-size:0.82rem;padding:1rem 0;font-family:\'Source Code Pro\',monospace">Error: ' + e.message + '</div>';
+    }
+  }
+
+  function renderRoadmapTable(plan) {
+    _roadmapTasks = [];
+    const savedDone = JSON.parse(localStorage.getItem('mitqlab_todo_done') || '{}');
+    (plan.days || []).forEach(day => {
+      (day.tasks || []).forEach(task => {
+        _roadmapTasks.push({ day: day.day, topic: day.topic || '', text: task, hours: day.hours || 1, done: false });
+      });
+    });
+    Object.entries(savedDone).forEach(([i, v]) => { if (_roadmapTasks[i]) _roadmapTasks[i].done = v; });
+
+    const fs = _roadmapFontSize;
+    const wrap = document.getElementById('roadmap-table-wrap');
+    let html = '<div style="font-family:\'Playfair Display\',serif;font-size:' + (fs+2) + 'px;color:var(--midnight);margin-bottom:0.7rem;font-weight:700">' + (plan.title || 'Ughi') + '</div>';
+    html += '<table id="roadmap-tbl" style="width:100%;border-collapse:collapse;font-size:' + (fs-2) + 'px;table-layout:fixed">' +
+      '<colgroup><col style="width:30px"><col style="width:90px"><col><col style="width:30px"><col style="width:26px"></colgroup>' +
+      '<thead><tr style="background:var(--midnight);color:var(--cloud)">' +
+      '<th style="padding:0.42rem 0.4rem;text-align:left;font-family:\'Source Code Pro\',monospace;font-size:' + (fs-4) + 'px;letter-spacing:0.07em">Or</th>' +
+      '<th style="padding:0.42rem 0.4rem;text-align:left;font-family:\'Source Code Pro\',monospace;font-size:' + (fs-4) + 'px;letter-spacing:0.07em">Tema</th>' +
+      '<th style="padding:0.42rem 0.4rem;text-align:left;font-family:\'Source Code Pro\',monospace;font-size:' + (fs-4) + 'px;letter-spacing:0.07em">Arajadranqner</th>' +
+      '<th style="padding:0.42rem 0.4rem;text-align:center;font-family:\'Source Code Pro\',monospace;font-size:' + (fs-4) + 'px">Zh</th>' +
+      '<th style="padding:0.42rem 0.4rem;text-align:center;font-family:\'Source Code Pro\',monospace;font-size:' + (fs-4) + 'px">\u2713</th>' +
+      '</tr></thead><tbody>';
+
+    let idx = 0;
+    (plan.days || []).forEach((day, di) => {
+      const tasks = day.tasks || [];
+      tasks.forEach((task, ti) => {
+        const done = _roadmapTasks[idx] ? _roadmapTasks[idx].done : false;
+        const bg = di % 2 === 0 ? '#ffffff' : 'rgba(65,90,119,0.035)';
+        html += '<tr id="rtr-' + idx + '" style="background:' + bg + ';' + (done?'opacity:0.5;':'') + 'border-bottom:1px solid rgba(65,90,119,0.07)">';
+        if (ti === 0) {
+          html += '<td rowspan="' + tasks.length + '" style="padding:0.38rem 0.4rem;font-family:\'Source Code Pro\',monospace;font-size:' + (fs-4) + 'px;color:var(--heritage);font-weight:700;vertical-align:top;border-right:2px solid rgba(65,90,119,0.1)">' + day.day + '</td>' +
+                  '<td rowspan="' + tasks.length + '" style="padding:0.38rem 0.4rem;color:var(--midnight);font-size:' + (fs-2) + 'px;vertical-align:top;border-right:1px solid rgba(65,90,119,0.08);word-break:break-word;line-height:1.4">' + day.topic + '</td>';
+        }
+        html += '<td class="rtask-cell" style="padding:0.35rem 0.4rem;color:var(--midnight);line-height:1.55;word-break:break-word;font-size:' + fs + 'px">' + renderMarkdown(task) + '</td>';
+        if (ti === 0) {
+          html += '<td rowspan="' + tasks.length + '" style="padding:0.38rem 0.4rem;text-align:center;color:var(--celestial);font-family:\'Source Code Pro\',monospace;font-size:' + (fs-4) + 'px;vertical-align:top">' + day.hours + '</td>';
+        }
+        html += '<td style="padding:0.38rem 0.3rem;text-align:center;vertical-align:top">' +
+          '<div id="rcb-' + idx + '" onclick="toggleRoadmapTask(' + idx + ')" style="width:16px;height:16px;border-radius:3px;border:1.5px solid ' + (done?'var(--heritage)':'var(--celestial)') + ';background:' + (done?'var(--heritage)':'white') + ';display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;color:white;transition:all 0.15s;flex-shrink:0">' + (done?'\u2713':'') + '</div>' +
+          '</td></tr>';
+        idx++;
+      });
+    });
+    html += '</tbody></table>';
+    wrap.innerHTML = html;
+    updateRoadmapProgress();
+  }
+
+  function toggleRoadmapTask(idx) {
+    if (!_roadmapTasks[idx]) return;
+    _roadmapTasks[idx].done = !_roadmapTasks[idx].done;
+    const saved = JSON.parse(localStorage.getItem('mitqlab_todo_done') || '{}');
+    saved[idx] = _roadmapTasks[idx].done;
+    localStorage.setItem('mitqlab_todo_done', JSON.stringify(saved));
+    const done = _roadmapTasks[idx].done;
+    const cb = document.getElementById('rcb-' + idx);
+    const row = document.getElementById('rtr-' + idx);
+    if (cb) { cb.style.background = done?'var(--heritage)':'white'; cb.style.borderColor = done?'var(--heritage)':'var(--celestial)'; cb.textContent = done?'\u2713':''; }
+    if (row) row.style.opacity = done ? '0.5' : '1';
+    updateRoadmapProgress();
+  }
+
+  function updateRoadmapProgress() {
+    const total = _roadmapTasks.length, done = _roadmapTasks.filter(t=>t.done).length;
+    const pct = total ? Math.round(done/total*100) : 0;
+    const bar = document.getElementById('roadmap-pbar');
+    const label = document.getElementById('roadmap-plabel');
+    if (bar) bar.style.width = pct + '%';
+    if (label) label.textContent = done + '/' + total + ' \u00b7 ' + pct + '%';
+  }
+
+  function downloadRoadmapCSV() {
+    if (!_roadmapTasks.length) return;
+    const hdr = 'Or,Թեմա,Առաջադրանք,Ժամանակ,Կատարված\n';
+    const rows = _roadmapTasks.map(t =>
+      t.day + ',"' + (t.topic||'').replace(/"/g,'""') + '","' + t.text.replace(/"/g,'""').replace(/<[^>]+>/g,'') + '",' + t.hours + 'h,"' + (t.done?'Ayo':'Voch') + '"'
+    ).join('\n');
+    const blob = new Blob(['\uFEFF' + hdr + rows], {type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href=url; a.download='ughi.csv';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+  }
+
+  function downloadRoadmapPNG() {
+    const tbl = document.getElementById('roadmap-tbl');
+    const titleEl = document.querySelector('#roadmap-table-wrap > div');
+    if (!tbl) return;
+    const scale = 2;
+    const W = Math.max(tbl.scrollWidth + 60, 620);
+    const rows = tbl.querySelectorAll('tbody tr');
+    const rowH = 30, headerH = 52, titleH = 44, footerH = 26;
+    const H = titleH + headerH + rows.length * rowH + footerH + 24;
+    const canvas = document.createElement('canvas');
+    canvas.width = W * scale; canvas.height = H * scale;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(scale, scale);
+    ctx.fillStyle = '#f0f4f8'; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#1b2a3b'; ctx.fillRect(0, 0, W, titleH);
+    ctx.fillStyle = '#e8d5b7'; ctx.font = 'bold 14px serif';
+    ctx.fillText(titleEl ? titleEl.textContent.substring(0,70) : 'Ughi', 18, 27);
+    ctx.fillStyle = '#778ba9'; ctx.font = '9px monospace';
+    ctx.fillText('MitqLab \u00b7 mitqlab.am', W - 135, 27);
+    const pct = _roadmapTasks.length ? _roadmapTasks.filter(t=>t.done).length / _roadmapTasks.length : 0;
+    ctx.fillStyle = 'rgba(119,141,169,0.2)'; ctx.fillRect(0, titleH, W, 5);
+    ctx.fillStyle = '#415a77'; ctx.fillRect(0, titleH, W * pct, 5);
+    ctx.fillStyle = '#415a77'; ctx.fillRect(0, titleH + 5, W, headerH);
+    ctx.fillStyle = '#d9e8f0'; ctx.font = 'bold 10px monospace';
+    const colX = [8, 44, 148, W-52, W-22];
+    ['Or','Թեմա','Առաջադրանք','Ժամանակ','\u2713'].forEach((c, i) => ctx.fillText(c, colX[i], titleH + 32));
+    rows.forEach((row, ri) => {
+      const y = titleH + headerH + 5 + ri * rowH;
+      ctx.fillStyle = ri % 2 === 0 ? '#ffffff' : 'rgba(65,90,119,0.04)';
+      ctx.fillRect(0, y, W, rowH);
+      ctx.strokeStyle = 'rgba(65,90,119,0.09)'; ctx.lineWidth = 0.5;
+      ctx.strokeRect(0, y, W, rowH);
+      const cells = row.querySelectorAll('td');
+      ctx.fillStyle = '#1b2a3b'; ctx.font = '10px serif';
+      cells.forEach((cell, ci) => {
+        const txt = (cell.textContent||'').replace('\u2713','').trim().substring(0,60);
+        if (txt) ctx.fillText(txt, colX[ci] || colX[colX.length-1], y + 19);
+      });
+    });
+    ctx.fillStyle = 'rgba(65,90,119,0.35)'; ctx.fillRect(0, H - footerH, W, footerH);
+    ctx.fillStyle = '#415a77'; ctx.font = '9px monospace';
+    ctx.fillText('MitqLab \u00b7 ' + new Date().getFullYear() + ' \u00b7 mitqlab.am', 10, H - 8);
+    const link = document.createElement('a'); link.download = 'ughi.png'; link.href = canvas.toDataURL('image/png');
+    document.body.appendChild(link); link.click(); document.body.removeChild(link);
+  }
+
+  function resetRoadmap() {
+    localStorage.removeItem('mitqlab_roadmap_result'); localStorage.removeItem('mitqlab_todo_done');
+    _roadmapTasks = []; _assessmentResult = null;
+    Object.keys(roadmapSelections).forEach(k => roadmapSelections[k] = null);
+    document.querySelectorAll('.roadmap-chip').forEach(b => b.classList.remove('selected'));
+    const btn = document.getElementById('roadmap-generate-btn');
+    if (btn) { btn.disabled = true; btn.style.opacity = '0.4'; }
+    const res = document.getElementById('roadmap-result'); if (res) res.style.display = 'none';
+    const wrap = document.getElementById('roadmap-table-wrap'); if (wrap) wrap.innerHTML = '';
+    const wiz = document.getElementById('roadmap-wizard'); if (wiz) wiz.style.display = 'flex';
+    const ab = document.getElementById('assessment-box'); if (ab) { ab.style.display = 'none'; ab.innerHTML = ''; }
+    const rt = document.getElementById('reason-text'); if (rt) { rt.style.display = 'none'; rt.value = ''; }
+    const ageEl = document.getElementById('roadmap-age'); if (ageEl) ageEl.value = '';
+    const disEl = document.getElementById('roadmap-disability'); if (disEl) disEl.value = '';
+    const bar = document.getElementById('roadmap-pbar'); if (bar) bar.style.width = '0%';
+    const lbl = document.getElementById('roadmap-plabel'); if (lbl) lbl.textContent = '';
+    const slider = document.getElementById('time-slider'); if (slider) { slider.value = 30; updateTimeSlider(30); }
+  }
+
+  function restoreRoadmapIfSaved() {
+    const saved = localStorage.getItem('mitqlab_roadmap_result');
+    if (!saved) return;
+    try {
+      const plan = JSON.parse(saved);
+      const wiz = document.getElementById('roadmap-wizard');
+      const res = document.getElementById('roadmap-result');
+      if (wiz) wiz.style.display = 'none';
+      if (res) { res.style.display = 'flex'; renderRoadmapTable(plan); }
+    } catch(e) { localStorage.removeItem('mitqlab_roadmap_result'); }
+  }
     setTimeout(() => {
       setTutorMode(tutorMode);
       if (tutorOllamaIp) {
         const ipInp = document.getElementById('tutor-ollama-ip-input');
         if (ipInp) { ipInp.placeholder = '✓ ' + tutorOllamaIp; ipInp.style.borderColor = '#4caf50'; }
       }
+      // Restore saved Ollama model in both selectors
+      const tutorSel = document.getElementById('tutor-ollama-model');
+      const labSel   = document.getElementById('lab-ollama-model');
+      if (tutorSel) tutorSel.value = ollamaModel;
+      if (labSel)   labSel.value   = ollamaModel;
     }, 100);
     if (tutorApiKey) {
       setTimeout(() => {
@@ -3420,7 +5833,6 @@ Max 200 words. Bold key terms with **. Use triple backticks for code. Be warm an
         });
       }
     });
-  })();
 </script>
 
 <!-- ═══ AI TUTOR WIDGET ═══ -->
@@ -3433,7 +5845,7 @@ Max 200 words. Bold key terms with **. Use triple backticks for code. Be warm an
       <div class="tutor-avatar">🧠</div>
       <div>
         <div class="tutor-title">MitqLab AI Դասավանդող</div>
-        <div class="tutor-subtitle" id="tutor-subtitle">gemma-4-31b-it · Հայերեն</div>
+        <div class="tutor-subtitle" id="tutor-subtitle">gemma-4-31b-it · Gemma 4 · Հայերեն</div>
       </div>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
@@ -3449,9 +5861,6 @@ Max 200 words. Bold key terms with **. Use triple backticks for code. Be warm an
       <select id="tutor-model-select" onchange="saveTutorSettings()" style="flex:1;padding:4px 8px;border:1px solid var(--celestial);border-radius:6px;font-size:0.82rem;background:#fff">
         <option value="gemma-4-31b-it">Gemma 4 31B (առաջնային)</option>
         <option value="gemma-4-26b-a4b-it">Gemma 4 26B MoE</option>
-        <option value="gemma-3-27b-it">Gemma 3 27B</option>
-        <option value="gemini-2.0-flash-lite">Gemini 2.0 Flash Lite</option>
-        <option value="gemini-1.5-flash-8b">Gemini 1.5 Flash 8B</option>
       </select>
     </div>
     <div style="display:flex;align-items:center;gap:8px">
@@ -3470,12 +5879,22 @@ Max 200 words. Bold key terms with **. Use triple backticks for code. Be warm an
   <div class="tutor-api-key-wrap" id="tutor-settings-wrap">
     <div style="display:flex;gap:0.4rem;margin-bottom:0.4rem;flex-wrap:wrap;">
       <button class="tutor-mode-btn" id="btn-mode-ollama" onclick="setTutorMode('ollama')">🖥 Ollama (անկախ)</button>
-      <button class="tutor-mode-btn" id="btn-mode-gemini" onclick="setTutorMode('gemini')">☁ Google AI</button>
+      <button class="tutor-mode-btn" id="btn-mode-gemini" onclick="setTutorMode('gemini')">☁ Gemma 4 Cloud</button>
     </div>
-    <div id="tutor-ollama-row" style="display:flex;gap:0.5rem;align-items:center;">
-      <input type="text" class="tutor-api-input" id="tutor-ollama-ip-input"
-        placeholder="IP հասցե, օր.՝ 127.0.0.1 կամ 192.168.1.42">
-      <button class="tutor-api-save-btn" onclick="saveOllamaIp()">Պահել</button>
+    <div id="tutor-ollama-row" style="display:flex;flex-direction:column;gap:0.4rem;">
+      <div style="display:flex;gap:0.5rem;align-items:center;">
+        <select id="tutor-ollama-model" onchange="saveOllamaModel()" style="flex:1;padding:4px 8px;border:1px solid var(--celestial);border-radius:4px;font-family:'Source Code Pro',monospace;font-size:0.72rem;background:#fff;color:var(--midnight)">
+          <option value="gemma4:e4b">gemma4:e4b — 9.6 ԳԲ (առաջնային)</option>
+          <option value="gemma4:e2b">gemma4:e2b — 7.2 ԳԲ (թեթև)</option>
+          <option value="gemma4:26b">gemma4:26b — 18 ԳԲ (հզոր)</option>
+          <option value="gemma4:31b">gemma4:31b — 20 ԳԲ (առավելագույն)</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:0.5rem;align-items:center;">
+        <input type="text" class="tutor-api-input" id="tutor-ollama-ip-input"
+          placeholder="IP հասցե, օր.՝ 127.0.0.1 կամ 192.168.1.42">
+        <button class="tutor-api-save-btn" onclick="saveOllamaIp()">Պահել</button>
+      </div>
     </div>
     <div id="tutor-gemini-row" style="display:none;flex-direction:column;gap:0.5rem;">
       <div style="font-size:0.78rem;color:var(--heritage);line-height:1.6;">
@@ -3493,20 +5912,47 @@ Max 200 words. Bold key terms with **. Use triple backticks for code. Be warm an
     </div>
   </div>
 
-  <div class="tutor-quick-btns">
-    <button class="tutor-quick-btn" onclick="sendQuickPrompt('explain')">📖 Բացատրել</button>
-    <button class="tutor-quick-btn" onclick="sendQuickPrompt('hint')">💡 Հուշում</button>
-    <button class="tutor-quick-btn" onclick="sendQuickPrompt('code')">💻 Կոդ</button>
-    <button class="tutor-quick-btn" onclick="sendQuickPrompt('practice')">✏️ Վարժություն</button>
+  <!-- TAB ROW -->
+  <div class="tutor-tab-row">
+    <button class="tutor-tab active" id="tab-chat" onclick="switchTutorTab('chat')">💬 Զրույց</button>
+    <button class="tutor-tab" id="tab-tracker" onclick="switchTutorTab('tracker')">📊 Ուղի</button>
   </div>
 
-  <div class="tutor-messages" id="tutor-msgs"></div>
+  <!-- CHAT CONTENT -->
+  <div id="tutor-chat-content" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+    <div class="tutor-quick-btns">
+      <button class="tutor-quick-btn" onclick="sendQuickPrompt('explain')">📖 Բացատրել</button>
+      <button class="tutor-quick-btn" onclick="sendQuickPrompt('hint')">💡 Հուշում</button>
+      <button class="tutor-quick-btn" onclick="sendQuickPrompt('code')">💻 Կոդ</button>
+      <button class="tutor-quick-btn" onclick="sendQuickPrompt('practice')">✏️ Վարժություն</button>
+    </div>
 
-  <div class="tutor-input-row">
-    <textarea class="tutor-input" id="tutor-input"
-      placeholder="Հարց տվեք հայերեն կամ անգլերեն…" rows="1"></textarea>
-    <button class="tutor-send-btn" id="tutor-send-btn" onclick="sendTutorMessage()">➤</button>
+    <div class="tutor-messages" id="tutor-msgs"></div>
+
+    <!-- Image preview -->
+    <div id="tutor-img-preview-wrap" style="padding:0 1rem 0.4rem;background:white;display:none;flex-direction:column;gap:0.3rem;flex-shrink:0">
+      <img id="tutor-img-preview" src="" alt="preview" style="max-height:90px;max-width:100%;border-radius:6px;border:1px solid var(--parchment);object-fit:contain;align-self:flex-start">
+      <button id="tutor-img-clear" onclick="clearTutorImage()" style="font-family:'Source Code Pro',monospace;font-size:0.65rem;color:var(--heritage);background:none;border:none;cursor:pointer;padding:0;align-self:flex-start;text-decoration:underline">✕ Հեռացնել նկարը</button>
+    </div>
+
+    <div class="tutor-input-row">
+      <input type="file" id="tutor-img-input" accept="image/*" style="display:none" onchange="handleTutorImageSelect(event)">
+      <button class="tutor-img-btn" id="tutor-img-btn" onclick="document.getElementById('tutor-img-input').click()" title="Կցել նկար (multimodal)">📷</button>
+      <textarea class="tutor-input" id="tutor-input"
+        placeholder="Հարց տվեք հայերեն կամ անգլերեն…" rows="1"></textarea>
+      <button class="tutor-send-btn" id="tutor-send-btn" onclick="sendTutorMessage()">➤</button>
+    </div>
   </div>
+
+  <!-- TRACKER PANEL (tutor) -->
+  <div id="tutor-tracker-panel" style="flex-direction:column;overflow-y:auto;padding:0.85rem 1rem;gap:0.6rem;background:var(--cloud)">
+    <div class="tracker-header-row">
+      <span class="tracker-title-text">📊 Ուսուցման ուղի</span>
+      <button class="tracker-reset-btn" onclick="resetLearningPath()">Մաքրել</button>
+    </div>
+    <div id="tracker-body"></div>
+  </div>
+
 </div>
 
 </body>
