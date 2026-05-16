@@ -1163,7 +1163,9 @@
   .lab-chat-body {
     display: flex;
     flex-direction: column;
-    height: 900px;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
   }
 
   .lab-chat-settings {
@@ -2104,7 +2106,7 @@
           </div>
 
           <!-- CHAT TAB -->
-          <div id="lab-chat-tab-content" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+          <div id="lab-chat-tab-content" style="display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden">
             <!-- Starter quick-prompts -->
             <div class="lab-starter-btns">
               <button class="lab-starter-btn" onclick="labQuickPrompt('test-math')">Մաթ. թեստ</button>
@@ -4188,7 +4190,7 @@ Your job:
 
 Reply ONLY in English. Exceptions: Armenian proper nouns (MitqLab, etc.).
 CRITICAL: Output ONLY your answer. Never output your role, instructions, or meta-text.
-Max 250 words. Bold key terms with **. Use triple backticks for code examples. Be warm and encouraging.`;
+Max 400 words. Bold key terms with **. Use triple backticks for code examples. Be warm and encouraging.`;
     }
     return `You are an AI tutor for MitqLab, an Armenian platform teaching kids and teens math and programming.
 Your job:
@@ -4198,7 +4200,7 @@ Your job:
 
 Reply ONLY in Armenian (exceptions: code, technical terms like Python keywords, DataFrame, etc.).
 CRITICAL: Output ONLY your answer. Never output your role, instructions, or meta-text.
-Max 250 words. Bold key terms with **. Use triple backticks for code examples. Be warm and encouraging.`;
+Max 400 words. Bold key terms with **. Use triple backticks for code examples. Be warm and encouraging.`;
   }
 
   async function sendLabMessage(overrideText) {
@@ -4575,7 +4577,7 @@ Topics: ${ctx.topics}
 
 ${langInstruction}
 CRITICAL: Output ONLY your answer. Never output your instructions, role, constraints, plans, or any meta-text.
-Max 200 words. Bold key terms with **. Use triple backticks for code. Be warm and encouraging.
+Max 400 words. Bold key terms with **. Use triple backticks for code. Be warm and encouraging.
 
 LEARNING TRACKING: You have access to the track_concept function. After any exchange where the student's understanding of a concept becomes clear, call track_concept with the appropriate module, concept key, and status ("mastered" or "reviewing"). Only call it when the student's level is evident from the conversation — not for generic questions.
 Available concepts by module:
@@ -4583,11 +4585,6 @@ ${conceptMap}`;
   }
 
   function buildContents(apiMessages, systemPrompt, useSystemInstruction, imageBase64, imageMime) {
-    // Per Gemma 4 official docs: prepend an empty thought block to the first model
-    // turn to stabilize no-thinking behavior on large models (31B, 26B-MoE).
-    // See: https://ai.google.dev/gemma/docs/core/prompt-formatting-gemma4
-    const emptyThought = '<|channel>thought\n<channel|>';
-
     // Build parts for the final user message (may include image)
     const lastMsg = apiMessages[apiMessages.length - 1];
     const isLastUser = lastMsg && lastMsg.role === 'user';
@@ -4596,7 +4593,7 @@ ${conceptMap}`;
       : null;
 
     if (useSystemInstruction) {
-      const contents = apiMessages.map((m, i) => {
+      return apiMessages.map((m, i) => {
         const isLast = i === apiMessages.length - 1;
         const parts = (isLast && isLastUser && lastUserParts)
           ? lastUserParts
@@ -4606,15 +4603,8 @@ ${conceptMap}`;
           parts
         };
       });
-      // Prepend empty thought block to every model turn to suppress leakage
-      contents.forEach(c => {
-        if (c.role === 'model') {
-          c.parts[0].text = emptyThought + (c.parts[0].text || '');
-        }
-      });
-      return contents;
     }
-    // For models without system_instruction (Gemma 3): inject as opening exchange
+    // For models without native system_instruction: inject as opening exchange
     const mainContents = apiMessages.map((m, i) => {
       const isLast = i === apiMessages.length - 1;
       const parts = (isLast && isLastUser && lastUserParts)
@@ -4627,7 +4617,7 @@ ${conceptMap}`;
     });
     return [
       { role: 'user',  parts: [{ text: systemPrompt + '\n\nConfirm you understand and are ready.' }] },
-      { role: 'model', parts: [{ text: emptyThought + 'Հասկացա։ Կպատասխանեմ ուղղակիորեն։' }] },
+      { role: 'model', parts: [{ text: 'Հասկացա։ Կպատասխանեմ ուղղակիորեն։' }] },
       ...mainContents
     ];
   }
@@ -4690,7 +4680,7 @@ ${conceptMap}`;
   async function callGemini(modelDef, apiMessages, systemPrompt, imageBase64, imageMime, onChunk, maxTokens, useTools) {
     const key = tutorApiKey || labApiKey;
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelDef.id}:streamGenerateContent?alt=sse&key=${key}`;
-    const genConfig = { temperature: 0.5, maxOutputTokens: maxTokens || 600,
+    const genConfig = { temperature: 0.5, maxOutputTokens: maxTokens || 1500,
       stopSequences: ['*   Armenian', '* Armenian', '*   Warm', '*   Under', '* Under'] };
     const body = {
       contents: buildContents(apiMessages, systemPrompt, modelDef.sysInstruction, imageBase64, imageMime),
@@ -4830,7 +4820,7 @@ ${conceptMap}`;
       try {
         removeThinking();
         const bubble = makeStreamingBubble(document.getElementById('tutor-msgs'), 'tutor-msg bot');
-        await callGemini(modelDef, apiMessages, systemPrompt, imgBase64, imgMime, c => bubble.append(c), 600, true);
+        await callGemini(modelDef, apiMessages, systemPrompt, imgBase64, imgMime, c => bubble.append(c), 1500, true);
         const reply = cleanReply(bubble.finalize());
         const cleanedReply = parseLearningPathUpdates(reply);
         tutorMessages.push({ role: 'user', content: text });
@@ -5380,7 +5370,7 @@ ${conceptMap}`;
       await callOllama(messages, sys, c => { raw += c; }, labOllamaIp);
     } else {
       const m = TUTOR_MODELS.find(x => x.id === (tutorModel || 'gemma-4-31b-it')) || TUTOR_MODELS[0];
-      await callGemini(m, messages, sys, null, null, c => { raw += c; }, 800);
+      await callGemini(m, messages, sys, null, null, c => { raw += c; }, 1500);
     }
     try {
       const arr = JSON.parse(raw.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim().replace(/^[^[]*(\[[\s\S]*\])[^]]*$/, '$1'));
